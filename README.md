@@ -1,4 +1,9 @@
-# Repositório Destinado ao Grupo 5 de MDS
+## Objetivo
+Trabalho referente a disciplina de Métodos de Desenvolvimento de Software, Ministrada pela prof. Carla Rocha, na Universidade de Brasília - FGA.
+
+## Descrição do Projeto
+
+Elaborar uma ferramenta offline, que, por linha de comando, a partir do _git log_ de um repositório, gere relatório (txt) com estatísticas de um ususário específico ou da esquipe inteira. 
 
 ## 🤝 Desenvolvedores do Projeto
 
