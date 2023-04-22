@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    text-align: justify;
 }
 
 
@@ -10,7 +11,7 @@
 body {
     background-color: #282c34;
 }
-
+ 
 header {
     background-color: #808080;
     color: white;
@@ -20,13 +21,28 @@ header {
 }
 
 header > h1 {
-    padding: 10px 0px 15px 30px;
+    padding: 10px 0px 15px 20px;
     font-size: 45px;
+}
+
+#openMenu, #closeMenu {
+    border: none;
+    background: none;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 0px 5px 0px 5px;
+    cursor: pointer;
+    color: white;
+    display: none;
 }
 
 .ancora {
     text-decoration: none;
     color: white;
+}
+
+.ancora:hover {
+    text-decoration: underline;
 }
 
 #identDir {
@@ -63,3 +79,34 @@ footer {
     text-align: center;
     margin-top: 2px;
 }
+
+/* ============================================================================================================ */
+@media only screen and (max-width: 717px){
+    #openMenu, #closeMenu {
+        display: block;
+    }
+
+    #openMenu{
+        margin-left: auto;
+    }
+
+    #closeMenu {
+        position: fixed;
+        right: 20px;
+        top: 20px;
+    }
+
+    #identDir{
+        position: fixed;
+        flex-direction: column;
+        width: 100vw;
+        /* height: 100vh; */
+        background: #808080;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        display: none;
+        opacity: 0;
+        transition: 0.3s;
+    }
+}   
