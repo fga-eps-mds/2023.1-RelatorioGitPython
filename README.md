@@ -32,3 +32,14 @@ Em construção ...
     <td align="center" style="vertical-align:top"><a href="https://github.com/FelipeDireito"><img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/FelipeDireito" width="100px;" alt="foto"/><br /><sub><b>Felipe <br> Direito</b></sub></a><br /></td>
   </tr>
 </table>
+
+## :clipboard: Contribuição
+
+Contribuições são sempre bem-vindas!
+
+Veja ... para saber como começar.
+
+Por favor, siga o [código de conduta](docs/CODE_OF_CONDUCT.md) desse projeto.
+
+## :mag_right: Licença
+Este projeto está sob [licença](/LICENSE). Acesse para mais informações.
