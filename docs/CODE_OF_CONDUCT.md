@@ -48,18 +48,22 @@ Todas as reclamações serão analisadas e investigadas prontamente e de forma j
 O scrum master seguirá essas Diretrizes de impacto na comunidade para determinar as consequências de qualquer ação que considerem violar este Código de Conduta:
  
 1. Correção
+
 **Infração:** uso de linguagem imprópria ou outro comportamento considerado não profissional ou indesejável no grupo.
 **Consequência:** Uma advertência escrita privada dos líderes comunitários, fornecendo clareza sobre a natureza da violação e uma explicação de por que o comportamento era inadequado. Um pedido público de desculpas pode ser solicitado.
 
 2. Aviso
+
 **Infração:** Uma violação por meio de um único incidente ou série de ações.
 **Consequência:** Um aviso com consequências para comportamento continuado. Não interação com as pessoas envolvidas, incluindo interação não solicitada com aqueles que aplicam o Código de Conduta, por um período de tempo especificado. Esse inclui evitar interações no projeto, bem como todas os canais de acesso ao trabalho. A violação destes termos pode levar a uma perda temporária ou permanente banimento.
 
 3. Banimento Temporário
+
 **Infração:** Uma violação grave dos padrões da comunidade, incluindo comportamento inadequado sustentado.
 **Consequência:** banimento temporário de qualquer tipo de interação ou comunicação com o grupo por um período de tempo especificado. Sem público ou interação privada com as pessoas envolvidas, incluindo interação não solicitada com aqueles que fazem cumprir o Código de Conduta, é permitido durante este período. A violação desses termos pode levar a um banimento permanente.
 
 4. Banimento Permanente
+
 **Infração:** Demonstrar um padrão de violação aos padrões do grupo, incluindo comportamento inapropriado sustentado, assédio de um indivíduo, ou agressão ou depreciação de classes de indivíduos.
 **Consequência:** Proibição permanente de qualquer tipo de interação pública dentro do comunidade.
 
