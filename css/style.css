@@ -65,6 +65,10 @@ section > h2 {
 
 }
 
+.docs{
+    color: #70E5FF;
+}
+
 .white {
     background-color: #d0c3f1;
     color: black;
