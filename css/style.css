@@ -4,8 +4,6 @@
     text-align: justify;
 }
 
-
-
 /* =========================================================================================================== */
 
 body {
@@ -76,8 +74,11 @@ section > h2 {
 footer {
     background-color: #808080;
     color: white;
-    text-align: center;
     margin-top: 2px;
+}
+
+footer > p{
+    text-align: center;
 }
 
 /* ============================================================================================================ */
@@ -100,7 +101,6 @@ footer {
         position: fixed;
         flex-direction: column;
         width: 100vw;
-        /* height: 5vh; */
         background: #808080;
         align-items: center;
         justify-content: center;
