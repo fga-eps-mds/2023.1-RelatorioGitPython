@@ -100,7 +100,7 @@ footer {
         position: fixed;
         flex-direction: column;
         width: 100vw;
-        height: 5vh;
+        /* height: 5vh; */
         background: #808080;
         align-items: center;
         justify-content: center;
