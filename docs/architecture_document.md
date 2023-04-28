@@ -12,7 +12,7 @@
 Este documento tem como objetivo passar uma visão geral do projeto que será implementado, para que os integrantes possam conhecer como a aplicação será subdivida e as funções de cada componente.
 
 ### 1.2 Escopo
-Este documento tem aplica-se ao projeto da biblioteca em python para gerar relatório de repositórios git. Esse projeto será desenvolvido pelos alunos da disciplina Métodos de Desenvolvimento de Software, ministrada pela professora Carla Rocha, da Universidade de Brasília - Campus Gama.
+Este documento aplica-se ao projeto da biblioteca em python para gerar relatório de repositórios git. Esse projeto será desenvolvido pelos alunos da disciplina Métodos de Desenvolvimento de Software, ministrada pela professora Carla Rocha, da Universidade de Brasília - Campus Gama.
 
 ## 2. Representação Arquitetural
 
