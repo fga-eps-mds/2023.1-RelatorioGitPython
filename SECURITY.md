@@ -1,6 +1,8 @@
-# Security Policy
 
-## Supported Versions
+# Política de segurança
+<!--
+
+## Versões Suportadas
 
 Use this section to tell people about which versions of your project are
 currently being supported with security updates.
@@ -12,10 +14,8 @@ currently being supported with security updates.
 | 4.0.x   | :white_check_mark: |
 | < 4.0   | :x:                |
 
-## Reporting a Vulnerability
+-->
 
-Use this section to tell people how to report a vulnerability.
+## Reportando vulnerabilidade
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Achou alguma vulnerabilidade em nosso projeto? Crie uma [issue de report](https://github.com/fga-eps-mds/2023.1-RelatorioGitPython/issues/new?assignees=&labels=&template=template-padrão-de-issue.md&title=) descrevendo a vulnerabilidade!
