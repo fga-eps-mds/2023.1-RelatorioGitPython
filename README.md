@@ -1,23 +1,21 @@
 # Gerador de Relatório Git
 
-
-## Descrição do Projeto
+## :pencil2: Descrição do Projeto
 
 Trabalho referente a disciplina de Métodos de Desenvolvimento de Software, Ministrada pela prof. Carla Rocha, na Universidade de Brasília - FGA. 
 Este projeto visa criar uma biblioteca Python para gerar relatórios automáticos sobre as participações dos desenvolvedores em um repositório/projeto. Como por exemplo, listar a quantidade de commits e issues por cara desenvolvedor.
 
-
-
-## Objetivo
+## :dart: Objetivo
 
 Elaborar uma ferramenta offline, que, por linha de comando, a partir do _git log_ de um repositório, gere relatório (txt) com estatísticas de um ususário específico ou da esquipe inteira. 
 
+## :computer: Tecnologias
 
-## Usabilidade
+![Python](https://img.shields.io/badge/-python-14354C?style=for-the-badge&logo=python&labelColor=0D1117)&nbsp;
+![GIT](https://img.shields.io/badge/Git-E34F26?style=for-the-badge&logo=git&logoColor=white)&nbsp;
+## :hammer: Usabilidade
 
 Em construção ...
-
-
 
 ## 🤝 Desenvolvedores do Projeto
 
@@ -37,7 +35,7 @@ Em construção ...
 
 Contribuições são sempre bem-vindas!
 
-Veja ... para saber como começar.
+Veja o [guia de contribuição](/CONTRIBUTING.md) para saber como começar.
 
 Por favor, siga o [código de conduta](docs/CODE_OF_CONDUCT.md) desse projeto.
 
