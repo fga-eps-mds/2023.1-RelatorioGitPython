@@ -7,11 +7,11 @@
 /* =========================================================================================================== */
 
 body {
-    background-color: #282c34;
+    background-color: #FFFFFF;
 }
  
 header {
-    background-color: #808080;
+    background-color: #33CC33;
     color: white;
     display: flex;
     align-items: center;
@@ -57,7 +57,7 @@ header > h1 {
 /* ========================================================================================================== */
 section {
     padding: 50px;
-    color: white;
+    color: black;
 }
 
 section > h2 {
@@ -66,17 +66,17 @@ section > h2 {
 }
 
 .docs{
-    color: #70E5FF;
+    color: #00CCCC;
 }
 
 .white {
-    background-color: #d0c3f1;
+    background-color: #CCCCCC;
     color: black;
 }
 
 /* ============================================================================================================ */
 footer {
-    background-color: #808080;
+    background-color: #33CC33;
     color: white;
     margin-top: 2px;
 }
@@ -86,7 +86,7 @@ footer > p{
 }
 
 /* ============================================================================================================ */
-@media only screen and (max-width: 717px){
+@media only screen and (max-width: 804px){
     #openMenu, #closeMenu {
         display: block;
     }
