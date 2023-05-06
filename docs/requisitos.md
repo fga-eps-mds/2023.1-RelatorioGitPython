@@ -19,7 +19,8 @@ Os relatórios devem der gerados em diferentes formatos, como arquivos de texto.
 
 
 ## REQUISITOS DE EXECUÇÃO
-O usuário vai fornecer como entrada o repositório que ele deseja obter as informações
+O usuário vai fornecer como entrada o repositório que ele deseja obter as informações.
+
 A biblioteca vai gerar um relatório, em txt, contendo:
 - O  número total de Commits 
 - A data do último commit, o autor e o comentário
@@ -28,7 +29,10 @@ A biblioteca vai gerar um relatório, em txt, contendo:
 
 ## REQUISITOS NÃO FUNCIONAIS
 
-A linguagem do programa será python
-O software desenvolvido será uma biblioteca em python
-Os dados serão pegos pelo git log
-Esse software será acessado po qualquer pessoa, mas ele será desenvolido tendo como publuco alvo pessoas com conhecimento em programação
+A linguagem do programa será python.
+
+O software desenvolvido será uma biblioteca em python.
+
+Os dados serão pegos pelo git log.
+
+Esse software será acessado po qualquer pessoa, mas ele será desenvolido tendo como publuco alvo pessoas com conhecimento em programação.
