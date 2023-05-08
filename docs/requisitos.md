@@ -6,8 +6,6 @@ A biblioteca vai gerar relatórios, a partir de um usuário específico ou de um
 
 A biblioteca deve ser capaz de gerar relatórios com base em diferentes intervalos de tempo na semana, no mês ou em um intervalo de tempo personalizado.
 
-A biblioteca deve ser capaz de gerar relatórios com base em diferentes intervalos de tempo na semana, no mês ou em um intervalo de tempo personalizado.
-
 A biblioteca deve ser fácil de usar e permitir que os usuários personalizem os relatórios gerados de acordo com suas necessidades.
 
 ## REQUISITOS DE DADOS
@@ -35,4 +33,4 @@ O software desenvolvido será uma biblioteca em python.
 
 Os dados serão pegos pelo git log.
 
-Esse software será acessado po qualquer pessoa, mas ele será desenvolido tendo como publuco alvo pessoas com conhecimento em programação.
+Esse software será acessado por qualquer pessoa, mas ele será desenvolido tendo como público alvo pessoas com conhecimento em programação.
