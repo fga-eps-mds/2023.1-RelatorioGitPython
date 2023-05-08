@@ -1,11 +1,3 @@
----
-name: Template padrão de issue
-about: 'Template utilizado como exemplo em sala de aula '
-title: ''
-labels: ''
-assignees: ''
-
----
 
 ## Descrição do Problema
 Qual é o problema?
