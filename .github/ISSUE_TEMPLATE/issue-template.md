@@ -1,0 +1,31 @@
+---
+name: Issue template
+about: Describe this issue template's purpose here.
+title: ''
+labels: ''
+assignees: ''
+
+---
+
+## Descrição do Problema
+Qual é o problema?
+
+## Solução Proposta
+COMO O PROBLEMA SERÁSOLUCIONADO
+
+## Tarefas
+  - [ ] ETAPAS QUE PRECISAM SER FEITAS PARA RESOLVER O PROBLEMA 
+
+  - [ ] 
+
+  - [ ] 
+
+## Critérios de Aceitação
+  - [ ] RESULTADOS ESPERADOS QUANDO RESOLVERMOS O PROBLEMA
+
+  - [ ]  
+
+## Recursos
+
+ - RECURSOS USADOS PARA RESOLVER O PROBLEMA(ARTIGOS,VIDEOS,SITES,LIVROS,CONVERSA ETC.) 
+ -
