@@ -6,6 +6,7 @@
 | :-   | :-     | :-          | :-    |
 | 25/04/2023 | 0.1 | Arquitetura a ser Avaliada | Gabriel Rosa |
 | 07/05/2023 | 0.2 | Descrição das tecnologias | Gabriel Zaranza |
+| 08/05/2023 | 0.3 | Adiação do diagrama de pacotes da R1| Gabriel Zaranza |
 
 ## 1. Introdução
 
@@ -41,6 +42,7 @@ A camada de entrada seria responsável por receber as informações de entrada d
 
 ### 3.2.2 Camada de Negócio
 A camada de negócios seria responsável por processar as informações recebidas da camada de entrada e gerar as estatísticas necessárias. Essa camada seria composta por vários módulos, cada um com uma responsabilidade específica. Por exemplo, poderia haver um módulo para coletar as informações do repositório, outro módulo para gerar as estatísticas e outro módulo para consolidar essas informações em um relatório.
+![Diagrama](https://github.com/fga-eps-mds/2023.1-RelatorioGitPython/blob/main/docs/Diagrama%20de%20pacotes-R1.png)
 
 ### 3.2.3 Camada de Saída
 A camada de saída seria responsável por exibir o relatório gerado pela camada de negócios. Ela poderia ser responsável por formatar o relatório de acordo com as especificações do projeto e exibi-lo na tela ou salvá-lo em um arquivo.
