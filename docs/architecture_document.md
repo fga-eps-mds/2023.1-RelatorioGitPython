@@ -7,7 +7,8 @@
 | 25/04/2023 | 0.1 | Arquitetura a ser Avaliada | Gabriel Rosa |
 | 07/05/2023 | 0.2 | Descrição das tecnologias | Gabriel Zaranza |
 | 08/05/2023 | 0.3 | Adiação do diagrama de pacotes da R1| Gabriel Zaranza |
-
+| 17/05/2023 | 0.4 | Adição da descrição de Orientação a Objetos | Gabriel Rosa |
+ 
 ## 1. Introdução
 
 ### 1.1 Objetivo
@@ -42,16 +43,16 @@ A camada de entrada seria responsável por receber as informações de entrada d
 
 ### 3.2.2 Camada de Negócio
 A camada de negócios seria responsável por processar as informações recebidas da camada de entrada e gerar as estatísticas necessárias. Essa camada seria composta por vários módulos, cada um com uma responsabilidade específica. Por exemplo, poderia haver um módulo para coletar as informações do repositório, outro módulo para gerar as estatísticas e outro módulo para consolidar essas informações em um relatório.
-![Diagrama](/docs/image/Diagrama%20de%20pacotes-R1.png)
 
 ### 3.2.3 Camada de Saída
 A camada de saída seria responsável por exibir o relatório gerado pela camada de negócios. Ela poderia ser responsável por formatar o relatório de acordo com as especificações do projeto e exibi-lo na tela ou salvá-lo em um arquivo.
 
-### 3.2 Diagrama de Pacotes
-O *diagrama de pacotes* pode ser usado para representar as camadas do sistema e como os pacotes (ou módulos) estão organizados em cada camada. Por exemplo, pode ser criado um pacote para cada camada, como a camada de acesso aos dados, a camada de lógica de negócios e a camada de interface com o usuário. Esse diagrama pode ajudar a visualizar a estrutura do sistema e como as diferentes camadas se relacionam entre si.
+### 3.2 Orientação a Objetos 
+Para o desenvolvimento da biblioteca, será utilizado o paradigma de Orientação a Objetos, os objetos são as principais unidades de estrutura e interação. Cada objeto é uma instância de uma classe, que define suas propriedades (atributos) e comportamentos (métodos). Os atributos representam as características do objeto, enquanto os métodos são as ações que ele pode executar. 
 
-### 3.3 Diagrama de Sequência
-O *diagrama de sequência* pode ser usado para representar as interações entre os componentes do sistema em uma determinada funcionalidade. Por exemplo, pode ser criado um diagrama de sequência para representar como o programa coleta as informações do repositório Git, como as estatísticas são geradas e como o relatório é criado. Esse diagrama pode ajudar a entender o fluxo de execução do sistema e como as diferentes camadas se comunicam entre si.
+### 3.3 Diagrama de Pacotes
+O *diagrama de pacotes* pode ser usado para representar as camadas do sistema e como os pacotes (ou módulos) estão organizados em cada camada. Por exemplo, pode ser criado um pacote para cada camada, como a camada de acesso aos dados, a camada de lógica de negócios e a camada de interface com o usuário. Esse diagrama pode ajudar a visualizar a estrutura do sistema e como as diferentes camadas se relacionam entre si.
+![Diagrama](/docs/image/Diagrama%20de%20pacotes-R1.png)
 
 ## 4. Metas e Restrições Arquiteturais
 
@@ -62,7 +63,7 @@ Este projeto poderá ser baixado através do comando pip do Python para a utiliz
 A biblioteca deverá ser simples de ser utilizadas, com as funções bem definidas para cada atividade, de forma que não seja algo difícil de ser manipulado.
 
 ### 4.3 Ferramentas de Desenvolvimento 
-O projeto será desenvolvimento em Python (versão 3.10), em conjunto com a biblioteca PyGit, além da ferramenta Poetry para fazer o deploy dessa biblioteca e utilizaremos o Git que a partir do git log será possível pegar as informações do repositório e do usuário.
+O projeto será desenvolvimento em Python (versão 3.10), em conjunto com a biblioteca PyGit utilizaremos o Git que a partir do git log será possível pegar as informações do repositório e do usuário.
 
 ### 4.4 Confiabilidade
-A biblioteca terá uma cobertura de teste, buscando garantir que suas funcionalidades foram suficientemente testadas.
+A biblioteca terá uma cobertura de teste de 90%, buscando garantir que suas funcionalidades foram suficientemente testadas.
