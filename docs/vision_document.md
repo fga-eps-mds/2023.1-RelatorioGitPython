@@ -8,6 +8,7 @@
 | 17/05/2023 | 0.2 | Adição dos tópicos Introdução, Objetivo e Escopo| Gabriel Rosa |
 | 17/05/2023 | 0.3 | Adição dos Requisitos Funcionais, Dados, Execução e Não Funcionais| Gabriel Rosa, Lucas Lobão e Catlen Cleane |
 | 17/05/2023 | 0.4 | Repaginação do documento de visão | Gabriel Rosa |
+| 17/05/2023 | 0.5 | Adição do User Story Map | Gabriel Rosa |
 
 ## 1. Introdução
 
@@ -61,3 +62,8 @@ Este documento aplica-se ao projeto da biblioteca em python para gerar relatóri
 | RNF04 | A biblioteca deverá ser publica no PyPI |
 | RNF05 | Oferecer suporte a diferentes sistemas de codificação de caracteres, como UTF-8 e ISO-8859-1 |
 | RNF06 | Garantir que a biblioteca seja Unicode |
+
+## 3. User Story Map
+O User Story Map, ou mapa de histórias do usuário, é uma ferramenta visual que ajuda as equipes de desenvolvimento de software a entender e planejar as funcionalidades de um produto de maneira colaborativa. Ele fornece uma representação gráfica das histórias do usuário, organizadas de acordo com as suas prioridades e fluxo de trabalho.
+
+No nosso User Story Map definimos os Épicos, Features e as Histórias do Usuário e definimos as personas. Segue o link do Miro para acessar o nosso [board](https://miro.com/app/board/uXjVMQBxfUA=/). 
