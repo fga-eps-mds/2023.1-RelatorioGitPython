@@ -4,7 +4,16 @@
 
 | Data | Versão | Modificação | Autor |
 | :-   | :-     | :-          | :-    |
-| 26/04/2023 | 0.1 | Levantamento de Requisitos | Gabriel Rosa e Lucas Lobão|
+| 26/04/2023 | 0.1 | Levantamento de Requisitos | Gabriel Rosa e Lucas Lobão |
+| 17/05/2023 | 0.2 | Adição dos tópicos Introdução, Objetivo e Escopo| Gabriel Rosa |
+
+## 1. Introdução
+
+### 1.1 Objetivo
+Este documento tem como objetivo passar uma visão geral dos requisitos do projeto, para que os integrantes possam conhecer como a aplicação será desenvolvida. Assim, serão listados as principais funcionalidades e seus requisitos, para se obter uma melhor compreensão do escopo.
+
+### 1.2 Escopo
+Este documento aplica-se ao projeto da biblioteca em python para gerar relatório de repositórios git. Esse projeto será desenvolvido pelos alunos da disciplina Métodos de Desenvolvimento de Software, ministrada pela professora Carla Rocha, da Universidade de Brasília - Campus Gama.
 
 ## 1. Levantamento de Requisitos
 
