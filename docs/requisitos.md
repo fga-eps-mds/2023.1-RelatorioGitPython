@@ -34,3 +34,7 @@ O software desenvolvido será uma biblioteca em python.
 Os dados serão pegos pelo git log.
 
 Esse software será acessado por qualquer pessoa, mas ele será desenvolido tendo como público alvo pessoas com conhecimento em programação.
+
+## USER STORY MAP
+
+[Board](https://miro.com/app/board/uXjVMQBxfUA=/?share_link_id=439291500133) do user story map
