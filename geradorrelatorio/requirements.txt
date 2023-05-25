@@ -1,3 +1,4 @@
 cffi==1.15.1
 pycparser==2.21
 pygit2==1.12.1
+fuzzywuzzy==0.18.0
