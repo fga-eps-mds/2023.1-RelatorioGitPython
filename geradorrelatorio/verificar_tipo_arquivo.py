@@ -39,7 +39,7 @@ def check_extension():
             content += f'| {extension} | {file_list} | \n'
         content += "\n"
 
-    output = 'geradorrelatorio/arquivo.md'
+    output = 'arquivo.md'
 
     with open(output, 'w') as f:
         f.write(content)
