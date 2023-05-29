@@ -4,7 +4,7 @@ from pygit2 import GIT_SORT_REVERSE, GIT_SORT_TIME
 from pygit2 import *
 import pygit2
 import pandas as pd
-
+import datetime
 
 # Abrir o repositório Git
 current_working_directory = os.getcwd()
@@ -14,6 +14,7 @@ repository = Repository(repository_path)
 coauthors = []
 hashes = []
 authors = []
+dates = []
 columns = ['hash','author','co-author']
 
 
@@ -29,6 +30,7 @@ for commit in repository.walk(commit.id, GIT_SORT_TOPOLOGICAL | GIT_SORT_REVERSE
 
         hashes.append(str(commit.hex)[:6])
         authors.append(commit.author.name)
+        dates.append(datetime.datetime.fromtimestamp(commit.commit_time))
 
         lines = commit.message.splitlines()
         aux=[]
@@ -38,5 +40,5 @@ for commit in repository.walk(commit.id, GIT_SORT_TOPOLOGICAL | GIT_SORT_REVERSE
         coauthors.append(aux)
                
 
-df= pd.DataFrame({"authors": authors,"co-authors":coauthors}, index=hashes)
+df= pd.DataFrame({"authors": authors,"co-authors":coauthors,"date": dates}, index=hashes)
 print(df)
