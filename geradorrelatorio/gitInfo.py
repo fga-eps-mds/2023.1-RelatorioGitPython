@@ -1,4 +1,5 @@
 from pygit2 import Repository, discover_repository
+import pandas as pd
 import os
 from pygit2 import GIT_SORT_REVERSE, GIT_SORT_TIME
 from pygit2 import *
@@ -80,3 +81,34 @@ def get_commits_email():
             if(author.email != i):
                 commit_users.add(f'{author.email}')
     return commit_users
+
+def get_coAuthor():
+    coauthors = []
+    hashes = []
+    authors = []
+    dates = []
+    columns = ['hash','author','co-author']
+# Obter o commit mais recente (HEAD)
+    commit = repository.revparse_single('HEAD')
+
+# Percorrer todos os commits
+    for commit in repository.walk(commit.id, GIT_SORT_TOPOLOGICAL | GIT_SORT_REVERSE):
+        commit_message = commit.message
+
+        if 'Co-authored-by:' in commit_message:
+
+            hashes.append(str(commit.hex)[:6])
+            authors.append(commit.author.name)
+            dates.append(datetime.datetime.fromtimestamp(commit.commit_time))
+
+            lines = commit.message.splitlines()
+            aux=[]
+            for line in lines:
+                if line.startswith('Co-authored-by:'):
+                    aux.append(line[16:].strip().split('<')[0])
+            coauthors.append(aux)
+               
+
+    df_coauthor = pd.DataFrame({"authors": authors,"co-authors":coauthors,"date": dates}, index=hashes)
+    #print (df_coauthor)
+    return df_coauthor
