@@ -17,26 +17,26 @@ authors = []
 columns = ['hash','author','co-author']
 
 
+
 # Obter o commit mais recente (HEAD)
 commit = repository.revparse_single('HEAD')
 
 # Percorrer todos os commits
-for commit in repository.walk(commit.id, GIT_SORT_TOPOLOGICAL):
+for commit in repository.walk(commit.id, GIT_SORT_TOPOLOGICAL | GIT_SORT_REVERSE):
     commit_message = commit.message
+
     if 'Co-authored-by:' in commit_message:
 
         hashes.append(str(commit.hex)[:6])
         authors.append(commit.author.name)
 
         lines = commit.message.splitlines()
+        aux=[]
         for line in lines:
             if line.startswith('Co-authored-by:'):
-                coauthors.append(line[16:].strip().split('<')[0])
+                aux.append(line[16:].strip().split('<')[0])
+        coauthors.append(aux)
                
-    # Comparar a mensagem do commit com a linha "Co-authored-by"
-    
-    
-        #print(f'O commit {commit.hex} tem coautores.{commit.author.name} {coauthors}')
 
-df= pd.DataFrame({"authors":authors,"co-authors":coauthors},index=hashes)
+df= pd.DataFrame({"authors": authors,"co-authors":coauthors}, index=hashes)
 print(df)
