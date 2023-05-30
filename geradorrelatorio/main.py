@@ -12,3 +12,6 @@ get_commits()
 
 
 get_commits_by_user("FelipeDireito")
+
+
+get_coAuthor()
