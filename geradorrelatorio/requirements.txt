@@ -1,4 +1,7 @@
 cffi==1.15.1
 pycparser==2.21
 pygit2==1.12.1
-fuzzywuzzy==0.18.0
+pandas==1.4.0
+matplotlib==3.5.1
+PyGithub==1.58
+python-dotenv==0.19.1

@@ -3,19 +3,30 @@ from collections import defaultdict
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+from github import Github
+from dotenv import load_dotenv
 
-current_working_directory = os.getcwd() 
-repository_path = discover_repository(current_working_directory) 
-repository = Repository(repository_path) 
+# Carregar variáveis de ambiente do arquivo .env
+load_dotenv()
+
+# Obter o token do GitHub do arquivo .env
+github_token = os.getenv('GITHUB_TOKEN')
+
+github = Github(github_token)
+
+owner = 'fga-eps-mds'
+repo = '2023.1-RelatorioGitPython'
 
 def calculate_commit_average():
+
+    repository = github.get_repo(f'{owner}/{repo}')
     
     commits_count = defaultdict(int)
     
-    for commit in repository.walk(repository.head.target, GIT_SORT_TIME):
+    for commit in repository.get_commits():
         
-        # Obter o email do autor
-        name = commit.author.name
+        author = commit.author
+        name = author.login if author else "Unknown"
         
         # Incrementa o numero de commits do autor
         commits_count[name] += 1
@@ -33,11 +44,11 @@ def calculate_commit_average():
         data['Commits'].append(num_commits)
     
     df = pd.DataFrame(data)
+    df = df.sort_values(by='Commits', ascending=False)
+
+    print(df)
 
     df['Average'] = average_total # df da media total
-
-    above_avg = df[df['Commits'] > df['Average']]
-    below_avg = df[df['Commits'] < df['Average']]
 
     # Plotar um gráfico com as média de cada user
 
@@ -49,30 +60,3 @@ def calculate_commit_average():
     plt.legend()
     plt.xticks(rotation=45)
     plt.show()
-
-    '''
-    print('Média de Commits/Author do Repositório: ', average_total)
-
-    acima_media = []
-    abaixo_media = []
-
-    for author, num_commits in commits_count.items():
-        print(f'{author}: {num_commits}')
-        if num_commits > average_total:
-            acima_media.append(author)
-        elif num_commits < average_total:
-            abaixo_media.append(author)
-    
-    print('\n')
-
-    print('Usuários acima da média\n')
-    for author in acima_media: 
-        print(author)
-
-    print('\n')
-
-    print('Usuários abaixo da média\n')
-    for author in abaixo_media:
-        print(author)
-    '''
-    
