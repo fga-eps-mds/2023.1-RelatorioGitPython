@@ -1,13 +1,9 @@
-from pygit2 import Repository, discover_repository
-from pygit2 import GIT_SORT_TIME
 from pygit2 import *
 from collections import defaultdict
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
- 
 current_working_directory = os.getcwd() 
 repository_path = discover_repository(current_working_directory) 
 repository = Repository(repository_path) 
@@ -43,9 +39,16 @@ def calculate_commit_average():
     above_avg = df[df['Commits'] > df['Average']]
     below_avg = df[df['Commits'] < df['Average']]
 
-    print(above_avg)
-    print()
-    print(below_avg)
+    # Plotar um gráfico com as média de cada user
+
+    plt.bar(df['Author'], df['Commits'])
+    plt.axhline(y=average_total, color='r', linestyle='-', label='Average')
+    plt.xlabel('Author')
+    plt.ylabel('Commits')
+    plt.title('Commits per Author')
+    plt.legend()
+    plt.xticks(rotation=45)
+    plt.show()
 
     '''
     print('Média de Commits/Author do Repositório: ', average_total)
