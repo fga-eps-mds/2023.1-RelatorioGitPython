@@ -37,8 +37,15 @@ def calculate_commit_average():
         data['Commits'].append(num_commits)
     
     df = pd.DataFrame(data)
-    
-    print(df)
+
+    df['Average'] = average_total # df da media total
+
+    above_avg = df[df['Commits'] > df['Average']]
+    below_avg = df[df['Commits'] < df['Average']]
+
+    print(above_avg)
+    print()
+    print(below_avg)
 
     '''
     print('Média de Commits/Author do Repositório: ', average_total)
