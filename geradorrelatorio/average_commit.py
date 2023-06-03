@@ -3,6 +3,9 @@ from pygit2 import GIT_SORT_TIME
 from pygit2 import *
 from collections import defaultdict
 import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
 
  
 current_working_directory = os.getcwd() 
@@ -25,10 +28,19 @@ def calculate_commit_average():
     total_commits = sum(commits_count.values())
     qtd_user = len(commits_count)
 
-    average_commits_user = {}
-
     average_total = total_commits / qtd_user
+
+    data = {'Author': [], 'Commits': []}
+
+    for author, num_commits in commits_count.items():
+        data['Author'].append(author)
+        data['Commits'].append(num_commits)
     
+    df = pd.DataFrame(data)
+    
+    print(df)
+
+    '''
     print('Média de Commits/Author do Repositório: ', average_total)
 
     acima_media = []
@@ -52,3 +64,5 @@ def calculate_commit_average():
     print('Usuários abaixo da média\n')
     for author in abaixo_media:
         print(author)
+    '''
+    
