@@ -40,7 +40,7 @@ def check_extension():
             content += '| -------- | \n'
             for extension, files in extensions.items():
                 file_list = '| \n'.join(files)
-                content += f'| **{extension}** | {file_list} | \n'
+                content += f'| **{extension}** | \n'
                 content += f' {file_list} | \n'
             content += "\n"
 
