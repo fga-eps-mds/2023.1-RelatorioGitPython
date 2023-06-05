@@ -1,10 +1,41 @@
-from pygit2 import Repository, discover_repository, GIT_SORT_TIME
 import os
 from collections import defaultdict
+from github import Github
+from dotenv import load_dotenv
 
-current_working_directory = os.getcwd()
-repository_path = discover_repository(current_working_directory)
-repository = Repository(repository_path)
+# Carregar variáveis de ambiente do arquivo .env
+load_dotenv()
+
+# Obter o token do GitHub do arquivo .env
+github_token = os.getenv('GITHUB_TOKEN')
+
+github = Github(github_token)
+
+owner = 'fga-eps-mds'
+repository = '2023.1-RelatorioGitPython'
+
+def check_extension():
+    try:
+        repo = github.get_repo(f'{owner}/{repository}')
+        
+        extension_by_author = defaultdict(lambda: defaultdict(list))
+        
+        commits = repo.get_commits()
+
+        for commit in commits:
+            author = commit.author.login
+            file_modify = commit.files
+
+            for file in file_modify:
+                extension = file.filename.split('.')[-1]
+                filename = file.filename
+
+                extension_by_author[author][extension].append(filename)
+
+    except Exception as e:
+        print(f'Ocorreu um erro: {e}')
+
+'''
 
 def check_extension():
     # Criando o dicionário para armazenar o autor e as extensões
@@ -48,3 +79,5 @@ def check_extension():
 
 output_file = check_extension()
 print(f"A saída foi gravada no arquivo: {output_file}")
+
+'''
