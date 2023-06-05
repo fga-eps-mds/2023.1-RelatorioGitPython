@@ -1,22 +1,32 @@
-from pygit2 import Repository, discover_repository
-from pygit2 import GIT_SORT_TIME
 from pygit2 import *
 from collections import defaultdict
 import os
+import pandas as pd
+import matplotlib.pyplot as plt
+from github import Github
+from dotenv import load_dotenv
 
- 
-current_working_directory = os.getcwd() 
-repository_path = discover_repository(current_working_directory) 
-repository = Repository(repository_path) 
+# Carregar variáveis de ambiente do arquivo .env
+load_dotenv()
+
+# Obter o token do GitHub do arquivo .env
+github_token = os.getenv('GITHUB_TOKEN')
+
+github = Github(github_token)
+
+owner = 'fga-eps-mds'
+repo = '2023.1-RelatorioGitPython'
 
 def calculate_commit_average():
+
+    repository = github.get_repo(f'{owner}/{repo}')
     
     commits_count = defaultdict(int)
     
-    for commit in repository.walk(repository.head.target, GIT_SORT_TIME):
+    for commit in repository.get_commits():
         
-        # Obter o email do autor
-        name = commit.author.name
+        author = commit.author
+        name = author.login if author else "Unknown"
         
         # Incrementa o numero de commits do autor
         commits_count[name] += 1
@@ -25,30 +35,28 @@ def calculate_commit_average():
     total_commits = sum(commits_count.values())
     qtd_user = len(commits_count)
 
-    average_commits_user = {}
-
     average_total = total_commits / qtd_user
-    
-    print('Média de Commits/Author do Repositório: ', average_total)
 
-    acima_media = []
-    abaixo_media = []
+    data = {'Author': [], 'Commits': []}
 
     for author, num_commits in commits_count.items():
-        print(f'{author}: {num_commits}')
-        if num_commits > average_total:
-            acima_media.append(author)
-        elif num_commits < average_total:
-            abaixo_media.append(author)
+        data['Author'].append(author)
+        data['Commits'].append(num_commits)
     
-    print('\n')
+    df = pd.DataFrame(data)
+    df = df.sort_values(by='Commits', ascending=False)
 
-    print('Usuários acima da média\n')
-    for author in acima_media: 
-        print(author)
+    print(df)
 
-    print('\n')
+    df['Average'] = average_total # df da media total
 
-    print('Usuários abaixo da média\n')
-    for author in abaixo_media:
-        print(author)
+    # Plotar um gráfico com as média de cada user
+
+    plt.bar(df['Author'], df['Commits'])
+    plt.axhline(y=average_total, color='r', linestyle='-', label='Average')
+    plt.xlabel('Author')
+    plt.ylabel('Commits')
+    plt.title('Commits per Author')
+    plt.legend()
+    plt.xticks(rotation=45)
+    plt.show()
