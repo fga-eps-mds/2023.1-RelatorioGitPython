@@ -1,12 +1,15 @@
 from github import Github
 import base64
 import pandas as pd
+import os
 import re
+from dotenv import load_dotenv
 
+load_dotenv()
 
-acess_token="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"
+github_token = os.getenv('GITHUB_TOKEN')
 
-g=Github(acess_token)
+g=Github(github_token)
 
 repo = g.get_repo("fga-eps-mds/2023.1-RelatorioGitPython")
 
@@ -27,7 +30,7 @@ def commit_palavra(string: str):
         if string in commit_message:
             
             hashes.append(commit.sha[:6])
-            authors.append(commit.author.name)
+            authors.append(commit.commit.author.name)
             messages.append(commit.commit.message)
 
  
@@ -35,7 +38,3 @@ def commit_palavra(string: str):
     df = pd.DataFrame({"message":messages, "author": authors}, index=hashes)
 
     return df
-
-
-
-print(commit_palavra('Criando'))
