@@ -15,7 +15,17 @@ Elaborar uma ferramenta offline, que, por linha de comando, a partir do _git log
 ![GIT](https://img.shields.io/badge/Git-E34F26?style=for-the-badge&logo=git&logoColor=white)&nbsp;
 ## :hammer: Usabilidade
 
-Em construção ...
+Antes de tudo, você precisará ter o [Python](https://www.python.org/downloads/) previamente instalado.
+
+Após clonar o repositótio em sua máquina, siga os passos a seguir.
+
+### Passo 1
+
+Crie um arquivo **.env** e insira a informação a seguir:
+
+``` bash
+GITHUB_TOKEN = <seu_token>
+```
 
 ## 🤝 Desenvolvedores do Projeto
 
