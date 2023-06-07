@@ -29,4 +29,19 @@ def title_commits():
         else:
             author_name = 'Unknown'
 
+        commit_title = commit.commit.message
 
+        if author_name in commit_titles:
+            commit_titles[author_name].append(commit_title)
+        else:
+            commit_titles[author_name] = [commit_title]
+
+    for author, titles in commit_titles.items():
+        print(f'Usuário: {author}')
+        print(f'Títulos do commits:')
+        for title in titles:
+            print(f'- {title}')
+        print()
+
+
+title_commits()
