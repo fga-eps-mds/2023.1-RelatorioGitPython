@@ -34,4 +34,4 @@ jobs:
       - name: Install dependencies
         run: pip install -r src/requirements.txt
       - name: Run pylint
-        run: pylint --exit-zero
+        run: pylint src/ --exit-zero
