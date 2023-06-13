@@ -57,6 +57,3 @@ def title_commits():
 
     with open(output, 'w', encoding='utf-8') as f:
         f.write(content)
-
-
-title_commits()
