@@ -3,7 +3,7 @@ name: tests
 on:
   push:
     branches:
-      - main
+      - pipeline-1
 
 jobs:
   compile:
