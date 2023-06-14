@@ -5,6 +5,7 @@ import re
 import matplotlib
 import datetime
 import os
+import matplotlib.pyplot as plt
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -22,8 +23,6 @@ def issues_month(star_date: str, end_date: str):
 
     issues = repo.get_issues(state='closed')
     
-    issues_list =[]
-    
     count=[]
 
 
@@ -34,11 +33,15 @@ def issues_month(star_date: str, end_date: str):
                 contador+=1
         count.append(contador)
 
-    df = pd.DataFrame({"num issues": count},index=months_list)    
+    df = pd.DataFrame({"num_issues": count},index=months_list)    
 
 
 
-    print(df)
-   
-
-issues_month('2022-05-05','2023-12-06')
+    # print(df)
+    plt.bar(months_list, df['num_issues'])
+    plt.xlabel('Months')
+    plt.ylabel('Issues')
+    plt.title('Issues per month')
+    plt.yticks(range(0,max(df['num_issues']+1)))
+    plt.xticks(rotation=45)
+    plt.show()
