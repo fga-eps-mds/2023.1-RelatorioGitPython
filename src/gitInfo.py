@@ -1,19 +1,30 @@
 from pygit2 import Repository, discover_repository
 import pandas as pd
 import os
-from pygit2 import GIT_SORT_REVERSE, GIT_SORT_TIME
-from pygit2 import *
 import datetime
 import matplotlib.pyplot as plt
+from dotenv import load_dotenv
+from github import Github
+from pygit2 import GIT_SORT_REVERSE, GIT_SORT_TIME
+from pygit2 import *
+
+load_dotenv()
+#pegando o token do github
+github_token = os.getenv('GITHUB_TOKEN')
+#dando acesso a biblioteca
+g=Github(github_token)
+#escolhendo o repositorio a ser analisado
+repo = g.get_repo("fga-eps-mds/2023.1-RelatorioGitPython")
 
 current_working_directory = os.getcwd()
 repository_path = discover_repository(current_working_directory)
 repository = Repository(repository_path)
 
 
-def all_commits(arquivo):
+""" def all_commits(arquivo):
     list = []
     cont = 0
+    
     for commits in repository.walk(repository.head.target, GIT_SORT_TIME | GIT_SORT_REVERSE):
         list.append(str(commits.id) + ' - ' + commits.message)
         cont = cont+1
@@ -35,23 +46,31 @@ def email_commits(arquivo, email):
         for commit in list:
             f.write(commit + '\n')
         f.write('numero de commits totais ' + str(cont))
-    f.close()
+    f.close() """
 
-def get_commits():
+""" def get_commits():
     list = []
     for commits in repository.walk(repository.head.target, GIT_SORT_TIME | GIT_SORT_REVERSE):
         #print(str(commits.id) + ' - ' + commits.message)
         list.append(str(commits.id) + ' - ' + commits.message)
-    return list
+    return list """
 
 
 def get_commits_by_user(usuario):
-    list = []
-    for commits in repository.walk(repository.head.target, GIT_SORT_TIME | GIT_SORT_REVERSE):
-        if commits.author.name == usuario:
-            print(str(commits.id) + ' - ' + commits.message)
-            list.append(str(commits.id) + ' - ' + commits.message)
-    return list
+    hashes = []
+    messages = []
+
+    commits = repo.get_commits()
+    count =0
+    for commit in commits:
+        if commit.author.login == usuario:
+            messages.append(commit.commit.message)
+            hashes.append(commit.sha[:6])
+            count+=1
+
+    df = pd.DataFrame({"message":messages}, index=hashes) 
+    print(count)     
+    return df
 
 
 def get_commit_dates():

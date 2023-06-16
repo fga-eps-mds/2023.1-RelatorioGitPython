@@ -1,8 +1,9 @@
 from gitInfo import *
 from commit_palavra import *
+from average_commit import * 
 
-word = commit_palavra('Criando')
-print(word)
+#word = commit_palavra('Criando')
+#print(word)
 
 # all_commits("allcommits")
 
@@ -13,5 +14,8 @@ print(word)
 # check_extension()
 
 #calculate_commit_average()
+a = get_commits_by_user("GZaranza")
+print(a)
+calculate_commit_average()
 
 
