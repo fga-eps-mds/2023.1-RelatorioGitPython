@@ -105,32 +105,26 @@ def get_coAuthor():
     coauthors = []
     hashes = []
     authors = []
-    dates = []
-    columns = ['hash','author','co-author']
-# Obter o commit mais recente (HEAD)
-    commit = repository.revparse_single('HEAD')
+    
+    commits = repo.get_commits()
 
-# Percorrer todos os commits
-    for commit in repository.walk(commit.id, GIT_SORT_TOPOLOGICAL | GIT_SORT_REVERSE):
-        commit_message = commit.message
-
+    for commit in commits:
+        commit_message = commit.commit.message
+        
         if 'Co-authored-by:' in commit_message:
+            hashes.append(commit.commit.sha[:6])
+            authors.append(commit.commit.author.name)
 
-            hashes.append(str(commit.hex)[:6])
-            authors.append(commit.author.name)
-            dates.append(datetime.datetime.fromtimestamp(commit.commit_time))
-
-            lines = commit.message.splitlines()
+            lines = commit_message.splitlines()
             aux=[]
             for line in lines:
                 if line.startswith('Co-authored-by:'):
                     aux.append(line[16:].strip().split('<')[0])
             coauthors.append(aux)
-               
 
-    df_coauthor = pd.DataFrame({"authors": authors,"co-authors":coauthors,"date": dates}, index=hashes)
-    #print (df_coauthor)
-    return df_coauthor
+    df = pd.DataFrame({"authors": authors,"co-authors":coauthors}, index=hashes)
+    
+    return df
 
 def issues_month(star_date: str, end_date: str):
     

@@ -14,8 +14,7 @@ from average_commit import *
 # check_extension()
 
 #calculate_commit_average()
-a = get_commits_by_user("GZaranza")
+a = get_coAuthor()
 print(a)
-calculate_commit_average()
 
 
