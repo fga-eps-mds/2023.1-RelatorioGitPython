@@ -1,0 +1,121 @@
+09f26d4d64a4f60c515154b84be772d9937cc1b8 - Initial commit
+18b43dc135a2d75da57a8f7ccf2b03e6152ad477 - iniciando readme
+
+d85580b8378425c0761f0ddccf5219850ebccf2a - Adicionando Felipe Direito no README
+
+da827759badc3c1648746fc6e87ab4b7f1f4d690 - subindo template das issues
+
+80284989e96e4d5cbe51bd1ee0ab2963cb765a0a - Update issue templates
+d8aea48ab44f7bfaec461042c0a648d4296c0182 - Update README.md
+5bebc8cc7ac2ba35ff7fdec9b3c71f76d3b3a468 - Inicial index gitpages created
+a6764b5cead2a19e99cf8afde40afea915773267 - Created an inicial css from index
+0d5105f5011a5e2d1d6ac99037e9e7880cd06910 - Added responsiveness
+
+e7a945809237774e3857ebe53c5daa59ceb2ddfe - Resumo linguagem python
+602f5571e20e1e88c95eaa10938fbbb20d8dbb6f - organizando o github
+
+4a4ce131db6e157b8922907a9bdbe8ca46c386a3 - :wrench: README em construção
+
+cbd04877411c2c3ad33f36c6cf0b57fe7e47c3c0 - adicionar codigo de conduta
+b31d605c598bcefdb57b77a666d277b856d080e6 - transformando cod conduta em markdown
+
+79f5854156cbdc5c7730e2d66c13bbc28fbcee53 - inserindo markdown da arquitetura
+
+7474906af27b046a5dedc571696ec45a48036ec7 - adicionando cod de conduta e licença no README
+
+95e558902803b532d7885c85742ac107bc7ee30c - Adicionando versão 0.1 da Arquitetura.
+
+155f0fb7563f4cfacaa90f065f5fa3b4636b1e2d - Deletando arquivo pdf codigo de conduta
+
+a2f61382007d3716b676a07c18f2b926713db465 - Adicionando o CONTRIBUTING.md
+
+35f45d194f932fbdc6dbeca35d7e724f5fbb48df - Merge branch 'main' of https://github.com/fga-eps-mds/2023.1-RelatorioGitPython
+
+35030285cfebd61dacb9c97577d171a1402e0e10 - Adicionando levantamento de requisitos
+
+Co-authored-by: Gabriel da Silva Rosa <gabriel10919@outlook.com>
+Co-authored-by: lucaslobao-18 <lucaslobao14df@gmail.com>
+
+d65d42be1df465ef4986f1e58b0f8e40f81dce57 - corrigindo alguns erros do documento
+
+Co-authored-by: Gabriel da Silva Rosa <gabriel10919@outlook.com>
+Co-authored-by: lucaslobao-18 <83256558+lucaslobao-18@users.noreply.github.com>
+
+061a4d076e2635a1038293003064e9c2228f6382 - Criando o template de Pull Request
+381ace4740ff5a7e70131356270cce49f7160494 - Delete Pull_Request_Template
+0f54404a40378871c4c757e2d61b03827b8a14a3 - Criando Padrão de Pull Request
+41258a0f3fd439ff757f1e6d924ed426aa20ae52 - Updated description
+
+bd4dca76da116461b791b3cbf1c27ed51ae81f6a - Merge branch 'main' of https://github.com/fga-eps-mds/2023.1-RelatorioGitPython
+
+f66286fa6d057cb354121b2bcf946cc81eb9e3bd - Updated goal
+
+3a305a90f34e4494b2f6c5eaa807858565d99911 - Updated the code of conduct
+
+94bbb93d42ac7b325f7916269f64896c77a56948 - Updated the contribution
+
+5870eaa882ce8718abe22a867aa53862fbc1a355 - Added license
+
+8f52c0258df3164184c27f0d5c46a4e418290871 - Updated style
+
+84ce89bce0af7128858cab0ec0170ffe5b634e8a - Updated the title
+
+35daec01ee42da2767adb2ffdacb3af3830a5e7c - :sparkles: primeiros testes do pygit2
+
+6ebe53b6a903e7b14b8743922a192a71ad0a206d - Create SECURITY.md
+aa388c5fd4c6113c749405b3796a78e8417b3f59 - Update SECURITY.md
+917c3f3d7a7332417228e21a703d4f2ac9b32f99 - adicionando outras info no readme
+
+a5dfa72ecba77a69640d13f20854dc4379664a60 - colocando o template pull_request na pasta .github
+
+e7a83b119a9cffc3582deace07dba022dc5ad5d3 - Updated the color
+
+cd7d25aa26d630b0ebdcb97d2b78a168d21393eb - Merge branch 'main' of https://github.com/fga-eps-mds/2023.1-RelatorioGitPython
+
+1bacb72871fca53fb6dc437c5eadee1c023bbe86 - Add files via upload
+8ec8488dfb03ae4acc389e45bf31d35456abe6fa - deletei arquivo errado
+f21f7a4b435c2ca8fb527205b63c81bff80c415f - requisitos
+c81a4823671b6aa6b57f7a8849d59c15712ad836 - Edição de texto
+822a0f51525f62f9662acbb3c5b76fb15f12559b - Adicionando as tecnologias
+b704eebd33ce1d184bc31e18c84f30a902771f1c - :fire: remove main.py
+
+5efa1e8fd49a3b2d4bec4444f5aadec0dfff2ec9 - :sparkles: .gitignore
+
+a14b163bdc91d4694791a1d347a60aa12624b5ac - :sparkles: quatro novas funções para a biblioteca
+
+1c7c3da4e860331b3f41d5d8a93af9506b6c2792 - Merge remote-tracking branch 'origin'
+
+afc308080f65634e951c3665586dfc35233c006b - Update template-padrão-de-issue.md
+08b30e1db0a013e14b40773d7123a52171961a67 - add o diagrama de pacotes da R1
+
+f4c698b706c26f2bc3ea5817ddca7636dfc529e3 - Update issue templates
+
+tirando a tabela da issue template
+6f25c13b5c14995a1a96d450464a1ce0c49afad6 - Update architecture_document.md
+46578450bd5775a1ba66562e04a73c77448434ba - Update requisitos.md
+
+pequenas alterações ortográficas
+fa1cdb72260bfcf2d97a688adf799ff2269effe4 - Adicionando Introdução, Objetivo e Escopo no documento de requisitos
+
+4ce421d884a04a2b0410eedd4839c236f3bd2fd3 - Adicionando Requisitos Funcionais, Dados, Execução e Não Funcionais
+
+5ecca12879315cf4f4ef2f6b827ea3ca443e95b4 - Deletando informações desnecessárias do documento de visão e fazendo uma repaginação
+
+056cd04cb5c5d2275ca16f3cd566ea7fb5efccab - Adicionando User Story Map no documento de visão
+
+b77270b42d06ef6530ffc4814c51a1c87f51750f - Adicionando trecho de orientação a objetos no documento de arquitetura
+
+33432ea2c8384af4f97f1400255c878441721727 - Add o link (apenas view)do board do user story map
+faf84d41b834b0805faa38df6258e6b03ef4a041 - cria requirements.txt com as bibliotecas usadas
+
+71621da811ecb3b756c034b2958079b61eac9bf1 - get user e get email dos commits
+
+Co-authored-by: Rafael Kenji <rafak.taira@gmail.com>
+
+09f916dc0ceffda7ca0b65a7318cdbd403fef114 - adicionando funcao de verificar tipo de arquivo
+
+Co-authored-by: Catlen Oliveira <99406424+catlenc@users.noreply.github.com>
+
+46743f707cab4a8716b77620a0c4414775e84357 - Ajuste nome do arquivo de saida
+
+numero de commits totais 64
