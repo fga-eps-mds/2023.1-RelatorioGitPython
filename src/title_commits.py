@@ -29,30 +29,21 @@ def title_commits():
         else:
             author_name = 'Unknown'
 
-        commit_title = commit.commit.message
+        commit_title = commit.commit.message.splitlines()[0]
 
         if author_name in commit_titles:
             commit_titles[author_name].append(commit_title)
         else:
             commit_titles[author_name] = [commit_title]
-    '''
-    for author, titles in commit_titles.items():
-        print(f'Usuário: {author}')
-        print(f'Títulos do commits:')
-        for title in titles:
-            print(f'- {title}')
-        print()
-    '''
+
     content = '#File Title Commits\n\n'
-
     for author, titles in commit_titles.items():
-            content += f'## Author: {author} \n\n'
-            #content += '| Extension / Files |\n'
-            content += '| -------- | \n'
-            content += f'## Titles: {titles} \n\n'
-            content += '| -------- | \n'
-            content += "\n"
-
+        content += f'## Usuário: {author}\n'
+        content += f'### Títulos do commits:\n'
+        for title in titles:
+            content += f'- {title}\n'
+        content += '\n'
+    
     output = 'arquivo_title.md'
 
     with open(output, 'w', encoding='utf-8') as f:
