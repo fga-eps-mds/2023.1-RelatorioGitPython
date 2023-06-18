@@ -1,8 +1,10 @@
 from pygit2 import Repository, discover_repository
+from collections import defaultdict
 import pandas as pd
 import os
 import datetime
 import matplotlib.pyplot as plt
+from datetime import datetime
 from dotenv import load_dotenv
 from github import Github
 from pygit2 import GIT_SORT_REVERSE, GIT_SORT_TIME
@@ -155,3 +157,84 @@ def issues_month(star_date: str, end_date: str):
     plt.yticks(range(0,max(df['num_issues']+1)))
     plt.xticks(rotation=45)
     plt.show()
+
+def calculate_commit_average():
+
+    commits = repo.get_commits()
+    
+    commits_count = defaultdict(int)
+    
+    for commit in commits:
+        
+        author = commit.author
+        name = author.login if author else "Unknown"
+        
+        # Incrementa o numero de commits do autor
+        commits_count[name] += 1
+        
+
+    total_commits = sum(commits_count.values())
+    qtd_user = len(commits_count)
+
+    average_total = total_commits / qtd_user
+
+    data = {'Author': [], 'Commits': []}
+
+    for author, num_commits in commits_count.items():
+        data['Author'].append(author)
+        data['Commits'].append(num_commits)
+    
+    df = pd.DataFrame(data)
+    df = df.sort_values(by='Commits', ascending=False)
+
+    print(df)
+
+    df['Average'] = average_total # df da media total
+
+    # Plotar um gráfico com as média de cada user
+
+    plt.bar(df['Author'], df['Commits'])
+    plt.axhline(y=average_total, color='r', linestyle='-', label='Average')
+    plt.xlabel('Author')
+    plt.ylabel('Commits')
+    plt.title('Commits per Author')
+    plt.legend()
+    plt.xticks(rotation=45)
+    plt.show()
+
+def commit_data(date: str):
+    hashes = []
+    messages = []
+    authors = []
+
+    commits = repo.get_commits()
+
+    for commit in commits:
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+
+        if commit_date_str == date:
+            hashes.append(commit.sha[:6])
+            authors.append(commit.commit.author.name)
+            messages.append(commit.commit.message)
+
+    # columns = ['hash', 'message', 'author']
+    # df = pd.DataFrame({"message": messages, "author": authors}, index=hashes)
+    
+    content = '#File Commit by date\n\n'
+
+    for author, message in zip(authors, messages):
+        content += f'## Author: {author} \n\n'
+        
+        content += '| -------- | \n'
+        content += f'## Messages: {message} \n\n'
+     
+        content += '| -------- | \n'
+        content += "\n"
+
+    output = 'arquivo_data.md'
+
+    with open(output, 'w', encoding='utf-8') as f:
+        f.write(content)
+
+    #return df
