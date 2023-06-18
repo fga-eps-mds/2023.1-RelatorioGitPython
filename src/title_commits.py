@@ -35,13 +35,25 @@ def title_commits():
             commit_titles[author_name].append(commit_title)
         else:
             commit_titles[author_name] = [commit_title]
-
+    '''
     for author, titles in commit_titles.items():
         print(f'Usuário: {author}')
         print(f'Títulos do commits:')
         for title in titles:
             print(f'- {title}')
         print()
+    '''
+    content = '#File Title Commits\n\n'
 
+    for author, titles in commit_titles.items():
+            content += f'## Author: {author} \n\n'
+            #content += '| Extension / Files |\n'
+            content += '| -------- | \n'
+            content += f'## Titles: {titles} \n\n'
+            content += '| -------- | \n'
+            content += "\n"
 
-title_commits()
+    output = 'arquivo_title.md'
+
+    with open(output, 'w', encoding='utf-8') as f:
+        f.write(content)
