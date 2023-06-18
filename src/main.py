@@ -1,8 +1,7 @@
 from gitInfo import *
-from commit_palavra import *
+from title_commits import *
 
-word = commit_palavra('Criando')
-print(word)
+title_commits()
 
 # all_commits("allcommits")
 
@@ -13,5 +12,3 @@ print(word)
 # check_extension()
 
 #calculate_commit_average()
-
-
