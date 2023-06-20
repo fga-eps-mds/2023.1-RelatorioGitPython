@@ -12,3 +12,6 @@ import pandas as pd
 
 #coaut = relat_coauthor()
 #print(coaut)
+
+#media_commits = calculate_commit_average()
+#print(media_commits)

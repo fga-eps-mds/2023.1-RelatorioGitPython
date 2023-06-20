@@ -15,4 +15,4 @@ from average_commit import *
 
 #check_extension()
 
-#calculate_commit_average()
+calculate_commit_average()

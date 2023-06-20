@@ -46,9 +46,13 @@ def calculate_commit_average():
     df = pd.DataFrame(data)
     df = df.sort_values(by='Commits', ascending=False)
 
-    print(df)
+    #agora a saida será no relatório geral
+
 
     df['Average'] = average_total # df da media total
+
+    print(df)
+    #teste da função
 
     # Plotar um gráfico com as média de cada user
 
@@ -60,3 +64,5 @@ def calculate_commit_average():
     plt.legend()
     plt.xticks(rotation=45)
     plt.show()
+
+    return df
