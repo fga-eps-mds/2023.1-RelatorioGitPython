@@ -112,10 +112,151 @@ faf84d41b834b0805faa38df6258e6b03ef4a041 - cria requirements.txt com as bibliote
 
 Co-authored-by: Rafael Kenji <rafak.taira@gmail.com>
 
+2ff9e029590644057fdc7957d0b8ada528b0a20e - criando .py que printa os commits com coautores
+
+Co-authored-by: Vinicius de Oliveira <githubdovinicius@gmail.com>
+
 09f916dc0ceffda7ca0b65a7318cdbd403fef114 - adicionando funcao de verificar tipo de arquivo
 
 Co-authored-by: Catlen Oliveira <99406424+catlenc@users.noreply.github.com>
 
+a80003208e146093c4bb7ccaedc2a80557bee417 - função imprimindo o datafram com todos os commits com coauthors, mas por conta de uns commits antigos não roda no nosso repositorio
+
+Co-authored-by: Vinicius de Oliveira <githubdovinicius@gmail.com>
+
+ffdb32a7e9eaf8b168ab60cb0bddfc61da268826 - Criando função de média de commits
+
+Co-authored-by: Gabriel da Silva Rosa <gabriel10919@outlook.com>
+
 46743f707cab4a8716b77620a0c4414775e84357 - Ajuste nome do arquivo de saida
 
-numero de commits totais 64
+424f3d8a6fd0fdab580a809a949fbb7e888f82be - Cria funcao de media
+
+Co-authored-by: Gabriel da Silva Rosa <gabriel10919@outlook.com>
+
+3fa3ed7d90445e7b86155b687055e73d0a31d858 - transformando a lista de co-autores em uma lista em que cada elemento armazena varios co-autores
+
+Co-authored-by: Vinicius de Oliveira <githubdovinicius@gmail.com>
+
+737b364baec0f3ca210e971b96936a1e835c343c - add coluna da data do commit no dateframe
+
+Co-authored-by: Vinicius de Oliveira <githubdovinicius@gmail.com>
+
+a2ce70aa0015790f17b43441a639e46829b51c31 - Criando a def get_coAuthor na gitInfo.py e adicionando a chamada da def na main.py
+
+Co-authored-by: Gabriel Zaranza <gabrielzaranza@hotmail.com>
+
+b1f51e3a8596b8e8c688bdfa028e3ab887c13fc7 - Merge pull request #38 from fga-eps-mds/coauthor
+
+Coauthor
+d6ca0028c4a74b54b6ecdb07bbab377b4549e47d - testando a função que gera o markdown com as extensões dos arquivos commitados no repo
+
+4beb9764b671b6b80886caa61d42e0c08cfe4330 - Merge branch 'main' into media_commits
+f6495570c6c334150484d62d1ad0412aa4e14e04 - Merge pull request #37 from fga-eps-mds/media_commits
+
+Media commits
+81ac8884e3905f14e30b11ae67c61f0092206290 - criando o commit_palavra.py e fazendo os primeiros testes da funcionalidade
+
+Co-authored-by: Vinicius de Oliveira <githubdovinicius@gmail.com>
+
+04ea8f819a1ea9ede1211da177b921238862e3db - adicionando dataframe
+
+Co-authored-by: lucaslobao-18 <lucaslobao14df@gmail.com>
+
+3da81ffd1973fefdb28cb423f44e98cd08757b3a - adicionando df dos usuarios maior e menor que a media
+
+Co-authored-by: lucaslobao-18 <lucaslobao14df@gmail.com>
+
+93bb814a5da837f5da90aeb596a173ee5438ca16 - adicionando grafico da media de commits com a lib matplotlib
+
+Co-authored-by: lucaslobao-18 <lucaslobao14df@gmail.com>
+
+706e80179b6e5932fd78bd4e763fd6e2844b4c74 - integrando api do github, adicionando versoes no requirements
+
+Co-authored-by: lucaslobao-18 <lucaslobao14df@gmail.com>
+
+33de3ab5d442b88bf39641ef3e53535d4168bf9d - Merge pull request #44 from fga-eps-mds/dataframe_media
+
+Finalizando Função Média de Commits com Integração da API do GitHub
+31df3ad0420c02ef77fa5f7de5147d80657ef2c6 - integrando api do github no codigo verificar extensão do arquivo
+
+Co-authored-by: Catlen Oliveira <99406424+catlenc@users.noreply.github.com>
+
+1586e54f65ade32e9dfe1343dea8badee58c0563 - inserindo arquivo markdown com a nova reformulacao
+
+Co-authored-by: Catlen Oliveira <99406424+catlenc@users.noreply.github.com>
+
+c458faeff0645af220f9de4b1f4d03095b8c8d7d - deletando codigo que estava comentado de backup
+
+Co-authored-by: Catlen Oliveira <99406424+catlenc@users.noreply.github.com>
+
+3e28b52f650c201a9122eaf9959f1fc4d0d0ef90 - consertando um bug na hora de gerar o markdown
+
+Co-authored-by: Catlen Oliveira <99406424+catlenc@users.noreply.github.com>
+
+81bba2fb52f04fda4f6dfbdae5fc9226692e0af9 - Merge pull request #45 from fga-eps-mds/api_check_extension
+
+Integração da API do GitHub na Função de Lista Arquivos por Extensão
+09b66d5a30504960f6df96aab5bc6f8b8033e609 - Renomeia geradorrelatorio para src
+
+a0bb2025287b68fe63d6a72f5df71c9e24424487 - Atualizando a branch
+
+42bc6e79635c5c6d8dd2798795484d9bbe799ad0 - Corrigindo os nomes dos autores dos commits no momento da busca por palavra no commit_palavra.py
+
+Co-authored-by: Gabriel Zaranza <gabrielzaranza@hotmail.com>
+
+d8332b30c906f5b8fb3429e4871d2b73f4d3ed72 - Alterando a secção usuabilidade do README
+
+2a5e4ee490dc68e31a67d2b148e24359934fca61 - Merge pull request #46 from fga-eps-mds/commit_palavra
+
+Commit_palavra
+bdc947b5f995b9b20d2047bcd20f58d3f156fb8b - Relacionar os commit por data
+
+Co-authored-by: Catlen Oliveira <99406424+catlenc@users.noreply.github.com>
+
+4bdf008e5279dae192b1a621ee2b8c8279a4d324 - implementando markdown
+
+Co-authored-by: Rafael Kenji <rafak.taira@gmail.com>
+
+e8689388dfe3e0a46f163c26c3c43b4f0eb0155b - Cria primeira pipeline
+851755f34821d3a129c113b13b2f235ea93c1079 - Update pylint.yml
+11bedccfc82f61c573cca6af721b9ce5ef8666df - Update pylint.yml
+a914cdd0e00b0ac80a086fb4857c380757ba7f0c - Update pipeline pylint
+
+90102f6f31e11f3073e273471083a55ac050b4fc - Update pipeline pylint
+
+dfdaabf574f86ea2e2a53caa893c777c1684912b - criando grafico_issues.py para implementar a função que gera o grafico das issues fechadas
+
+Co-authored-by: Vinicius de Oliveira <githubdovinicius@gmail.com>
+
+531e63c674da0291f0becb28e1d13d619d226024 - Update pylint.yml
+7bd12a65d5fa6dda67f3fee64be1e13dd53a2f3f - Update pylint.yml
+ec8011b129936720613799e0303193657abcba73 - Update pylint.yml
+62d5ef9edefb9cfeb9fb8b2ac5e0bef747fa1b7f - Conserta pylint
+
+fbb02a085a29ba1973b992a214d15cbeaf50d9d7 - pipeline version atualizada
+
+9b15e03b07f6bb9893dc37018f8b8e22c86df33a - executa em todas as branches
+
+d49ca6c23ffa39313a6d198e8738caac6cc149e1 - Merge pull request #52 from fga-eps-mds/pipeline-1
+
+Pipeline 1
+fe0389675499bd8e8773497ac66aeb65ce60d359 - Correção da saída markdown
+
+Co-authored-by: Catlen Oliveira <99406424+catlenc@users.noreply.github.com>
+
+b92f4baa240dc05fda6be9422b7fd7343710c6f4 - add o plot do gráfico
+
+Co-authored-by: Vinicius de Oliveira <githubdovinicius@gmail.com>
+
+5378f121af43c4f3c7fe1689df3a53081a821b2e - add a df na gitinfo.py
+
+Co-authored-by: Vinicius de Oliveira <githubdovinicius@gmail.com>
+
+89e1a165ed979cd5163827142d9f7af913fe4743 - Merge pull request #53 from fga-eps-mds/Commit-data
+
+Commit data
+ad2ba3aa94c61caeb150679b1057c26632f5505a - Merge pull request #54 from fga-eps-mds/grafico_issues
+
+Grafico issues top
+numero de commits totais 111
