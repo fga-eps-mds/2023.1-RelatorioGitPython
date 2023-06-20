@@ -23,41 +23,6 @@ repository_path = discover_repository(current_working_directory)
 repository = Repository(repository_path)
 
 
-""" def all_commits(arquivo):
-    list = []
-    cont = 0
-    
-    for commits in repository.walk(repository.head.target, GIT_SORT_TIME | GIT_SORT_REVERSE):
-        list.append(str(commits.id) + ' - ' + commits.message)
-        cont = cont+1
-    with open ("{}.txt".format(arquivo), "w") as f:
-        for commit in list:
-            f.write(commit + '\n')
-        f.write('numero de commits totais ' + str(cont))
-    f.close()
-
-
-def email_commits(arquivo, email):
-    list = []
-    cont = 0
-    for commits in repository.walk(repository.head.target, GIT_SORT_TIME | GIT_SORT_REVERSE):
-        if commits.author.email == email:
-            list.append(str(commits.id) + ' - ' + commits.message)
-            cont = cont + 1
-    with open ("{}.txt".format(arquivo), "w") as f:
-        for commit in list:
-            f.write(commit + '\n')
-        f.write('numero de commits totais ' + str(cont))
-    f.close() """
-
-""" def get_commits():
-    list = []
-    for commits in repository.walk(repository.head.target, GIT_SORT_TIME | GIT_SORT_REVERSE):
-        #print(str(commits.id) + ' - ' + commits.message)
-        list.append(str(commits.id) + ' - ' + commits.message)
-    return list """
-
-
 def get_commits_by_user(usuario):
     hashes = []
     messages = []
@@ -299,3 +264,36 @@ def check_extension():
 
     except Exception as e:
         print(f'Ocorreu um erro: {e}')
+
+def title_commits():
+
+    commits = repo.get_commits()
+
+    commit_titles = defaultdict(lambda: defaultdict(list))
+
+    for commit in commits:
+        author = commit.author
+        if author:
+            author_name = author.login
+        else:
+            author_name = 'Unknown'
+
+        commit_title = commit.commit.message.splitlines()[0]
+
+        if author_name in commit_titles:
+            commit_titles[author_name].append(commit_title)
+        else:
+            commit_titles[author_name] = [commit_title]
+
+    content = '#File Title Commits\n\n'
+    for author, titles in commit_titles.items():
+        content += f'## Usuário: {author}\n'
+        content += f'### Títulos do commits:\n'
+        for title in titles:
+            content += f'- {title}\n'
+        content += '\n'
+    
+    output = 'arquivo_title.md'
+
+    with open(output, 'w', encoding='utf-8') as f:
+        f.write(content)
