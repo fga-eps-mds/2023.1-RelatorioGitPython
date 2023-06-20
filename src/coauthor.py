@@ -17,28 +17,29 @@ authors = []
 dates = []
 columns = ['hash','author','co-author']
 
+def relat_coauthor():
+    # Obter o commit mais recente (HEAD)
+    commit = repository.revparse_single('HEAD')
 
+    # Percorrer todos os commits
+    for commit in repository.walk(commit.id, GIT_SORT_TOPOLOGICAL | GIT_SORT_REVERSE):
+        commit_message = commit.message
 
-# Obter o commit mais recente (HEAD)
-commit = repository.revparse_single('HEAD')
+        if 'Co-authored-by:' in commit_message:
 
-# Percorrer todos os commits
-for commit in repository.walk(commit.id, GIT_SORT_TOPOLOGICAL | GIT_SORT_REVERSE):
-    commit_message = commit.message
+            hashes.append(str(commit.hex)[:6])
+            authors.append(commit.author.name)
+            dates.append(datetime.datetime.fromtimestamp(commit.commit_time))
 
-    if 'Co-authored-by:' in commit_message:
+            lines = commit.message.splitlines()
+            aux=[]
+            for line in lines:
+                if line.startswith('Co-authored-by:'):
+                    aux.append(line[16:].strip().split('<')[0])
+            coauthors.append(aux)
+                    
 
-        hashes.append(str(commit.hex)[:6])
-        authors.append(commit.author.name)
-        dates.append(datetime.datetime.fromtimestamp(commit.commit_time))
+    df = pd.DataFrame({"authors": authors,"co-authors":coauthors,"date": dates}, index=hashes)
+    #print(df)
 
-        lines = commit.message.splitlines()
-        aux=[]
-        for line in lines:
-            if line.startswith('Co-authored-by:'):
-                aux.append(line[16:].strip().split('<')[0])
-        coauthors.append(aux)
-               
-
-df= pd.DataFrame({"authors": authors,"co-authors":coauthors,"date": dates}, index=hashes)
-print(df)
+    return df

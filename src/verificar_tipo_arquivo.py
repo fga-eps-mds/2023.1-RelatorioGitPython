@@ -44,10 +44,12 @@ def check_extension():
                 content += f' {file_list} | \n'
             content += "\n"
 
-        output = 'arquivo.md'
+        #output = 'arquivo.md'
 
-        with open(output, 'w', encoding='utf-8') as f:
-            f.write(content)
+        #with open(output, 'w', encoding='utf-8') as f:
+        #   f.write(content)
+
+        return content
 
     except Exception as e:
         print(f'Ocorreu um erro: {e}')
