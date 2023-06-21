@@ -3,6 +3,7 @@ from commit_palavra import *
 from verificar_tipo_arquivo import *
 from coauthor import *
 from average_commit import *
+from gerar_reatorio2 import gerar_relatorio
 
 #word = commit_palavra('Criando')
 #print(word)
@@ -15,4 +16,6 @@ from average_commit import *
 
 #check_extension()
 
-calculate_commit_average()
+#calculate_commit_average()
+
+gerar_relatorio()
