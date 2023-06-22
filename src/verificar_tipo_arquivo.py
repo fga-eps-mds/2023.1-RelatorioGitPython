@@ -36,8 +36,8 @@ def check_extension():
 
         for author, extensions in extension_by_author.items():
             content += f'## Author: {author} \n\n'
-            content += '| Extension / Files |\n'
-            content += '| -------- | \n'
+            content += '| Extension/Files |\n'
+            content += '|-----------| \n'
             for extension, files in extensions.items():
                 file_list = '| \n'.join(files)
                 content += f'| **{extension}** | \n'

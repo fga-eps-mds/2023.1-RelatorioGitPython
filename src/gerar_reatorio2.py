@@ -18,37 +18,51 @@ def gerar_relatorio():
 
     content += '#Relatório de Commits com Coauthor\n\n'
     
+    # Parte funcionando COAUTHOR ------------------------------------------
+    
     coaut = relat_coauthor()
     #print(coaut)
     
     num_linhas = len(coaut.index)
     
-    content += '| Hash / Author / Coauthor / Data |\n'
+    content += '| Hash | Author | Coauthor | Data |\n'
+    content += '|------|--------|----------|------|\n'
 
-    for i in num_linhas:
-        content += f'|{coaut.at[i, 0]} / {coaut.at[i, 1]} / {coaut.at[i, 2]} / {coaut.at[i][3]} |\n'
-        content += '| -------- |\n'
-   
-    content += '/n/n'
-    #print(content) 
+    for indice, linha in coaut.iterrows():
+        content += f'|{indice}'
+        for coluna, valor in linha.iteritems():
+            content += f'|{valor}'
+            nada = {coluna}
+        content += '|\n'
 
-    content += '#Relatório de Commits com Coauthor\n\n'
-        
-    commit = calculate_commit_average()
-           
-    content += '| Author / Commit/ Average |\n'
-        
-    num_linhas = len(commit.index)
-        
-    for i in num_linhas:
-        content += f'|{commit.at[i, 0]} / {commit.at[i, 1]} / {commit.at[i, 2]}|\n'
-        content += '| -------- |\n'
-    
-    content += '/n'
-    
     #print(content)
+    content += '\n\n'
+    
+    # Parte funcionando COAUTHOR ------------------------------------------
+
+    # Parte Média ---------------------------------------------------------
+
+    content += '#Commits por pessoa e Média Geral\n\n'
+
+    commits = calculate_commit_average()
+    
+    num_linhas = len(commits.index)
+    
+    content += '| índice | Author | Commits | Avarege |\n'
+    content += '|--------|--------|---------|---------|\n'
+
+    for indice, linha in commits.iterrows():
+        content += f'|{indice}'
+        for coluna, valor in linha.iteritems():
+            content += f'|{valor}'
+            nada = {coluna}
+        content += '|\n'
+
+
+    content += '\n\n'
+    print(content)
 
     output = 'relatorio.md'
 
     with open(output, 'w', encoding='utf-8') as f:
-       f.write(content)
+        f.write(content)

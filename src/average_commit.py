@@ -14,10 +14,11 @@ github_token = os.getenv('GITHUB_TOKEN')
 
 github = Github(github_token)
 
-owner = 'fga-eps-mds'
-repo = '2023.1-RelatorioGitPython'
-
 def calculate_commit_average():
+
+    owner = 'fga-eps-mds'
+    repo = '2023.1-RelatorioGitPython'
+
 
     repository = github.get_repo(f'{owner}/{repo}')
     
@@ -51,7 +52,7 @@ def calculate_commit_average():
 
     df['Average'] = average_total # df da media total
 
-    print(df)
+    #print(df)
     #teste da função
 
     # Plotar um gráfico com as média de cada user
