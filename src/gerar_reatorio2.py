@@ -7,7 +7,7 @@ import pandas as pd
 
 def gerar_relatorio():
 
-    content = '#Relatório Geral\n\n'
+    content = '## Relatório Geral\n\n'
 
     #pegando arquivo texto/md de extenção de arquivo
     content += check_extension()
@@ -16,14 +16,12 @@ def gerar_relatorio():
 
     content += '\n\n'
 
-    content += '#Relatório de Commits com Coauthor\n\n'
+    content += '## Lista de Commits com Coauthor\n\n'
     
     # Parte funcionando COAUTHOR ------------------------------------------
     
     coaut = relat_coauthor()
     #print(coaut)
-    
-    num_linhas = len(coaut.index)
     
     content += '| Hash | Author | Coauthor | Data |\n'
     content += '|------|--------|----------|------|\n'
@@ -42,11 +40,9 @@ def gerar_relatorio():
 
     # Parte Média ---------------------------------------------------------
 
-    content += '#Commits por pessoa e Média Geral\n\n'
+    content += '## Commits por pessoa e Média Geral\n\n'
 
     commits = calculate_commit_average()
-    
-    num_linhas = len(commits.index)
     
     content += '| índice | Author | Commits | Avarege |\n'
     content += '|--------|--------|---------|---------|\n'
@@ -57,7 +53,6 @@ def gerar_relatorio():
             content += f'|{valor}'
             nada = {coluna}
         content += '|\n'
-
 
     content += '\n\n'
     print(content)

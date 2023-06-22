@@ -32,7 +32,7 @@ def check_extension():
 
                 extension_by_author[author][extension].append(filename)
         
-        content = '#File Extensions Report by Author\n\n'
+        content = '## Arquivos e extensões por Autor\n\n'
 
         for author, extensions in extension_by_author.items():
             content += f'## Author: {author} \n\n'
