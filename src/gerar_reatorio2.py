@@ -7,29 +7,48 @@ import pandas as pd
 
 def gerar_relatorio():
 
-    #content = '#Relatório Geral\n\n'
+    content = '#Relatório Geral\n\n'
 
-    #pegando arquivo texto/md de extenção de arquivo --------
-    #content += check_extension()
+    #pegando arquivo texto/md de extenção de arquivo
+    content += check_extension()
     #content += texto
     #print(content)
 
-    #content += '\n\n'
-    #content += '#Relatório de Commits com Coauthor\n\n'
+    content += '\n\n'
+
+    content += '#Relatório de Commits com Coauthor\n\n'
     
     coaut = relat_coauthor()
-    print(coaut)
-
+    #print(coaut)
     
-    #content += '| Hash / Author / Coauthor / Data |\n'
-
     num_linhas = len(coaut.index)
-    print(num_linhas)
-'''
-    for  in coaut:
-        content += f'| {author} / {coaut} / {date} / {hash} |\n'
-        content += '| -------- | \n'
+    
+    content += '| Hash / Author / Coauthor / Data |\n'
 
-    print(content)'''  
-    #media_commits = calculate_commit_average()
-    #print(media_commits)
+    for i in num_linhas:
+        content += f'|{coaut.at[i, 0]} / {coaut.at[i, 1]} / {coaut.at[i, 2]} / {coaut.at[i][3]} |\n'
+        content += '| -------- |\n'
+   
+    content += '/n/n'
+    #print(content) 
+
+    content += '#Relatório de Commits com Coauthor\n\n'
+        
+    commit = calculate_commit_average()
+           
+    content += '| Author / Commit/ Average |\n'
+        
+    num_linhas = len(commit.index)
+        
+    for i in num_linhas:
+        content += f'|{commit.at[i, 0]} / {commit.at[i, 1]} / {commit.at[i, 2]}|\n'
+        content += '| -------- |\n'
+    
+    content += '/n'
+    
+    #print(content)
+
+    output = 'relatorio.md'
+
+    with open(output, 'w', encoding='utf-8') as f:
+       f.write(content)
