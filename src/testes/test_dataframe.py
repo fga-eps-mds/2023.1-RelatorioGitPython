@@ -1,3 +1,4 @@
+from github import Github
 import pytest
 from collections import defaultdict
 from datetime import datetime
@@ -42,8 +43,9 @@ def commit_data(repo, date: str):
     with open(output, 'w', encoding='utf-8') as f:
         f.write(content)
 
+    return hashes
 
-def calculate_commit_average(repo):
+def calculate_commit_average(repo, graph_filename=None):
     commits = repo.get_commits()
     commits_count = defaultdict(int)
 
@@ -74,5 +76,45 @@ def calculate_commit_average(repo):
     plt.title('Commits per Author')
     plt.legend()
     plt.xticks(rotation=45)
-    plt.savefig('commit_average_graph.png')
+
+    if graph_filename is None:
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        graph_filename = f'commit_average_graph_{timestamp}.png'
+
+    plt.savefig(graph_filename)
     plt.close()
+
+    return average_total, graph_filename
+
+def test_commit_data():
+    
+    github_token = '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'
+    repo_name = 'fga-eps-mds/2023.1-RelatorioGitPython'
+
+    # Inicialize o objeto Github com o token de acesso pessoal
+    g = Github(github_token)
+
+    # Obtenha o objeto repo usando o nome do repositório
+    repo = g.get_repo(repo_name)
+
+    # Chame a função de teste com o objeto repo
+    result = commit_data(repo, '06-15-2023')
+
+    expected_hashes = ['ad2ba3']
+    assert result == expected_hashes
+    
+def test_calculate_commit_average():
+    github_token = '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'
+    repo_name = 'fga-eps-mds/2023.1-RelatorioGitPython'
+
+    # Inicialize o objeto Github com o token de acesso pessoal
+    g = Github(github_token)
+
+    # Obtenha o objeto repo usando o nome do repositório
+    repo = g.get_repo(repo_name)
+
+    # Chame a função de teste com o objeto repo
+    result, _ = calculate_commit_average(repo)  # Ignore o nome do arquivo de gráfico retornado
+
+    expected_average = 16.375  # Defina o valor esperado para a média de commits
+    assert result == expected_average
