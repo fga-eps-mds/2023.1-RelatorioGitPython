@@ -4,6 +4,15 @@ from collections import defaultdict
 from datetime import datetime
 import pandas as pd
 import matplotlib.pyplot as plt
+from dotenv import load_dotenv
+import os
+
+dotenv_path = os.path.join(os.path.dirname(__file__), 'testes', '.env')
+load_dotenv(dotenv_path)
+
+github_token = os.getenv('GITHUB_TOKEN')
+
+g = Github(github_token)
 
 def commit_data(repo, date: str):
     hashes = []
@@ -88,7 +97,9 @@ def calculate_commit_average(repo, graph_filename=None):
 
 def test_commit_data():
     
-    github_token = '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'
+    github_token = os.getenv('GITHUB_TOKEN')
+    g = Github(github_token)
+
     repo_name = 'fga-eps-mds/2023.1-RelatorioGitPython'
 
     # Inicialize o objeto Github com o token de acesso pessoal
@@ -102,9 +113,12 @@ def test_commit_data():
 
     expected_hashes = ['ad2ba3']
     assert result == expected_hashes
-    
+
 def test_calculate_commit_average():
-    github_token = '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'
+    
+    github_token = os.getenv('GITHUB_TOKEN')
+    g = Github(github_token)
+    
     repo_name = 'fga-eps-mds/2023.1-RelatorioGitPython'
 
     # Inicialize o objeto Github com o token de acesso pessoal
