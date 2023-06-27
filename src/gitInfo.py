@@ -320,7 +320,7 @@ def gerar_relatorio():
 
     for indice, linha in coaut.iterrows():
         content += f'|{indice}'
-        for coluna, valor in linha.iteritems():
+        for coluna, valor in linha.items():
             content += f'|{valor}'
             nada = {coluna}
         content += '|\n'
@@ -339,13 +339,13 @@ def gerar_relatorio():
 
     for indice, linha in commits.iterrows():
         content += f'|{indice}'
-        for coluna, valor in linha.iteritems():
+        for coluna, valor in linha.items():
             content += f'|{valor}'
             nada = {coluna}
         content += '|\n'
 
     content += '\n\n'
-    print(content)
+    # print(content)
 
     output = 'relatorio_geral.md'
 
