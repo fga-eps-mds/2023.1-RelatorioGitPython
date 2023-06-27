@@ -1,4 +1,5 @@
 from gitInfo import *
 
-title_commits()
+gerar_relatorio()
+#title_commits()
 

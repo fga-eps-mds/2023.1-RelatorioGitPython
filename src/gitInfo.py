@@ -167,6 +167,8 @@ def calculate_commit_average():
     plt.xticks(rotation=45)
     plt.show()
 
+    return df
+
 def commit_data(date: str):
     hashes = []
     messages = []
@@ -245,7 +247,7 @@ def check_extension():
 
                 extension_by_author[author][extension].append(filename)
         
-        content = '#File Extensions Report by Author\n\n'
+        content = '## File Extensions Report by Author\n\n'
 
         for author, extensions in extension_by_author.items():
             content += f'## Author: {author} \n\n'
@@ -264,6 +266,8 @@ def check_extension():
 
     except Exception as e:
         print(f'Ocorreu um erro: {e}')
+
+    return content
 
 def title_commits():
 
@@ -294,6 +298,56 @@ def title_commits():
         content += '\n'
     
     output = 'arquivo_title.md'
+
+    with open(output, 'w', encoding='utf-8') as f:
+        f.write(content)
+
+
+def gerar_relatorio():
+    content = '## Relatório Geral\n\n'
+
+    content += check_extension()
+    content += '\n\n'
+
+    content += '## Lista de Commits com Coauthor\n\n'
+    
+    # Parte funcionando COAUTHOR ------------------------------------------
+    
+    coaut = get_coAuthor()
+    
+    content += '| Hash | Author | Coauthor | Data |\n'
+    content += '|------|--------|----------|------|\n'
+
+    for indice, linha in coaut.iterrows():
+        content += f'|{indice}'
+        for coluna, valor in linha.iteritems():
+            content += f'|{valor}'
+            nada = {coluna}
+        content += '|\n'
+
+    content += '\n\n'
+    
+    # Parte funcionando COAUTHOR ------------------------------------------
+
+    # Parte Média ---------------------------------------------------------
+
+    content += '## Commits por pessoa e Média Geral\n\n'
+    commits = calculate_commit_average()
+    
+    content += '| índice | Author | Commits | Avarege |\n'
+    content += '|--------|--------|---------|---------|\n'
+
+    for indice, linha in commits.iterrows():
+        content += f'|{indice}'
+        for coluna, valor in linha.iteritems():
+            content += f'|{valor}'
+            nada = {coluna}
+        content += '|\n'
+
+    content += '\n\n'
+    print(content)
+
+    output = 'relatorio_geral.md'
 
     with open(output, 'w', encoding='utf-8') as f:
         f.write(content)
