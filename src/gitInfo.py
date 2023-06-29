@@ -354,6 +354,16 @@ def gerar_relatorio():
 
 def issues_open():
     issues = repo.get_issues(state='open')
-    for issue in issues:
-        print(issue)
     
+    issues_assinadas = []
+    issues_nao_assinadas = []
+
+    for issue in issues:
+        if issue.assignee:
+            issues_assinadas.append(issue)
+        else:
+            issues_nao_assinadas.append(issue)
+    
+    print("Issues Assinadas:/n", issues_assinadas)
+    print("\n")
+    print("Issues Não Assinadas:/n", issues_nao_assinadas)
