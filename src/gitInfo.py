@@ -40,18 +40,24 @@ def get_commits_by_user(usuario):
     return df
 
 
-def get_commits_users():
-    commit_users = set()
-    for commit in repository.walk(repository.head.target, GIT_SORT_TIME):
-        author = commit.author
-        commit_users.add(f'{author.name}')
-        for i in commit_users:
-            if(author.name != i):
-                commit_users.add(f'{author.name}')
-    return commit_users
+def get_commits_users(start_date: str, end_date: str):
 
+    commit_users = []
+    commits = repo.get_commits()
+    for commit in commits:
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            author = commit.author.login
+            if author in commit_users:
+             continue
 
-def get_coAuthor(star_date: str, end_date: str):
+            commit_users.append(author)
+    
+    df = pd.DataFrame({"Users": commit_users})
+    return df
+
+def get_coAuthor(start_date: str, end_date: str):
     coauthors = []
     hashes = []
     authors = []
@@ -61,7 +67,7 @@ def get_coAuthor(star_date: str, end_date: str):
     for commit in commits:
         commit_date = commit.commit.author.date
         commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-        if commit_date_str >= star_date and commit_date_str <= end_date:
+        if commit_date_str >= start_date and commit_date_str <= end_date:
             commit_message = commit.commit.message
         
             if 'Co-authored-by:' in commit_message:
@@ -84,9 +90,9 @@ def get_coAuthor(star_date: str, end_date: str):
         return msg
     
 
-def issues_month(star_date: str, end_date: str):
+def issues_month(start_date: str, end_date: str):
 
-    months_list = pd.period_range(start =star_date,end=end_date, freq='M')
+    months_list = pd.period_range(start =start_date,end=end_date, freq='M')
     months_list = [month.strftime("%b-%Y") for month in months_list]
 
     issues = repo.get_issues(state='closed')
@@ -114,7 +120,7 @@ def issues_month(star_date: str, end_date: str):
     plt.xticks(rotation=45)
     plt.show()
 
-def calculate_commit_average(star_date: str, end_date: str):
+def calculate_commit_average(start_date: str, end_date: str):
 
     commits = repo.get_commits()
     
@@ -123,7 +129,7 @@ def calculate_commit_average(star_date: str, end_date: str):
     for commit in commits:
         commit_date = commit.commit.author.date
         commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-        if commit_date_str >= star_date and commit_date_str <= end_date:
+        if commit_date_str >= start_date and commit_date_str <= end_date:
             author = commit.author
             name = author.login if author else "Unknown"
         
@@ -224,7 +230,7 @@ def commit_palavra(string: str):
 
     return df
 
-def check_extension(star_date: str, end_date: str):
+def check_extension(start_date: str, end_date: str):
     try:
         extension_by_author = defaultdict(lambda: defaultdict(list))
         
@@ -233,7 +239,7 @@ def check_extension(star_date: str, end_date: str):
         for commit in commits:
             commit_date = commit.commit.author.date
             commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-            if commit_date_str >= star_date and commit_date_str <= end_date:
+            if commit_date_str >= start_date and commit_date_str <= end_date:
                 author = commit.author.login
                 file_modify = commit.files
 
