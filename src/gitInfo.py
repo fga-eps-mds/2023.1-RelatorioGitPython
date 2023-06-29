@@ -229,6 +229,8 @@ def commit_palavra(string: str):
     columns = ['hash','message','author']
     df = pd.DataFrame({"message":messages, "author": authors}, index=hashes)
 
+    print(df)
+
     return df
 
 def check_extension():
@@ -354,16 +356,26 @@ def gerar_relatorio():
 
 def issues_open():
     issues = repo.get_issues(state='open')
-    
-    issues_assinadas = []
-    issues_nao_assinadas = []
+
+    content = '## Issues Abertas Assinadas\n'
+
+    content += '| Titulo | Numero |\n'
+    content += '|--------|--------|\n'
 
     for issue in issues:
         if issue.assignee:
-            issues_assinadas.append(issue)
-        else:
-            issues_nao_assinadas.append(issue)
+            content += f'|{issue.title}|{issue.number}|\n'
     
-    print("Issues Assinadas:/n", issues_assinadas)
-    print("\n")
-    print("Issues Não Assinadas:/n", issues_nao_assinadas)
+    content += '\n\n'
+    content += '## Issues Abertas Não Assinadas\n'
+
+    content += '| Titulo | Numero |\n'
+    content += '|--------|--------|\n'
+
+    for issue in issues:
+        if not issue.assignee:
+            content += f'|{issue.title}|{issue.number}|\n'
+    
+    #Para testar a saída, descomente o print
+    print(content)
+    return content
