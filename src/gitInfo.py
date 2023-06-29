@@ -35,8 +35,8 @@ def get_commits_by_user(usuario):
             hashes.append(commit.sha[:6])
             count+=1
 
-    df = pd.DataFrame({"message":messages}, index=hashes) 
-    print(count)     
+    df = pd.DataFrame({"message":messages}, index=hashes)
+    print(count)
     return df
 
 
@@ -72,12 +72,12 @@ def get_coAuthor():
     coauthors = []
     hashes = []
     authors = []
-    
+
     commits = repo.get_commits()
 
     for commit in commits:
         commit_message = commit.commit.message
-        
+
         if 'Co-authored-by:' in commit_message:
             hashes.append(commit.commit.sha[:6])
             authors.append(commit.commit.author.name)
@@ -90,16 +90,16 @@ def get_coAuthor():
             coauthors.append(aux)
 
     df = pd.DataFrame({"authors": authors,"co-authors":coauthors}, index=hashes)
-    
+
     return df
 
 def issues_month(star_date: str, end_date: str):
-    
+
     months_list = pd.period_range(start =star_date,end=end_date, freq='M')
     months_list = [month.strftime("%b-%Y") for month in months_list]
 
     issues = repo.get_issues(state='closed')
-    
+
     count=[]
 
 
@@ -110,7 +110,7 @@ def issues_month(star_date: str, end_date: str):
                 contador+=1
         count.append(contador)
 
-    df = pd.DataFrame({"num_issues": count},index=months_list)    
+    df = pd.DataFrame({"num_issues": count},index=months_list)
 
 
 
@@ -126,17 +126,17 @@ def issues_month(star_date: str, end_date: str):
 def calculate_commit_average():
 
     commits = repo.get_commits()
-    
+
     commits_count = defaultdict(int)
-    
+
     for commit in commits:
-        
+
         author = commit.author
         name = author.login if author else "Unknown"
-        
+
         # Incrementa o numero de commits do autor
         commits_count[name] += 1
-        
+
 
     total_commits = sum(commits_count.values())
     qtd_user = len(commits_count)
@@ -148,7 +148,7 @@ def calculate_commit_average():
     for author, num_commits in commits_count.items():
         data['Author'].append(author)
         data['Commits'].append(num_commits)
-    
+
     df = pd.DataFrame(data)
     df = df.sort_values(by='Commits', ascending=False)
 
@@ -165,6 +165,7 @@ def calculate_commit_average():
     plt.title('Commits per Author')
     plt.legend()
     plt.xticks(rotation=45)
+    plt.savefig('commit_average_graph.png')
     plt.show()
 
     return df
@@ -187,15 +188,15 @@ def commit_data(date: str):
 
     # columns = ['hash', 'message', 'author']
     # df = pd.DataFrame({"message": messages, "author": authors}, index=hashes)
-    
+
     content = '#File Commit by date\n\n'
 
     for author, message in zip(authors, messages):
         content += f'## Author: {author} \n\n'
-        
+
         content += '| -------- | \n'
         content += f'## Messages: {message} \n\n'
-     
+
         content += '| -------- | \n'
         content += "\n"
 
@@ -211,7 +212,7 @@ def commit_palavra(string: str):
     hashes = []
     messages = []
     authors = []
-  
+
     commits = repo.get_commits()
 
     for commit in commits:
@@ -220,12 +221,12 @@ def commit_palavra(string: str):
         #re.search(palavra, commit_message,re.IGNORECASE)!=None:
 
         if string in commit_message:
-            
+
             hashes.append(commit.sha[:6])
             authors.append(commit.commit.author.name)
             messages.append(commit.commit.message)
 
- 
+
     columns = ['hash','message','author']
     df = pd.DataFrame({"message":messages, "author": authors}, index=hashes)
 
@@ -234,7 +235,7 @@ def commit_palavra(string: str):
 def check_extension():
     try:
         extension_by_author = defaultdict(lambda: defaultdict(list))
-        
+
         commits = repo.get_commits()
 
         for commit in commits:
@@ -246,7 +247,7 @@ def check_extension():
                 filename = file.filename
 
                 extension_by_author[author][extension].append(filename)
-        
+
         content = '## File Extensions Report by Author\n\n'
 
         for author, extensions in extension_by_author.items():
@@ -296,7 +297,7 @@ def title_commits():
         for title in titles:
             content += f'- {title}\n'
         content += '\n'
-    
+
     output = 'arquivo_title.md'
 
     with open(output, 'w', encoding='utf-8') as f:
@@ -310,11 +311,11 @@ def gerar_relatorio():
     content += '\n\n'
 
     content += '## Lista de Commits com Coauthor\n\n'
-    
+
     # Parte funcionando COAUTHOR ------------------------------------------
-    
+
     coaut = get_coAuthor()
-    
+
     content += '| Hash | Author | Coauthor | Data |\n'
     content += '|------|--------|----------|------|\n'
 
@@ -326,14 +327,15 @@ def gerar_relatorio():
         content += '|\n'
 
     content += '\n\n'
-    
+
     # Parte funcionando COAUTHOR ------------------------------------------
 
     # Parte Média ---------------------------------------------------------
 
     content += '## Commits por pessoa e Média Geral\n\n'
     commits = calculate_commit_average()
-    
+    graph_path = 'commit_average_graph.png'
+
     content += '| índice | Author | Commits | Avarege |\n'
     content += '|--------|--------|---------|---------|\n'
 
@@ -347,6 +349,7 @@ def gerar_relatorio():
     content += '\n\n'
     # print(content)
 
+    content += f'![Commit Average Graph]({graph_path})\n\n'
     output = 'relatorio_geral.md'
 
     with open(output, 'w', encoding='utf-8') as f:
