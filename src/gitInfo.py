@@ -113,8 +113,8 @@ def issues_month(star_date: str, end_date: str):
     df = pd.DataFrame({"num_issues": count},index=months_list)    
 
 
+    #print(df)
 
-    # print(df)
     plt.bar(months_list, df['num_issues'])
     plt.xlabel('Months')
     plt.ylabel('Issues')
@@ -351,3 +351,9 @@ def gerar_relatorio():
 
     with open(output, 'w', encoding='utf-8') as f:
         f.write(content)
+
+def issues_open():
+    issues = repo.get_issues(state='open')
+    for issue in issues:
+        print(issue)
+    
