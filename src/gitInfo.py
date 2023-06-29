@@ -217,22 +217,25 @@ def commit_palavra(string: str):
 
     return df
 
-def check_extension():
+def check_extension(star_date: str, end_date: str):
     try:
         extension_by_author = defaultdict(lambda: defaultdict(list))
-
+        
         commits = repo.get_commits()
 
         for commit in commits:
-            author = commit.author.login
-            file_modify = commit.files
+            commit_date = commit.commit.author.date
+            commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+            if commit_date_str >= star_date and commit_date_str <= end_date:
+                author = commit.author.login
+                file_modify = commit.files
 
-            for file in file_modify:
-                extension = file.filename.split('.')[-1]
-                filename = file.filename
+                for file in file_modify:
+                    extension = file.filename.split('.')[-1]
+                    filename = file.filename
 
-                extension_by_author[author][extension].append(filename)
-
+                    extension_by_author[author][extension].append(filename)
+        
         content = '## File Extensions Report by Author\n\n'
 
         for author, extensions in extension_by_author.items():
