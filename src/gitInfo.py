@@ -113,8 +113,8 @@ def issues_month(star_date: str, end_date: str):
     df = pd.DataFrame({"num_issues": count},index=months_list)
 
 
+    #print(df)
 
-    # print(df)
     plt.bar(months_list, df['num_issues'])
     plt.xlabel('Months')
     plt.ylabel('Issues')
@@ -229,6 +229,8 @@ def commit_palavra(string: str):
 
     columns = ['hash','message','author']
     df = pd.DataFrame({"message":messages, "author": authors}, index=hashes)
+
+    print(df)
 
     return df
 
@@ -353,4 +355,32 @@ def gerar_relatorio():
     output = 'relatorio_geral.md'
 
     with open(output, 'w', encoding='utf-8') as f:
+        
         f.write(content)
+
+
+def issues_open():
+    issues = repo.get_issues(state='open')
+
+    content = '## Issues Abertas Assinadas\n'
+
+    content += '| Titulo | Numero |\n'
+    content += '|--------|--------|\n'
+
+    for issue in issues:
+        if issue.assignee:
+            content += f'|{issue.title}|{issue.number}|\n'
+    
+    content += '\n\n'
+    content += '## Issues Abertas Não Assinadas\n'
+
+    content += '| Titulo | Numero |\n'
+    content += '|--------|--------|\n'
+
+    for issue in issues:
+        if not issue.assignee:
+            content += f'|{issue.title}|{issue.number}|\n'
+    
+    #Para testar a saída, descomente o print
+    print(content)
+    return content
