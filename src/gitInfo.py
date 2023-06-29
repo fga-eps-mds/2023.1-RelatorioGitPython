@@ -40,13 +40,6 @@ def get_commits_by_user(usuario):
     return df
 
 
-def get_commit_dates():
-    datas = []
-    for commit in repository.walk(repository.head.target, GIT_SORT_TIME):
-        data = datetime.datetime.fromtimestamp(commit.commit_time)
-        datas.append(data.strftime("%Y -%m -%d %H:%M:%S"))
-    return datas
-
 def get_commits_users():
     commit_users = set()
     for commit in repository.walk(repository.head.target, GIT_SORT_TIME):
@@ -57,16 +50,6 @@ def get_commits_users():
                 commit_users.add(f'{author.name}')
     return commit_users
 
-
-def get_commits_email():
-    commit_users = set()
-    for commit in repository.walk(repository.head.target, GIT_SORT_TIME):
-        author = commit.author
-        commit_users.add(f'{author.email}')
-        for i in commit_users:
-            if(author.email != i):
-                commit_users.add(f'{author.email}')
-    return commit_users
 
 def get_coAuthor():
     coauthors = []
@@ -92,6 +75,7 @@ def get_coAuthor():
     df = pd.DataFrame({"authors": authors,"co-authors":coauthors}, index=hashes)
 
     return df
+
 
 def issues_month(star_date: str, end_date: str):
 
@@ -123,20 +107,22 @@ def issues_month(star_date: str, end_date: str):
     plt.xticks(rotation=45)
     plt.show()
 
-def calculate_commit_average():
+def calculate_commit_average(star_date: str, end_date: str):
 
     commits = repo.get_commits()
-
+    
     commits_count = defaultdict(int)
-
+    
     for commit in commits:
-
-        author = commit.author
-        name = author.login if author else "Unknown"
-
-        # Incrementa o numero de commits do autor
-        commits_count[name] += 1
-
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= star_date and commit_date_str <= end_date:
+            author = commit.author
+            name = author.login if author else "Unknown"
+        
+            # Incrementa o numero de commits do autor
+            commits_count[name] += 1
+        
 
     total_commits = sum(commits_count.values())
     qtd_user = len(commits_count)
@@ -148,7 +134,7 @@ def calculate_commit_average():
     for author, num_commits in commits_count.items():
         data['Author'].append(author)
         data['Commits'].append(num_commits)
-
+    
     df = pd.DataFrame(data)
     df = df.sort_values(by='Commits', ascending=False)
 
@@ -165,7 +151,6 @@ def calculate_commit_average():
     plt.title('Commits per Author')
     plt.legend()
     plt.xticks(rotation=45)
-    plt.savefig('commit_average_graph.png')
     plt.show()
 
     return df
