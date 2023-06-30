@@ -23,22 +23,26 @@ repository_path = discover_repository(current_working_directory)
 repository = Repository(repository_path)
 
 
-def get_commits_by_user(usuario):
+def get_commits_by_user(usuario: str, start_date: str, end_date: str):
     hashes = []
     messages = []
 
     commits = repo.get_commits()
-    count =0
     for commit in commits:
-        if commit.author.login == usuario:
-            messages.append(commit.commit.message)
-            hashes.append(commit.sha[:6])
-            count+=1
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            if commit.author.login.lower() == usuario.lower():
+                messages.append(commit.commit.message)
+                hashes.append(commit.sha[:6])
 
-    df = pd.DataFrame({"message":messages}, index=hashes)
-    print(count)
-    return df
+    df = pd.DataFrame({"Message":messages}, index=hashes)     
 
+    if df.empty is False:
+        return df
+    else:
+        msg = "No commits with this user"
+        return msg
 
 def get_commits_users(start_date: str, end_date: str):
 
@@ -205,7 +209,7 @@ def commit_data(date: str):
 
     #return df
 
-def commit_palavra(string: str):
+def commit_palavra(string: str, start_date: str, end_date: str):
 
     hashes = []
     messages = []
@@ -214,21 +218,25 @@ def commit_palavra(string: str):
     commits = repo.get_commits()
 
     for commit in commits:
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
 
-        commit_message = commit.commit.message
-        #re.search(palavra, commit_message,re.IGNORECASE)!=None:
+            commit_message = commit.commit.message
 
-        if string in commit_message:
+            if string.lower() in commit_message.lower():
 
-            hashes.append(commit.sha[:6])
-            authors.append(commit.commit.author.name)
-            messages.append(commit.commit.message)
+                hashes.append(commit.sha[:6])
+                authors.append(commit.commit.author.name)
+                messages.append(commit.commit.message)
 
-
-    columns = ['hash','message','author']
     df = pd.DataFrame({"message":messages, "author": authors}, index=hashes)
 
-    return df
+    if df.empty is False:
+        return df
+    else:
+        msg = "No commits with this word"
+        return msg
 
 def check_extension(start_date: str, end_date: str):
     try:
@@ -271,25 +279,28 @@ def check_extension(start_date: str, end_date: str):
 
     return content
 
-def title_commits():
+def title_commits(start_date: str, end_date: str):
 
     commits = repo.get_commits()
 
     commit_titles = defaultdict(lambda: defaultdict(list))
 
     for commit in commits:
-        author = commit.author
-        if author:
-            author_name = author.login
-        else:
-            author_name = 'Unknown'
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            author = commit.author
+            if author:
+                author_name = author.login
+            else:
+                author_name = 'Unknown'
 
-        commit_title = commit.commit.message.splitlines()[0]
+            commit_title = commit.commit.message.splitlines()[0]
 
-        if author_name in commit_titles:
-            commit_titles[author_name].append(commit_title)
-        else:
-            commit_titles[author_name] = [commit_title]
+            if author_name in commit_titles:
+                commit_titles[author_name].append(commit_title)
+            else:
+                commit_titles[author_name] = [commit_title]
 
     content = '#File Title Commits\n\n'
     for author, titles in commit_titles.items():
@@ -298,7 +309,7 @@ def title_commits():
         for title in titles:
             content += f'- {title}\n'
         content += '\n'
-
+    
     output = 'arquivo_title.md'
 
     with open(output, 'w', encoding='utf-8') as f:
