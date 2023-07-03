@@ -346,3 +346,47 @@ def test_title_commits():
 
     # Remover o arquivo de saída após o teste
     os.remove(output_file)
+
+def issues_month(star_date: str, end_date: str):
+
+    months_list = pd.period_range(start =star_date,end=end_date, freq='M')
+    months_list = [month.strftime("%b-%Y") for month in months_list]
+
+    issues = repo.get_issues(state='closed')
+
+    count=[]
+
+
+    for month in months_list:
+        contador=0
+        for issue in issues:
+            if issue.pull_request is None and issue.closed_at.strftime("%b-%Y") == month:
+                contador+=1
+        count.append(contador)
+
+    df = pd.DataFrame({"num_issues": count},index=months_list)
+
+def test_issues_month():
+    github_token = os.getenv('GITHUB_TOKEN')
+    g = Github(github_token)
+
+    repo_name = 'fga-eps-mds/2023.1-RelatorioGitPython'
+
+    # Inicialize o objeto Github com o token de acesso pessoal
+    g = Github(github_token)
+
+    # Obtenha o repositório
+    repo = g.get_repo(repo_name)
+
+    # Chame a função para obter o número de issues por mês
+    result = issues_month('2023-01-01', '2023-06-30')
+
+    # Verifique se o DataFrame resultante possui as colunas e índices esperados
+    expected_columns = ['num_issues']
+    expected_index = ['Jan-2023', 'Feb-2023', 'Mar-2023', 'Apr-2023', 'May-2023', 'Jun-2023']
+    assert result.columns.tolist() == expected_columns
+    assert result.index.tolist() == expected_index
+
+    # Verifique se os valores numéricos estão corretos
+    expected_values = [0, 0, 0, 18, 14, 12]
+    assert result['num_issues'].tolist() == expected_values
