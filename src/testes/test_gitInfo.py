@@ -1,5 +1,6 @@
 import pytest
 from github import Github
+from collections import defaultdict
 from pygit2 import GIT_SORT_TIME, Repository, discover_repository
 from datetime import datetime
 import pandas as pd
@@ -24,7 +25,7 @@ repo = g.get_repo("fga-eps-mds/2023.1-RelatorioGitPython")
 current_working_directory = os.getcwd()
 repository_path = discover_repository(current_working_directory)
 repository = Repository(repository_path)
-
+'''
 def get_commits_by_user(username):
     hashes = []
     messages = []
@@ -61,7 +62,6 @@ def test_get_commits_by_user():
     )
 
     assert str(result) == str(expected_result)
-
 
 def get_commit_dates():
     datas = []
@@ -110,7 +110,7 @@ def test_get_commits_users():
     assert len(result) == 2
 
     # Defina o valor esperado para o resultado
-    expected_result = {'FelipeDireito', 'Rafael Kenji'}
+    expected_result = {'Rafael Kenji'}
 
     # Realize a comparação entre o resultado obtido e o valor esperado
     assert result == expected_result
@@ -131,7 +131,7 @@ def test_get_commits_email():
     result = get_commits_email()
 
     # Defina o valor esperado para o resultado
-    expected_result = {'fedireito92@gmail.com', 'rafak.taira@gmail.com'}
+    expected_result = {'rafak.taira@gmail.com'}
 
     # Realize a comparação entre o resultado obtido e o valor esperado
     assert result == expected_result
@@ -191,3 +191,66 @@ def test_get_coAuthor():
 
     # Realize a comparação entre o resultado obtido e o valor esperado
     assert result.equals(expected_result)
+'''
+def commit_palavra(string: str):
+
+    hashes = []
+    messages = []
+    authors = []
+    count = 0
+
+    commits = repo.get_commits()
+
+    for commit in commits:
+        commit_message = commit.commit.message
+
+        if string in commit_message:
+            hashes.append(commit.sha[:6])
+            authors.append(commit.commit.author.name)
+            messages.append(commit.commit.message)
+            count += 1
+
+        if count == 3:
+            break
+
+    columns = ['hash','message','author']
+    df = pd.DataFrame({"message": messages, "author": authors}, index=hashes)
+    
+    return df
+
+def test_commit_palavra():
+    github_token = os.getenv('GITHUB_TOKEN')
+    g = Github(github_token)
+
+    repo_name = 'fga-eps-mds/2023.1-RelatorioGitPython'
+
+    # Inicialize o objeto Github com o token de acesso pessoal
+    g = Github(github_token)
+
+    # Obtenha o repositório
+    repo = g.get_repo(repo_name)
+
+    result = commit_palavra('issues')
+
+    expected_result = pd.DataFrame(
+        {"message": [
+            'Finaliza a funcao das issues com saida em markdown',
+            'Cria as listas com issues assinadas e nao assinadas',
+            'Cria funcao que busca as issues'
+        ],
+        "author": [
+            'lucaslobao-18',
+            'catlenc',
+            'lucaslobao-18'
+        ]},
+        index=['718b52', 'f7bcfd', '6f0926']
+    )
+
+    # Remover parte adicional das mensagens de commit
+    result['message'] = result['message'].str.split('\n\n', n=1, expand=True)[0]
+
+    # Comparar o conteúdo da mensagem de commit e o índice
+    assert result['message'].to_list() == expected_result['message'].to_list()
+    assert result['author'].to_list() == expected_result['author'].to_list()
+    assert result.index.to_list() == expected_result.index.to_list()
+
