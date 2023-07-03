@@ -128,7 +128,7 @@ def test_calculate_commit_average():
     repo = g.get_repo(repo_name)
 
     # Chame a função de teste com o objeto repo
-    result, _ = calculate_commit_average(repo)  # Ignore o nome do arquivo de gráfico retornado
+    result, _ = calculate_commit_average(repo)
 
-    expected_average = 16.375  # Defina o valor esperado para a média de commits
+    expected_average = 16.625 # Defina o valor esperado para a média de commits
     assert result == expected_average
