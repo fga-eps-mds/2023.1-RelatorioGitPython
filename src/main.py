@@ -1,6 +1,4 @@
 from gitInfo import *
 
-#gerar_relatorio()
-issues_open()
-#commit_palavra('Cria')
+gerar_relatorio()
 #title_commits()

@@ -23,52 +23,45 @@ repository_path = discover_repository(current_working_directory)
 repository = Repository(repository_path)
 
 
-def get_commits_by_user(usuario):
+def get_commits_by_user(usuario: str, start_date: str, end_date: str):
     hashes = []
     messages = []
 
     commits = repo.get_commits()
-    count =0
     for commit in commits:
-        if commit.author.login == usuario:
-            messages.append(commit.commit.message)
-            hashes.append(commit.sha[:6])
-            count+=1
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            if commit.author.login.lower() == usuario.lower():
+                messages.append(commit.commit.message)
+                hashes.append(commit.sha[:6])
 
-    df = pd.DataFrame({"message":messages}, index=hashes)
-    print(count)
+    df = pd.DataFrame({"Message":messages}, index=hashes)
+
+    if df.empty is False:
+        return df
+    else:
+        msg = "No commits with this user"
+        return msg
+
+def get_commits_users(start_date: str, end_date: str):
+
+    commit_users = []
+    commits = repo.get_commits()
+    for commit in commits:
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            author = commit.author.login
+            if author in commit_users:
+             continue
+
+            commit_users.append(author)
+
+    df = pd.DataFrame({"Users": commit_users})
     return df
 
-
-def get_commit_dates():
-    datas = []
-    for commit in repository.walk(repository.head.target, GIT_SORT_TIME):
-        data = datetime.datetime.fromtimestamp(commit.commit_time)
-        datas.append(data.strftime("%Y -%m -%d %H:%M:%S"))
-    return datas
-
-def get_commits_users():
-    commit_users = set()
-    for commit in repository.walk(repository.head.target, GIT_SORT_TIME):
-        author = commit.author
-        commit_users.add(f'{author.name}')
-        for i in commit_users:
-            if(author.name != i):
-                commit_users.add(f'{author.name}')
-    return commit_users
-
-
-def get_commits_email():
-    commit_users = set()
-    for commit in repository.walk(repository.head.target, GIT_SORT_TIME):
-        author = commit.author
-        commit_users.add(f'{author.email}')
-        for i in commit_users:
-            if(author.email != i):
-                commit_users.add(f'{author.email}')
-    return commit_users
-
-def get_coAuthor():
+def get_coAuthor(start_date: str, end_date: str):
     coauthors = []
     hashes = []
     authors = []
@@ -76,26 +69,34 @@ def get_coAuthor():
     commits = repo.get_commits()
 
     for commit in commits:
-        commit_message = commit.commit.message
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            commit_message = commit.commit.message
 
-        if 'Co-authored-by:' in commit_message:
-            hashes.append(commit.commit.sha[:6])
-            authors.append(commit.commit.author.name)
+            if 'Co-authored-by:' in commit_message:
+                hashes.append(commit.commit.sha[:6])
+                authors.append(commit.commit.author.name)
 
-            lines = commit_message.splitlines()
-            aux=[]
-            for line in lines:
-                if line.startswith('Co-authored-by:'):
-                    aux.append(line[16:].strip().split('<')[0])
-            coauthors.append(aux)
+                lines = commit_message.splitlines()
+                aux=[]
+                for line in lines:
+                    if line.startswith('Co-authored-by:'):
+                        aux.append(line[16:].strip().split('<')[0])
+                coauthors.append(aux)
 
     df = pd.DataFrame({"authors": authors,"co-authors":coauthors}, index=hashes)
 
-    return df
+    if df.empty is False:
+        return df
+    else:
+        msg = "0 commits with Coauthors"
+        return msg
 
-def issues_month(star_date: str, end_date: str):
 
-    months_list = pd.period_range(start =star_date,end=end_date, freq='M')
+def issues_month(start_date: str, end_date: str):
+
+    months_list = pd.period_range(start =start_date,end=end_date, freq='M')
     months_list = [month.strftime("%b-%Y") for month in months_list]
 
     issues = repo.get_issues(state='closed')
@@ -123,19 +124,21 @@ def issues_month(star_date: str, end_date: str):
     plt.xticks(rotation=45)
     plt.show()
 
-def calculate_commit_average():
+def calculate_commit_average(start_date: str, end_date: str):
 
     commits = repo.get_commits()
 
     commits_count = defaultdict(int)
 
     for commit in commits:
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            author = commit.author
+            name = author.login if author else "Unknown"
 
-        author = commit.author
-        name = author.login if author else "Unknown"
-
-        # Incrementa o numero de commits do autor
-        commits_count[name] += 1
+            # Incrementa o numero de commits do autor
+            commits_count[name] += 1
 
 
     total_commits = sum(commits_count.values())
@@ -165,7 +168,6 @@ def calculate_commit_average():
     plt.title('Commits per Author')
     plt.legend()
     plt.xticks(rotation=45)
-    plt.savefig('commit_average_graph.png')
     plt.show()
 
     return df
@@ -207,7 +209,7 @@ def commit_data(date: str):
 
     #return df
 
-def commit_palavra(string: str):
+def commit_palavra(string: str, start_date: str, end_date: str):
 
     hashes = []
     messages = []
@@ -216,39 +218,44 @@ def commit_palavra(string: str):
     commits = repo.get_commits()
 
     for commit in commits:
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
 
-        commit_message = commit.commit.message
-        #re.search(palavra, commit_message,re.IGNORECASE)!=None:
+            commit_message = commit.commit.message
 
-        if string in commit_message:
+            if string.lower() in commit_message.lower():
 
-            hashes.append(commit.sha[:6])
-            authors.append(commit.commit.author.name)
-            messages.append(commit.commit.message)
+                hashes.append(commit.sha[:6])
+                authors.append(commit.commit.author.name)
+                messages.append(commit.commit.message)
 
-
-    columns = ['hash','message','author']
     df = pd.DataFrame({"message":messages, "author": authors}, index=hashes)
 
-    print(df)
+    if df.empty is False:
+        return df
+    else:
+        msg = "No commits with this word"
+        return msg
 
-    return df
-
-def check_extension():
+def check_extension(start_date: str, end_date: str):
     try:
         extension_by_author = defaultdict(lambda: defaultdict(list))
 
         commits = repo.get_commits()
 
         for commit in commits:
-            author = commit.author.login
-            file_modify = commit.files
+            commit_date = commit.commit.author.date
+            commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+            if commit_date_str >= start_date and commit_date_str <= end_date:
+                author = commit.author.login
+                file_modify = commit.files
 
-            for file in file_modify:
-                extension = file.filename.split('.')[-1]
-                filename = file.filename
+                for file in file_modify:
+                    extension = file.filename.split('.')[-1]
+                    filename = file.filename
 
-                extension_by_author[author][extension].append(filename)
+                    extension_by_author[author][extension].append(filename)
 
         content = '## File Extensions Report by Author\n\n'
 
@@ -272,25 +279,28 @@ def check_extension():
 
     return content
 
-def title_commits():
+def title_commits(start_date: str, end_date: str):
 
     commits = repo.get_commits()
 
     commit_titles = defaultdict(lambda: defaultdict(list))
 
     for commit in commits:
-        author = commit.author
-        if author:
-            author_name = author.login
-        else:
-            author_name = 'Unknown'
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            author = commit.author
+            if author:
+                author_name = author.login
+            else:
+                author_name = 'Unknown'
 
-        commit_title = commit.commit.message.splitlines()[0]
+            commit_title = commit.commit.message.splitlines()[0]
 
-        if author_name in commit_titles:
-            commit_titles[author_name].append(commit_title)
-        else:
-            commit_titles[author_name] = [commit_title]
+            if author_name in commit_titles:
+                commit_titles[author_name].append(commit_title)
+            else:
+                commit_titles[author_name] = [commit_title]
 
     content = '#File Title Commits\n\n'
     for author, titles in commit_titles.items():
@@ -355,7 +365,7 @@ def gerar_relatorio():
     output = 'relatorio_geral.md'
 
     with open(output, 'w', encoding='utf-8') as f:
-        
+
         f.write(content)
 
 
@@ -370,7 +380,7 @@ def issues_open():
     for issue in issues:
         if issue.assignee:
             content += f'|{issue.title}|{issue.number}|\n'
-    
+
     content += '\n\n'
     content += '## Issues Abertas Não Assinadas\n'
 
@@ -380,7 +390,7 @@ def issues_open():
     for issue in issues:
         if not issue.assignee:
             content += f'|{issue.title}|{issue.number}|\n'
-    
+
     #Para testar a saída, descomente o print
     print(content)
     return content
