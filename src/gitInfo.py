@@ -36,7 +36,7 @@ def get_commits_by_user(usuario: str, start_date: str, end_date: str):
                 messages.append(commit.commit.message)
                 hashes.append(commit.sha[:6])
 
-    df = pd.DataFrame({"Message":messages}, index=hashes)     
+    df = pd.DataFrame({"Message":messages}, index=hashes)
 
     if df.empty is False:
         return df
@@ -57,7 +57,7 @@ def get_commits_users(start_date: str, end_date: str):
              continue
 
             commit_users.append(author)
-    
+
     df = pd.DataFrame({"Users": commit_users})
     return df
 
@@ -65,7 +65,7 @@ def get_coAuthor(start_date: str, end_date: str):
     coauthors = []
     hashes = []
     authors = []
-    
+
     commits = repo.get_commits()
 
     for commit in commits:
@@ -73,7 +73,7 @@ def get_coAuthor(start_date: str, end_date: str):
         commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
         if commit_date_str >= start_date and commit_date_str <= end_date:
             commit_message = commit.commit.message
-        
+
             if 'Co-authored-by:' in commit_message:
                 hashes.append(commit.commit.sha[:6])
                 authors.append(commit.commit.author.name)
@@ -92,7 +92,7 @@ def get_coAuthor(start_date: str, end_date: str):
     else:
         msg = "0 commits with Coauthors"
         return msg
-    
+
 
 def issues_month(start_date: str, end_date: str):
 
@@ -114,8 +114,8 @@ def issues_month(start_date: str, end_date: str):
     df = pd.DataFrame({"num_issues": count},index=months_list)
 
 
+    #print(df)
 
-    # print(df)
     plt.bar(months_list, df['num_issues'])
     plt.xlabel('Months')
     plt.ylabel('Issues')
@@ -127,19 +127,19 @@ def issues_month(start_date: str, end_date: str):
 def calculate_commit_average(start_date: str, end_date: str):
 
     commits = repo.get_commits()
-    
+
     commits_count = defaultdict(int)
-    
+
     for commit in commits:
         commit_date = commit.commit.author.date
         commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
         if commit_date_str >= start_date and commit_date_str <= end_date:
             author = commit.author
             name = author.login if author else "Unknown"
-        
+
             # Incrementa o numero de commits do autor
             commits_count[name] += 1
-        
+
 
     total_commits = sum(commits_count.values())
     qtd_user = len(commits_count)
@@ -151,7 +151,7 @@ def calculate_commit_average(start_date: str, end_date: str):
     for author, num_commits in commits_count.items():
         data['Author'].append(author)
         data['Commits'].append(num_commits)
-    
+
     df = pd.DataFrame(data)
     df = df.sort_values(by='Commits', ascending=False)
 
@@ -241,7 +241,7 @@ def commit_palavra(string: str, start_date: str, end_date: str):
 def check_extension(start_date: str, end_date: str):
     try:
         extension_by_author = defaultdict(lambda: defaultdict(list))
-        
+
         commits = repo.get_commits()
 
         for commit in commits:
@@ -256,7 +256,7 @@ def check_extension(start_date: str, end_date: str):
                     filename = file.filename
 
                     extension_by_author[author][extension].append(filename)
-        
+
         content = '## File Extensions Report by Author\n\n'
 
         for author, extensions in extension_by_author.items():
@@ -309,7 +309,7 @@ def title_commits(start_date: str, end_date: str):
         for title in titles:
             content += f'- {title}\n'
         content += '\n'
-    
+
     output = 'arquivo_title.md'
 
     with open(output, 'w', encoding='utf-8') as f:
@@ -365,4 +365,32 @@ def gerar_relatorio():
     output = 'relatorio_geral.md'
 
     with open(output, 'w', encoding='utf-8') as f:
+
         f.write(content)
+
+
+def issues_open():
+    issues = repo.get_issues(state='open')
+
+    content = '## Issues Abertas Assinadas\n'
+
+    content += '| Titulo | Numero |\n'
+    content += '|--------|--------|\n'
+
+    for issue in issues:
+        if issue.assignee:
+            content += f'|{issue.title}|{issue.number}|\n'
+
+    content += '\n\n'
+    content += '## Issues Abertas Não Assinadas\n'
+
+    content += '| Titulo | Numero |\n'
+    content += '|--------|--------|\n'
+
+    for issue in issues:
+        if not issue.assignee:
+            content += f'|{issue.title}|{issue.number}|\n'
+
+    #Para testar a saída, descomente o print
+    print(content)
+    return content
