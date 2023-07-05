@@ -1,10 +1,9 @@
 from github import Github
-import base64
-import pandas as pd
 import os
-import re
 from datetime import datetime
 from dotenv import load_dotenv
+import io
+from datetime import datetime
 
 load_dotenv()
 
@@ -31,25 +30,17 @@ def commit_data(date: str):
             authors.append(commit.commit.author.name)
             messages.append(commit.commit.message)
 
-    # columns = ['hash', 'message', 'author']
-    # df = pd.DataFrame({"message": messages, "author": authors}, index=hashes)
-    
-    content = '#File Commit by date\n\n'
+    # Criar o arquivo Markdown
+    with io.open("commit_data.md", "w", encoding="utf-8") as file:
+        file.write("# Commits do dia {}\n\n".format(date))
 
-    for author, message in zip(authors, messages):
-        content += f'## Author: {author} \n\n'
-        
-        content += '| -------- | \n'
-        content += f'## Messages: {message} \n\n'
-     
-        content += '| -------- | \n'
-        content += "\n"
+        if not hashes:
+            file.write("Não houve commits no dia.\n")
+        else:
+            for i in range(len(hashes)):
+                file.write("## Commit {}\n\n".format(i+1))
+                file.write("- Hash: {}\n".format(hashes[i]))
+                file.write("- Autor: {}\n".format(authors[i]))
+                file.write("- Mensagem: {}\n\n".format(messages[i]))
 
-    output = 'arquivo_data.md'
-
-    with open(output, 'w', encoding='utf-8') as f:
-        f.write(content)
-
-    #return df
-
-#commit_data("06-05-2023")
+commit_data('06-29-2023')
