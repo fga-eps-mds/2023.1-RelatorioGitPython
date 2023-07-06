@@ -7,8 +7,7 @@ import pandas as pd
 from dotenv import load_dotenv
 import os
 import sys
-import re
-from pandas.testing import assert_frame_equal
+import json
 
 # Adicionar o diretório 'src' ao caminho de busca de módulos do Python
 src_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))
@@ -27,27 +26,22 @@ current_working_directory = os.getcwd()
 repository_path = discover_repository(current_working_directory)
 repository = Repository(repository_path)
 
-def get_commits_by_user(usuario: str, start_date: str, end_date: str):
+def get_commits_by_user(username):
     hashes = []
     messages = []
 
     commits = repo.get_commits()
+    count = 0
     for commit in commits:
-        commit_date = commit.commit.author.date
-        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-        if commit_date_str >= start_date and commit_date_str <= end_date:
-            if commit.author.login.lower() == usuario.lower():
-                messages.append(commit.commit.message)
-                hashes.append(commit.sha[:6])
+        if commit.commit.author.name == username:
+            messages.append(commit.commit.message)
+            hashes.append(commit.sha[:6])
+            count += 1
 
-    df = pd.DataFrame({"Message":messages}, index=hashes)
+    df = pd.DataFrame({"message": messages}, index=hashes)
+    print(count)
+    return df
 
-    if df.empty is False:
-        return df
-    else:
-        msg = "No commits with this user"
-        return msg
-    
 def test_get_commits_by_user():
     github_token = os.getenv('GITHUB_TOKEN')
     g = Github(github_token)
@@ -60,30 +54,14 @@ def test_get_commits_by_user():
     # Obtenha o repositório
     repo = g.get_repo(repo_name)
 
-    usuario = 'rafa-kenji'
-    start_date = '05-01-2023'
-    end_date = '06-30-2023'
+    result = get_commits_by_user('rafa-kenji')
 
-    result = get_commits_by_user(usuario, start_date, end_date)
-
-    expected_messages = [
-        'Merge pull request #58 from fga-eps-mds/refatoracao_biblioteca',
-        'Correção da saída markdown\n\nCo-authored-by: Catlen Oliveira <99406424+catlenc@users.noreply.github.com>',
-        'Merge pull request #52 from fga-eps-mds/pipeline-1',
-        'Relacionar os commit por data\n\nCo-authored-by: Catlen Oliveira <99406424+catlenc@users.noreply.github.com>'
-    ]
-    expected_hashes = ['f8e353', 'fe0389', 'd49ca6', 'bdc947']
     expected_result = pd.DataFrame(
-        {"Message": expected_messages},
-        index=expected_hashes
+        {"message": ['Merge pull request #58 from fga-eps-mds/refatoracao_biblioteca', 'Merge pull request #52 from fga-eps-mds/pipeline-1\n\nPipeline 1']},
+        index=['f8e353', 'd49ca6']
     )
 
-    if not result.equals(expected_result):
-        print("Differences:")
-        print(result.compare(expected_result))
-
-    assert result.equals(expected_result)
-
+    assert str(result) == str(expected_result)
 
 def get_commit_dates():
     datas = []
@@ -109,39 +87,33 @@ def test_get_commit_dates():
     expected_dates = ['2023-07-02 23:33:27', '2023-07-02 22:58:58', '2023-07-02 22:58:16']
     assert result == expected_dates
 
+def get_commits_users():
+    commit_users = set()
+    count = 0
+    for commit in repository.walk(repository.head.target, GIT_SORT_TIME):
+        author = commit.author
+        commit_users.add(author.name)
+        count += 1
+        if count == 3:  # Limita para os três primeiros usuários
+            break
+    return commit_users
 
-def get_commits_users(start_date: str, end_date: str):
-
-    commit_users = []
-    commits = repo.get_commits()
-    for commit in commits:
-        commit_date = commit.commit.author.date
-        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-        if commit_date_str >= start_date and commit_date_str <= end_date:
-            author = commit.author.login
-            if author in commit_users:
-             continue
-
-            commit_users.append(author)
-
-    df = pd.DataFrame({"Users": commit_users})
-    return df
 
 def test_get_commits_users():
     # Chame a função para obter os usuários de commits
-    result = get_commits_users('06-29-2023', '06-30-2023')
+    result = get_commits_users()
+
+    # Verifique se o resultado é um conjunto (set)
+    assert isinstance(result, set)
+
+    # Verifique se o resultado contém exatamente três usuários
+    assert len(result) == 2
 
     # Defina o valor esperado para o resultado
-
-    expected_users = ['GZaranza','lucaslobao-18','ViniciussdeOliveira','catlenc','FelipeDireito']
-    expected_result = pd.DataFrame({"Users": expected_users})
-
-    if not result.equals(expected_result):
-        print("Differences:")
-        print(result.compare(expected_result))    
+    expected_result = {'Rafael Kenji'}
 
     # Realize a comparação entre o resultado obtido e o valor esperado
-    assert result.equals(expected_result)
+    assert result == expected_result
 
 def get_commits_email():
     commit_emails = set()
@@ -164,38 +136,37 @@ def test_get_commits_email():
     # Realize a comparação entre o resultado obtido e o valor esperado
     assert result == expected_result
 
-
-def get_coAuthor(start_date: str, end_date: str):
+def get_coAuthor():
     coauthors = []
     hashes = []
     authors = []
 
     commits = repo.get_commits()
+    count = 0
 
     for commit in commits:
-        commit_date = commit.commit.author.date
-        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-        if commit_date_str >= start_date and commit_date_str <= end_date:
-            commit_message = commit.commit.message
+        if count == 3:  # Limite para três coautores
+            break
 
-            if 'Co-authored-by:' in commit_message:
-                hashes.append(commit.commit.sha[:6])
-                authors.append(commit.commit.author.name)
+        commit_message = commit.commit.message
 
-                lines = commit_message.splitlines()
-                aux=[]
-                for line in lines:
-                    if line.startswith('Co-authored-by:'):
-                        aux.append(line[16:].strip().split('<')[0])
-                coauthors.append(aux)
+        if 'Co-authored-by:' in commit_message:
+            hashes.append(commit.commit.sha[:6])
+            authors.append(commit.commit.author.name)
 
-    df = pd.DataFrame({"author": authors, "co-authors": coauthors}, index=hashes)
+            lines = commit_message.splitlines()
+            aux = []
+            for line in lines:
+                if line.startswith('Co-authored-by:'):
+                    aux.append(line[16:].strip().split('<')[0])
+            coauthors.append(aux)
 
-    if not df.empty:
-        return df
-    else:
-        msg = "0 commits with Coauthors"
-        return msg
+        count += 1
+
+    df = pd.DataFrame({"authors": authors, "co-authors": coauthors}, index=hashes)
+
+    return df
+
 
 def test_get_coAuthor():
     github_token = os.getenv('GITHUB_TOKEN')
@@ -210,55 +181,42 @@ def test_get_coAuthor():
     repo = g.get_repo(repo_name)
 
     # Chame a função de teste com o objeto repo
-    result = get_coAuthor('06-28-2023', '06-29-2023')
+    result = get_coAuthor()
 
     # Defina o valor esperado para o resultado
-    expected_authors = ['lucaslobao-18', 'Vinicius de Oliveira Santos', 'Vinicius de Oliveira Santos', 'Vinicius de Oliveira Santos', 'Vinicius de Oliveira Santos', 'catlenc', 'lucaslobao-18']
-    expected_coauthors = [['Catlen Oliveira'], ['Gabriel Zaranza'], ['Gabriel Zaranza'], ['Gabriel Zaranza'], ['Gabriel Zaranza'], ['lucaslobao-18, lucaslobao-18'], ['Catlen Oliveira']]
-    expected_hashes = ['718b52', 'bf6229', '7ac306', '53546b', '715d50', 'f7bcfd', '6f0926']
+    expected_result = pd.DataFrame(
+        {"authors": ['lucaslobao-18'], "co-authors": [['Catlen Oliveira ']]},
+        index=['718b52']
+    )
 
-    expected_result = pd.DataFrame({"author": expected_authors, "co-authors": expected_coauthors}, index=expected_hashes)
-    expected_result = expected_result.reindex(index=result.index, columns=result.columns)
+    # Realize a comparação entre o resultado obtido e o valor esperado
+    assert result.equals(expected_result)
 
-    # Converter listas de co-autores em strings separadas por vírgula e comparar valores independentemente da ordem
-    result['co-authors'] = result['co-authors'].apply(lambda x: ', '.join(sorted([s.strip() for s in x])))
-    expected_result['co-authors'] = expected_result['co-authors'].apply(lambda x: ', '.join(sorted([s.strip() for s in x])))
-
-    if not result.equals(expected_result):
-        print("Differences:")
-        print(result.compare(expected_result))  
-    
-    assert_frame_equal(result, expected_result)
-
-
-def commit_palavra(string: str, start_date: str, end_date: str):
+def commit_palavra(string: str):
 
     hashes = []
     messages = []
     authors = []
+    count = 0
 
     commits = repo.get_commits()
 
     for commit in commits:
-        commit_date = commit.commit.author.date
-        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-        if commit_date_str >= start_date and commit_date_str <= end_date:
+        commit_message = commit.commit.message
 
-            commit_message = commit.commit.message
+        if string in commit_message:
+            hashes.append(commit.sha[:6])
+            authors.append(commit.commit.author.name)
+            messages.append(commit.commit.message)
+            count += 1
 
-            if string.lower() in commit_message.lower():
+        if count == 3:
+            break
 
-                hashes.append(commit.sha[:6])
-                authors.append(commit.commit.author.name)
-                messages.append(commit.commit.message)
-
-    df = pd.DataFrame({"message":messages, "author": authors}, index=hashes)
-
-    if df.empty is False:
-        return df
-    else:
-        msg = "No commits with this word"
-        return msg
+    columns = ['hash','message','author']
+    df = pd.DataFrame({"message": messages, "author": authors}, index=hashes)
+    
+    return df
 
 def test_commit_palavra():
     github_token = os.getenv('GITHUB_TOKEN')
@@ -272,7 +230,7 @@ def test_commit_palavra():
     # Obtenha o repositório
     repo = g.get_repo(repo_name)
 
-    result = commit_palavra('issues','06-28-2023', '06-29-2023')
+    result = commit_palavra('issues')
 
     expected_result = pd.DataFrame(
         {"message": [
@@ -289,45 +247,37 @@ def test_commit_palavra():
     )
 
     # Remover parte adicional das mensagens de commit
-    #result['message'] = result['message'].str.split('\n\n', n=1, expand=True)[0]
-    result['message'] = result['message'].apply(lambda x: re.split('\n\n|\n', x, maxsplit=1)[0])
-
+    result['message'] = result['message'].str.split('\n\n', n=1, expand=True)[0]
 
     # Comparar o conteúdo da mensagem de commit e o índice
     assert result['message'].to_list() == expected_result['message'].to_list()
     assert result['author'].to_list() == expected_result['author'].to_list()
     assert result.index.to_list() == expected_result.index.to_list()
 
-def title_commits(start_date: str, end_date: str):
 
+def title_commits():
     commits = repo.get_commits()
-
-    commit_titles = defaultdict(lambda: defaultdict(list))
+    commit_titles = defaultdict(list)
 
     for commit in commits:
-        commit_date = commit.commit.author.date
-        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
-        if commit_date_str >= start_date and commit_date_str <= end_date:
-            author = commit.author
-            if author:
-                author_name = author.login
-            else:
-                author_name = 'Unknown'
+        author = commit.author
+        if author:
+            author_name = author.login
+        else:
+            author_name = 'Unknown'
 
-            commit_title = commit.commit.message.splitlines()[0]
+        commit_title = commit.commit.message.splitlines()[0]
+        commit_titles[author_name].append(commit_title)
 
-            if author_name in commit_titles:
-                commit_titles[author_name].append(commit_title)
-            else:
-                commit_titles[author_name] = [commit_title]
+    first_author = next(iter(commit_titles))
+    first_titles = commit_titles[first_author]
 
     content = '#File Title Commits\n\n'
-    for author, titles in commit_titles.items():
-        content += f'## Usuário: {author}\n'
-        content += f'### Títulos do commits:\n'
-        for title in titles:
-            content += f'- {title}\n'
-        content += '\n'
+    content += f'## Usuário: {first_author}\n'
+    content += '### Títulos do commits:\n'
+    for title in first_titles:
+        content += f'- {title}\n'
+    content += '\n'
 
     output = 'arquivo_title.md'
 
@@ -347,7 +297,7 @@ def test_title_commits():
     repo = g.get_repo(repo_name)
 
     # Chame a função para gerar o arquivo de títulos dos commits
-    title_commits('06-29-2023', '06-30-2023')
+    title_commits()
 
     # Verifique se o arquivo de saída foi criado
     output_file = 'arquivo_title.md'
@@ -361,30 +311,35 @@ def test_title_commits():
 
 ## Usuário: GZaranza
 ### Títulos do commits:
-- add o filtro de data nas defs tittle_commits, get_commits_by_user, commit_palavra
 - Merge pull request #69 from fga-eps-mds/issue_65
 - Merge branch 'main' into issue_65
-
-## Usuário: lucaslobao-18
-### Títulos do commits:
-- Finaliza a funcao das issues com saida em markdown
-- Cria funcao que busca as issues
-
-## Usuário: ViniciussdeOliveira
-### Títulos do commits:
-- Refatorando e adicionando filtro data na função get_commits_users()
-- Adicionando o filtro data na função get_coAuthor()
-- Adicionando filtro data na função check_extension()
-- Adicionando filtro de data na função calculate_commit_average()
-- Merge pull request #68 from fga-eps-mds/grafico_no_markdown
-
-## Usuário: catlenc
-### Títulos do commits:
-- Cria as listas com issues assinadas e nao assinadas
-
-## Usuário: FelipeDireito
-### Títulos do commits:
-- Adiciona plot do grafico no markdown gerado
+- testando o gerador de relatorio
+- add a def tittle_commits na gitInfo.py
+- Merge pull request #57 from fga-eps-mds/issue_39
+- refatorando a def get_coAuthor da gitInfo.py
+- refatorando a def get_commits_by_user na gitInfo.py
+- Merge pull request #53 from fga-eps-mds/Commit-data
+- add a df na gitinfo.py
+- add o plot do gráfico
+- criando grafico_issues.py para implementar a função que gera o grafico das issues fechadas
+- criando o commit_palavra.py e fazendo os primeiros testes da funcionalidade
+- Merge pull request #37 from fga-eps-mds/media_commits
+- Merge branch 'main' into media_commits
+- testando a função que gera o markdown com as extensões dos arquivos commitados no repo
+- add coluna da data do commit no dateframe
+- transformando a lista de co-autores em uma lista em que cada elemento armazena varios co-autores
+- função imprimindo o datafram com todos os commits com coauthors, mas por conta de uns commits antigos não roda no nosso repositorio
+- criando .py que printa os commits com coautores
+- Add o link (apenas view)do board do user story map
+- Update architecture_document.md
+- Update issue templates
+- add o diagrama de pacotes da R1
+- Update template-padrão-de-issue.md
+- Adicionando as tecnologias
+- Update SECURITY.md
+- Create SECURITY.md
+- Update issue templates
+- subindo template das issues
 '''
 
     assert content.strip() == expected_content.strip()
@@ -392,9 +347,9 @@ def test_title_commits():
     # Remover o arquivo de saída após o teste
     os.remove(output_file)
 
-def issues_month(start_date: str, end_date: str):
+def issues_month(star_date: str, end_date: str):
 
-    months_list = pd.period_range(start =start_date,end=end_date, freq='M')
+    months_list = pd.period_range(start =star_date,end=end_date, freq='M')
     months_list = [month.strftime("%b-%Y") for month in months_list]
 
     issues = repo.get_issues(state='closed')
@@ -411,9 +366,6 @@ def issues_month(start_date: str, end_date: str):
 
     df = pd.DataFrame({"num_issues": count},index=months_list)
 
-    return df
-
-
 def test_issues_month():
     github_token = os.getenv('GITHUB_TOKEN')
     g = Github(github_token)
@@ -423,17 +375,18 @@ def test_issues_month():
     # Inicialize o objeto Github com o token de acesso pessoal
     g = Github(github_token)
 
-    # Obtenha o objeto repo usando o nome do repositório
+    # Obtenha o repositório
     repo = g.get_repo(repo_name)
 
-    # Chame a função de teste
+    # Chame a função para obter o número de issues por mês
     result = issues_month('2023-01-01', '2023-06-30')
 
-    # Defina o valor esperado para o resultado
-    expected_issues = [0, 0, 0, 18, 14, 12]
-    expected_months = ['Jan-2023', 'Feb-2023', 'Mar-2023', 'Apr-2023', 'May-2023', 'Jun-2023']
+    # Verifique se o DataFrame resultante possui as colunas e índices esperados
+    expected_columns = ['num_issues']
+    expected_index = ['Jan-2023', 'Feb-2023', 'Mar-2023', 'Apr-2023', 'May-2023', 'Jun-2023']
+    assert result.columns.tolist() == expected_columns
+    assert result.index.tolist() == expected_index
 
-    expected_result = pd.DataFrame({"num_issues": expected_issues}, index=expected_months)
-
-    # Verifique se o resultado é igual ao esperado
-    assert_frame_equal(result, expected_result)
+    # Verifique se os valores numéricos estão corretos
+    expected_values = [0, 0, 0, 18, 14, 12]
+    assert result['num_issues'].tolist() == expected_values

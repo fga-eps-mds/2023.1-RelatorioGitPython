@@ -1,10 +1,23 @@
-from gitInfo import *
+from pygit2 import Repository, discover_repository
+import pandas as pd
+import os
+import datetime
+import matplotlib.pyplot as plt
+from dotenv import load_dotenv
 from github import Github
+from pygit2 import GIT_SORT_REVERSE, GIT_SORT_TIME
+from pygit2 import *
 
+load_dotenv()
+#pegando o token do github
 github_token = os.getenv('GITHUB_TOKEN')
 #dando acesso a biblioteca
-g=Github("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")
+g=Github(github_token)
 #escolhendo o repositorio a ser analisado
 repo = g.get_repo("fga-eps-mds/2023.1-RelatorioGitPython")
 
-gerar_relatorio()
+
+commits = repo.get_commits()
+
+for commit in commits:
+    print(commit.author.login)
