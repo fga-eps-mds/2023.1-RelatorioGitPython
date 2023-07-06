@@ -9,6 +9,7 @@
 | 17/05/2023 | 0.3 | Adição dos Requisitos Funcionais, Dados, Execução e Não Funcionais| Gabriel Rosa, Lucas Lobão e Catlen Cleane |
 | 17/05/2023 | 0.4 | Repaginação do documento de visão | Gabriel Rosa |
 | 17/05/2023 | 0.5 | Adição do User Story Map | Gabriel Rosa |
+| 05/07/2023 | 0.6 | Adicionando novos requisitos | Gabriel Rosa |
 
 ## 1. Introdução
 
@@ -52,12 +53,17 @@ Este documento aplica-se ao projeto da biblioteca em python para gerar relatóri
 | RE04 | A biblioteca deverá relacionar o usuário com o título do commit | -- | Alta |
 | RE05 | A biblioteca deverá identificar os commits que tivem co-author | -- | Alta |
 | RE06 | A biblioteca deverá listar a descrição de commit por pessoa | -- | Alta |
+| RE07 | A biblioteca deverá através de uma função fornecer um relatório completo do repositório do GitHub | -- | Alta |
+| RE08 | A biblioteca deverá fornecer um gráfico de issues do repositório | -- | Alta |
+| RE09 | A biblioteca deverá listar os commits através de uma data específica | -- | Média |
+| RE10 | A biblioteca deverá buscar um commit através de uma palavra fornecida pelo usuário | -- | Baixa | 
+| RE11 | A biblioteca deverá ser capaz de listar as issues que estão abertas | -- | Baixa |
 
 ## 2.4 Requisitos Não Funcionais 
 | Identificador | Requisito |
 | :-   | :-     |
 | RNF01 | A linguagem da biblioteca será em Python | 
-| RNF02 | Os dados serão pegos no git log |
+| RNF02 | Os dados serão pegos através da API do GITHUB |
 | RNF03 | A biblioteca tem como público alvo desenvolvedores (Scrum Master) com conhecimento em programação |
 | RNF04 | A biblioteca deverá ser publica no PyPI |
 | RNF05 | Oferecer suporte a diferentes sistemas de codificação de caracteres, como UTF-8 e ISO-8859-1 |
