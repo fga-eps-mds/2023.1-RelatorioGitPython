@@ -54,17 +54,27 @@ def commit_data(repo, date: str):
 
     return hashes
 
-def calculate_commit_average(repo, graph_filename=None):
+def calculate_commit_average(start_date: str, end_date: str):
+    repo = g.get_repo("fga-eps-mds/2023.1-RelatorioGitPython")
+
     commits = repo.get_commits()
+
     commits_count = defaultdict(int)
 
     for commit in commits:
-        author = commit.author
-        name = author.login if author else "Unknown"
-        commits_count[name] += 1
+        commit_date = commit.commit.author.date
+        commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
+        if commit_date_str >= start_date and commit_date_str <= end_date:
+            author = commit.author
+            name = author.login if author else "Unknown"
+
+            # Incrementa o numero de commits do autor
+            commits_count[name] += 1
+
 
     total_commits = sum(commits_count.values())
     qtd_user = len(commits_count)
+
     average_total = total_commits / qtd_user
 
     data = {'Author': [], 'Commits': []}
@@ -76,24 +86,11 @@ def calculate_commit_average(repo, graph_filename=None):
     df = pd.DataFrame(data)
     df = df.sort_values(by='Commits', ascending=False)
 
-    df['Average'] = average_total
+    #print(df)
 
-    plt.bar(df['Author'], df['Commits'])
-    plt.axhline(y=average_total, color='r', linestyle='-', label='Average')
-    plt.xlabel('Author')
-    plt.ylabel('Commits')
-    plt.title('Commits per Author')
-    plt.legend()
-    plt.xticks(rotation=45)
+    df['Average'] = average_total # df da media total
 
-    if graph_filename is None:
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        graph_filename = f'commit_average_graph_{timestamp}.png'
-
-    plt.savefig(graph_filename)
-    plt.close()
-
-    return average_total, graph_filename
+    return df
 
 def test_commit_data():
     
@@ -128,7 +125,16 @@ def test_calculate_commit_average():
     repo = g.get_repo(repo_name)
 
     # Chame a função de teste com o objeto repo
-    result, _ = calculate_commit_average(repo)
+    result = calculate_commit_average('06-29-2023', '06-30-2023')
+    expected_users = ['GZaranza', 'lucaslobao-18', 'ViniciussdeOliveira', 'catlenc', 'FelipeDireito']
+    expected_commits = [3, 2, 5, 1, 1]
+    average_total = 2.4
 
-    expected_average = 16.625 # Defina o valor esperado para a média de commits
-    assert result == expected_average
+    expected_result = pd.DataFrame({"Author": expected_users, "Commits": expected_commits, "Average": average_total}, index=[0,1,2,3,4])
+    expected_result = expected_result.sort_values(by='Commits', ascending=False)
+
+    if not result.equals(expected_result):
+        print("Differences:")
+        print(result.compare(expected_result))     
+
+    assert result.equals(expected_result)
