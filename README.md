@@ -49,5 +49,13 @@ Veja o [guia de contribuição](/CONTRIBUTING.md) para saber como começar.
 
 Por favor, siga o [código de conduta](docs/CODE_OF_CONDUCT.md) desse projeto.
 
+## :books: Documentation
+### Visão Geral
+### Instalação e Configuração
+### Uso da biblioteca
+### Parâmetros e Retorno de cada função
+### Atualização e Suporte
+
+
 ## :mag_right: Licença
 Este projeto está sob [licença](/LICENSE). Acesse para mais informações.
