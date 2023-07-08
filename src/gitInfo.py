@@ -291,7 +291,7 @@ def title_commits(start_date: str, end_date: str):
     return content
 
 
-def gerar_relatorio(start_date: str, end_date: str):
+def generate_report(start_date: str, end_date: str):
     content = '## Report from ' + start_date + ' - ' + end_date + '\n\n'
 
     content += check_extension(start_date, end_date)
