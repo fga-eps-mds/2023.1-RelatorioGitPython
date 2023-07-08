@@ -76,9 +76,9 @@ def get_coAuthor(start_date: str, end_date: str):
 
                 lines = commit_message.splitlines()
                 aux=[]
-                for line in lines:
-                    if line.startswith('Co-authored-by:'):
-                        aux.append(line[16:].strip().split('<')[0])
+                for row in lines:
+                    if row.startswith('Co-authored-by:'):
+                        aux.append(row[16:].strip().split('<')[0])
                 coauthors.append(aux)
 
     df = pd.DataFrame({"authors": authors,"co-authors":coauthors}, index=hashes)
@@ -115,7 +115,7 @@ def issues_month(start_date: str, end_date: str):
     plt.title('Issues per month')
     plt.yticks(range(0,max(df['num_issues']+1)))
     plt.xticks(rotation=13)
-    plt.savefig('issues_fechadas.png', format='png')
+    plt.savefig('closed_issues.png', format='png')
 
     return df
 
@@ -158,7 +158,7 @@ def calculate_commit_average(start_date: str, end_date: str):
     plt.title('Commits per Author')
     plt.legend()
     plt.xticks(rotation=13)
-    plt.savefig('media_commits.png', format='png')
+    plt.savefig('commit_average.png', format='png')
 
     return df
 
@@ -291,53 +291,46 @@ def title_commits(start_date: str, end_date: str):
     return content
 
 
-def gerar_relatorio():
-    content = '## Relatório Geral\n\n'
+def gerar_relatorio(start_date: str, end_date: str):
+    content = '## Report from ' + start_date + ' - ' + end_date + '\n\n'
 
-    content += check_extension()
+    content += check_extension(start_date, end_date)
     content += '\n\n'
 
-    content += '## Lista de Commits com Coauthor\n\n'
+    content += '## List of commits with coauthor\n\n'
 
-    # Parte funcionando COAUTHOR ------------------------------------------
+    coaut = get_coAuthor(start_date, end_date)
 
-    coaut = get_coAuthor()
+    content += '| Hash | Author | Coauthor |\n'
+    content += '|------|--------|----------|\n'
 
-    content += '| Hash | Author | Coauthor | Data |\n'
-    content += '|------|--------|----------|------|\n'
-
-    for indice, linha in coaut.iterrows():
-        content += f'|{indice}'
-        for coluna, valor in linha.items():
-            content += f'|{valor}'
-            nada = {coluna}
+    for index, row in coaut.iterrows():
+        content += f'|{index}'
+        for columm, value in row.items():
+            content += f'|{value}'
+            nothing = {columm}
         content += '|\n'
 
     content += '\n\n'
 
-    # Parte funcionando COAUTHOR ------------------------------------------
+    content += '## Commits per person and general avarage\n\n'
+    commits = calculate_commit_average(start_date, end_date)
+    graph_path = 'commit_average.png'
 
-    # Parte Média ---------------------------------------------------------
+    content += '| Index | Author | Commits | Averege |\n'
+    content += '|-------|--------|---------|---------|\n'
 
-    content += '## Commits por pessoa e Média Geral\n\n'
-    commits = calculate_commit_average()
-    graph_path = 'commit_average_graph.png'
-
-    content += '| índice | Author | Commits | Avarege |\n'
-    content += '|--------|--------|---------|---------|\n'
-
-    for indice, linha in commits.iterrows():
-        content += f'|{indice}'
-        for coluna, valor in linha.items():
-            content += f'|{valor}'
-            nada = {coluna}
+    for index, row in commits.iterrows():
+        content += f'|{index}'
+        for columm, value in row.items():
+            content += f'|{value}'
+            nothing = {columm}
         content += '|\n'
 
     content += '\n\n'
-    # print(content)
 
     content += f'![Commit Average Graph]({graph_path})\n\n'
-    output = 'relatorio_geral.md'
+    output = 'gitInfo_report.md'
 
     with open(output, 'w', encoding='utf-8') as f:
 
