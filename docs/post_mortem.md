@@ -1,5 +1,5 @@
 ## Introdução
-Este documento tem como objetivo trazer uma análise do projeto, em seu aspecto final, e relatos de cada membro do grupo sobre o desenvolvimento do projeto. 
+Este documento tem como objetivo trazer uma análise do projeto, em seu aspecto final, e relatos de cada membro do grupo sobre o desenvolvimento do projeto.
 A leitura deste se faz necessária, pois contém informações importantes que podem auxiliar até mesmo outros grupos no desenvolvimento dos projetos.
 
 ## Pontos do projeto
@@ -27,6 +27,15 @@ Durante os primeiros dias de aula me senti muito perdida sem saber o que era pra
 Apesar de as dificuldades que tenho por ser uma pessoa bem mais velha que a maioria dos estudantes, e me sentir atrasada com relação ao conhecimento dos demais, eu sempre me senti bem em trabalhar em equipe, e o grupo foi bem organizado e um ajudou o outro muito bem.
 
 Enfim, foi um processo desafiador e recompensador. Aprendi bastantes termos novos, e pude vivenciar na prática um trabalho real. É importante continuar a aproveitar essa experiência como base para futuros projetos e aprendizados.
+
+### Felipe Direito
+
+Acredito que o começo do projeto tenha sido o mais difícil para todos do grupo. É um período de compreensão e entendimento do que vai ser feito, mas, ao mesmo tempo, já é um período crucial para conseguir desenvolver bem o escopo do projeto. Quanto melhor for definida esta parte inicial, mais fácil será alcançar o produto final.
+
+Contudo, acredito que o grupo se saiu bem ao decorrer do projeto. Eu já havia trabalhado com outros desenvolvimentos em grupo antes e vi que todos foram participativos nas decisões quanto ao rumo que estávamos tomando. Cada projeto é um aprendizado diferente, sinto que saí com uma experiência muito boa e um aprendizado muito importante para mim.
+
+Sinto que consegui ajudar e fui ajudado diversas vezes no decorrer do desenvolvimento. E mesmo sendo um curto período de tempo para desenvolver um projeto do zero, fiquei contente com a evolução de todos da equipe e com o trabalho entregado. Ainda que tenham muitos pontos que poderiam ser evoluídos, acredito que conseguimos cumprir com o objetivo geral da disciplina, e, principalmente, perceber a importância da metodologia no desenvolvimento do projeto.
+
 
 ### Gabriel Zaranza
 O início da disciplina é bem nebuloso por estar tendo contato com novas metodologias de desenvolvimento, mas com o passar das semanas vai ficando mais claro como que a equipe tem se organizar. Desde do início é necessário a equipe se organizar e dar atenção aos requisitos e escopo do projeto para que na hora de “codar” não gaste tempo decidindo o que vai fazer e por consequência ficar sem rumo.
