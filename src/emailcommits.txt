@@ -1,5 +1,0 @@
-061a4d076e2635a1038293003064e9c2228f6382 - Criando o template de Pull Request
-381ace4740ff5a7e70131356270cce49f7160494 - Delete Pull_Request_Template
-0f54404a40378871c4c757e2d61b03827b8a14a3 - Criando Padrão de Pull Request
-numero de commits totais 
-3

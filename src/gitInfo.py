@@ -1,29 +1,25 @@
-from pygit2 import Repository, discover_repository
 from collections import defaultdict
 import pandas as pd
 import os
+import io
 import datetime
 import matplotlib.pyplot as plt
 from datetime import datetime
 from dotenv import load_dotenv
 from github import Github
-from pygit2 import GIT_SORT_REVERSE, GIT_SORT_TIME
-from pygit2 import *
 
 load_dotenv()
-#pegando o token do github
+
 github_token = os.getenv('GITHUB_TOKEN')
-#dando acesso a biblioteca
+
 g=Github(github_token)
-#escolhendo o repositorio a ser analisado
-repo = g.get_repo("fga-eps-mds/2023.1-RelatorioGitPython")
 
-current_working_directory = os.getcwd()
-repository_path = discover_repository(current_working_directory)
-repository = Repository(repository_path)
+repo = os.getenv('REPO')
+
+repo = g.get_repo(repo)
 
 
-def get_commits_by_user(usuario: str, start_date: str, end_date: str):
+def get_commits_by_user(user: str, start_date: str, end_date: str):
     hashes = []
     messages = []
 
@@ -32,7 +28,7 @@ def get_commits_by_user(usuario: str, start_date: str, end_date: str):
         commit_date = commit.commit.author.date
         commit_date_str = datetime.strftime(commit_date, "%m-%d-%Y")
         if commit_date_str >= start_date and commit_date_str <= end_date:
-            if commit.author.login.lower() == usuario.lower():
+            if commit.author.login.lower() == user.lower():
                 messages.append(commit.commit.message)
                 hashes.append(commit.sha[:6])
 
@@ -41,8 +37,8 @@ def get_commits_by_user(usuario: str, start_date: str, end_date: str):
     if df.empty is False:
         return df
     else:
-        msg = "No commits with this user"
-        return msg
+        msg_error = "No commits with this user"
+        return msg_error
 
 def get_commits_users(start_date: str, end_date: str):
 
@@ -80,9 +76,9 @@ def get_coAuthor(start_date: str, end_date: str):
 
                 lines = commit_message.splitlines()
                 aux=[]
-                for line in lines:
-                    if line.startswith('Co-authored-by:'):
-                        aux.append(line[16:].strip().split('<')[0])
+                for row in lines:
+                    if row.startswith('Co-authored-by:'):
+                        aux.append(row[16:].strip().split('<')[0])
                 coauthors.append(aux)
 
     df = pd.DataFrame({"authors": authors,"co-authors":coauthors}, index=hashes)
@@ -105,24 +101,23 @@ def issues_month(start_date: str, end_date: str):
 
 
     for month in months_list:
-        contador=0
+        counter=0
         for issue in issues:
             if issue.pull_request is None and issue.closed_at.strftime("%b-%Y") == month:
-                contador+=1
-        count.append(contador)
+                counter+=1
+        count.append(counter)
 
     df = pd.DataFrame({"num_issues": count},index=months_list)
-
-
-    #print(df)
 
     plt.bar(months_list, df['num_issues'])
     plt.xlabel('Months')
     plt.ylabel('Issues')
     plt.title('Issues per month')
     plt.yticks(range(0,max(df['num_issues']+1)))
-    plt.xticks(rotation=45)
-    plt.show()
+    plt.xticks(rotation=13)
+    plt.savefig('closed_issues.png', format='png')
+
+    return df
 
 def calculate_commit_average(start_date: str, end_date: str):
 
@@ -137,14 +132,13 @@ def calculate_commit_average(start_date: str, end_date: str):
             author = commit.author
             name = author.login if author else "Unknown"
 
-            # Incrementa o numero de commits do autor
             commits_count[name] += 1
 
 
     total_commits = sum(commits_count.values())
-    qtd_user = len(commits_count)
+    count_user = len(commits_count)
 
-    average_total = total_commits / qtd_user
+    average_total = total_commits / count_user
 
     data = {'Author': [], 'Commits': []}
 
@@ -155,11 +149,7 @@ def calculate_commit_average(start_date: str, end_date: str):
     df = pd.DataFrame(data)
     df = df.sort_values(by='Commits', ascending=False)
 
-    print(df)
-
-    df['Average'] = average_total # df da media total
-
-    # Plotar um gráfico com as média de cada user
+    df['Average'] = average_total 
 
     plt.bar(df['Author'], df['Commits'])
     plt.axhline(y=average_total, color='r', linestyle='-', label='Average')
@@ -167,8 +157,8 @@ def calculate_commit_average(start_date: str, end_date: str):
     plt.ylabel('Commits')
     plt.title('Commits per Author')
     plt.legend()
-    plt.xticks(rotation=45)
-    plt.show()
+    plt.xticks(rotation=13)
+    plt.savefig('commit_average.png', format='png')
 
     return df
 
@@ -188,26 +178,19 @@ def commit_data(date: str):
             authors.append(commit.commit.author.name)
             messages.append(commit.commit.message)
 
-    # columns = ['hash', 'message', 'author']
-    # df = pd.DataFrame({"message": messages, "author": authors}, index=hashes)
+    # Criar o arquivo Markdown
+    with io.open("commit_data.md", "w", encoding="utf-8") as file:
+        file.write("# Commits from day {}\n\n".format(date))
 
-    content = '#File Commit by date\n\n'
+        if not hashes:
+            file.write("There were no commits that day.\n")
+        else:
+            for i in range(len(hashes)):
+                file.write("## Commit {}\n\n".format(i+1))
+                file.write("- Hash: {}\n".format(hashes[i]))
+                file.write("- Author: {}\n".format(authors[i]))
+                file.write("- Message: {}\n\n".format(messages[i]))
 
-    for author, message in zip(authors, messages):
-        content += f'## Author: {author} \n\n'
-
-        content += '| -------- | \n'
-        content += f'## Messages: {message} \n\n'
-
-        content += '| -------- | \n'
-        content += "\n"
-
-    output = 'arquivo_data.md'
-
-    with open(output, 'w', encoding='utf-8') as f:
-        f.write(content)
-
-    #return df
 
 def commit_palavra(string: str, start_date: str, end_date: str):
 
@@ -269,13 +252,8 @@ def check_extension(start_date: str, end_date: str):
                 content += f' {file_list} | \n'
             content += "\n"
 
-        output = 'arquivo.md'
-
-        with open(output, 'w', encoding='utf-8') as f:
-            f.write(content)
-
     except Exception as e:
-        print(f'Ocorreu um erro: {e}')
+        print(f'Error: {e}')
 
     return content
 
@@ -304,65 +282,55 @@ def title_commits(start_date: str, end_date: str):
 
     content = '#File Title Commits\n\n'
     for author, titles in commit_titles.items():
-        content += f'## Usuário: {author}\n'
-        content += f'### Títulos do commits:\n'
+        content += f'## User: {author}\n'
+        content += f'### Commit title:\n'
         for title in titles:
             content += f'- {title}\n'
         content += '\n'
 
-    output = 'arquivo_title.md'
-
-    with open(output, 'w', encoding='utf-8') as f:
-        f.write(content)
+    return content
 
 
-def gerar_relatorio():
-    content = '## Relatório Geral\n\n'
+def generate_report(start_date: str, end_date: str):
+    content = '## Report from ' + start_date + ' - ' + end_date + '\n\n'
 
-    content += check_extension()
+    content += check_extension(start_date, end_date)
     content += '\n\n'
 
-    content += '## Lista de Commits com Coauthor\n\n'
+    content += '## List of commits with coauthor\n\n'
 
-    # Parte funcionando COAUTHOR ------------------------------------------
+    coaut = get_coAuthor(start_date, end_date)
 
-    coaut = get_coAuthor()
+    content += '| Hash | Author | Coauthor |\n'
+    content += '|------|--------|----------|\n'
 
-    content += '| Hash | Author | Coauthor | Data |\n'
-    content += '|------|--------|----------|------|\n'
-
-    for indice, linha in coaut.iterrows():
-        content += f'|{indice}'
-        for coluna, valor in linha.items():
-            content += f'|{valor}'
-            nada = {coluna}
+    for index, row in coaut.iterrows():
+        content += f'|{index}'
+        for columm, value in row.items():
+            content += f'|{value}'
+            nothing = {columm}
         content += '|\n'
 
     content += '\n\n'
 
-    # Parte funcionando COAUTHOR ------------------------------------------
+    content += '## Commits per person and general avarage\n\n'
+    commits = calculate_commit_average(start_date, end_date)
+    graph_path = 'commit_average.png'
 
-    # Parte Média ---------------------------------------------------------
+    content += '| Index | Author | Commits | Averege |\n'
+    content += '|-------|--------|---------|---------|\n'
 
-    content += '## Commits por pessoa e Média Geral\n\n'
-    commits = calculate_commit_average()
-    graph_path = 'commit_average_graph.png'
-
-    content += '| índice | Author | Commits | Avarege |\n'
-    content += '|--------|--------|---------|---------|\n'
-
-    for indice, linha in commits.iterrows():
-        content += f'|{indice}'
-        for coluna, valor in linha.items():
-            content += f'|{valor}'
-            nada = {coluna}
+    for index, row in commits.iterrows():
+        content += f'|{index}'
+        for columm, value in row.items():
+            content += f'|{value}'
+            nothing = {columm}
         content += '|\n'
 
     content += '\n\n'
-    # print(content)
 
     content += f'![Commit Average Graph]({graph_path})\n\n'
-    output = 'relatorio_geral.md'
+    output = 'gitInfo_report.md'
 
     with open(output, 'w', encoding='utf-8') as f:
 
@@ -372,25 +340,23 @@ def gerar_relatorio():
 def issues_open():
     issues = repo.get_issues(state='open')
 
-    content = '## Issues Abertas Assinadas\n'
+    content = '## Issues opened assigned\n'
 
-    content += '| Titulo | Numero |\n'
-    content += '|--------|--------|\n'
+    content += '| Title | Number |\n'
+    content += '|-------|--------|\n'
 
     for issue in issues:
         if issue.assignee:
             content += f'|{issue.title}|{issue.number}|\n'
 
     content += '\n\n'
-    content += '## Issues Abertas Não Assinadas\n'
+    content += '## Issues opened not assigned\n'
 
-    content += '| Titulo | Numero |\n'
-    content += '|--------|--------|\n'
+    content += '| Title | Number |\n'
+    content += '|-------|--------|\n'
 
     for issue in issues:
         if not issue.assignee:
             content += f'|{issue.title}|{issue.number}|\n'
 
-    #Para testar a saída, descomente o print
-    print(content)
     return content
