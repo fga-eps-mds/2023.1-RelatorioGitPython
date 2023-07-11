@@ -239,15 +239,15 @@ class TestGitFunctions(unittest.TestCase):
     
         # Assert content of 'arquivo_data.md' file
     
-        with open('arquivo_data.md', 'r') as f:
+        with open('commit_data.md', 'r') as f:
             content = f.read()
     
-        expected_content = '# File Commit by date\n\n'
-        expected_content += '## Author: FelipeDireito \n\n'
-        expected_content += '| -------- | \n'
-        expected_content += '## Messages: Merge pull request #54 from fga-eps-mds/grafico_issues\n\n'
+        expected_content = '# Commits from day 06-15-2023\n\n'
+        expected_content += '## Commit 1\n\n'
+        expected_content += '- Hash: ad2ba3\n'
+        expected_content += '- Author: FelipeDireito\n'
+        expected_content += '- Message: Merge pull request #54 from fga-eps-mds/grafico_issues\n\n'
         expected_content += 'Grafico issues top \n\n'
-        expected_content += '| -------- | \n'
     
         self.assertEqual(content.strip(), expected_content.strip())
     
