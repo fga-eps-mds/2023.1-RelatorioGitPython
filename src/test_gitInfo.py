@@ -8,7 +8,7 @@ import re
 import datetime
 import matplotlib.pyplot as plt
 from datetime import datetime
-from dotenv import load_dotenv
+import os
 from github import Github
 import gitInfo
 import difflib
@@ -348,6 +348,131 @@ src/gitInfo.py |
 '''
         result = gitInfo.check_extension(start_date, end_date)
         
+        self.maxDiff = None
+        self.assertMultiLineEqual(result, expected_content)
+    
+    def test_title_commits(self):
+        start_date = '06-28-2023'
+        end_date = '06-29-2023'
+
+        # Mock commits
+        commit1 = MagicMock()
+        commit1.commit.author.date = datetime(2023, 6, 28)
+        commit1.author.login = 'author1'
+        commit1.commit.message = 'Commit message 1'
+
+        commit2 = MagicMock()
+        commit2.commit.author.date = datetime(2023, 6, 29)
+        commit2.author.login = 'author2'
+        commit2.commit.message = 'Commit message 2'
+
+        commits = [commit1, commit2]
+
+        # Mock repository
+        repo = MagicMock()
+        repo.get_commits.return_value = commits
+
+        # Call the function
+        gitInfo.title_commits(start_date, end_date)
+
+        # Define the expected content
+        expected_content = '''#File Title Commits
+
+## Usuário: GZaranza
+### Títulos do commits:
+- Merge pull request #69 from fga-eps-mds/issue_65
+- Merge branch 'main' into issue_65
+
+## Usuário: lucaslobao-18
+### Títulos do commits:
+- Finaliza a funcao das issues com saida em markdown
+- Cria funcao que busca as issues
+
+## Usuário: ViniciussdeOliveira
+### Títulos do commits:
+- Refatorando e adicionando filtro data na função get_commits_users()
+- Adicionando o filtro data na função get_coAuthor()
+- Adicionando filtro data na função check_extension()
+- Adicionando filtro de data na função calculate_commit_average()
+- Merge pull request #68 from fga-eps-mds/grafico_no_markdown
+
+## Usuário: catlenc
+### Títulos do commits:
+- Cria as listas com issues assinadas e nao assinadas
+
+## Usuário: FelipeDireito
+### Títulos do commits:
+- Adiciona plot do grafico no markdown gerado
+
+'''
+        with open('arquivo_title.md', 'r', encoding='utf-8') as f:
+            result = f.read()
+
+        # Compare the result with the expected content
+        self.maxDiff = None
+        self.assertEqual(result, expected_content)
+
+        # Cleanup: delete the generated file
+        os.remove('arquivo_title.md')
+
+    def test_issues_open(self):
+        # Mock get_issues result
+        issue1 = MagicMock()
+        issue1.title = 'Ajuste final gitINfo'
+        issue1.number = 71
+        issue1.assignee = MagicMock()
+
+        issue2 = MagicMock()
+        issue2.title = 'Configuração para empacotamento da biblioteca'
+        issue2.number = 66
+        issue2.assignee = MagicMock()
+
+        issue3 = MagicMock()
+        issue3.title = 'Atualizar as estórias de usuário'
+        issue3.number = 64
+        issue3.assignee = MagicMock()
+
+        issue4 = MagicMock()
+        issue4.title = 'Desenvolver testes unitários'
+        issue4.number = 56
+        issue4.assignee = MagicMock()
+
+        issue5 = MagicMock()
+        issue5.title = 'Criar a documentação da biblioteca'
+        issue5.number = 50
+        issue5.assignee = MagicMock()
+
+        issue6 = MagicMock()
+        issue6.title = 'Ajuste final'
+        issue6.number = 72
+        issue6.assignee = None
+
+        issues = [issue1, issue2, issue3, issue4, issue5, issue6]
+
+        # Mock repository
+        repo = MagicMock()
+        repo.get_issues.return_value = issues
+
+        # Call the function
+        result = gitInfo.issues_open()
+
+        # Construir o conteúdo esperado usando issues
+        expected_content = '## Issues Abertas Assinadas\n'
+        expected_content += '| Titulo | Numero |\n'
+        expected_content += '|--------|--------|\n'
+        for issue in issues:
+            if issue.assignee:
+                expected_content += f'|{issue.title}|{issue.number}|\n'
+
+        expected_content += '\n\n'
+        expected_content += '## Issues Abertas Não Assinadas\n'
+        expected_content += '| Titulo | Numero |\n'
+        expected_content += '|--------|--------|\n'
+        for issue in issues:
+            if not issue.assignee:
+                expected_content += f'|{issue.title}|{issue.number}|\n'
+
+        # Compare the result with the expected content
         self.maxDiff = None
         self.assertMultiLineEqual(result, expected_content)
 
