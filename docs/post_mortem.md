@@ -52,3 +52,10 @@ Com o passar do tempo a disciplina foi mostrando a sua real face, que não era r
 Nas primeiras semanas eu fiquei perdido por ter muita coisa que tínhamos que fazer antes de começar a desenvolver o produto em si, mas depois que comecei a entender todas as etapas todas as partes começaram a se encaixar e até mesmo ficar divertido, porque quando passamos para a parte de código o produto está quase todo pronto e o que falta é só implementar de acordo com o que está definido. E não se enganem um escopo bem definido facilita muito no momento de codificar.
 
 Essa disciplina para mim é muito importante, pois aprendi muito sobre a criação de um software. Ela exige muito do seu tempo, mas a sensação de conquista no final do semestre e de dever cumprido é única. Então mesmo se estiver cansado e não aguentando mais, siga em frente que o final é recompensador.
+
+## Rafael Kenji
+No início do projeto, nos deparamos com desafios e uma certa confusão em relação às tarefas a serem realizadas. No entanto, graças à colaboração e ao esforço conjunto da equipe, conseguimos superar essas dificuldades e alcançar nosso objetivo. Foi fundamental estabelecer uma comunicação eficiente dentro da equipe para alinhar expectativas e compreender claramente o que precisava ser feito.
+
+Durante o processo, enfrentamos obstáculos e momentos de incerteza, mas o trabalho em equipe e a comunicação foram essenciais para o nosso progresso. Aprendi a lidar com situações desafiadoras e a valorizar a importância da organização e metodologia na construção do projeto.
+
+Este projeto foi extremamente interessante, por ser a minha primeira experiência em um projeto de desenvolvimento de software. Entrei em um grupo interessado que sempre me ajudou e que tentei ajudar tambem. Pude aprender e crescer profissionalmente. Ao final do projeto, sinto-me transformado e mais preparado para enfrentar novos desafios.
