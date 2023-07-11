@@ -222,7 +222,7 @@ class TestGitFunctions(unittest.TestCase):
         with open('arquivo_data.md', 'r') as f:
             content = f.read()
 
-        expected_content = '#File Commit by date\n\n'
+        expected_content = '# File Commit by date\n\n'
         expected_content += '## Author: FelipeDireito \n\n'
         expected_content += '| -------- | \n'
         expected_content += '## Messages: Merge pull request #54 from fga-eps-mds/grafico_issues\n\n'
@@ -372,48 +372,42 @@ src/gitInfo.py |
         repo = MagicMock()
         repo.get_commits.return_value = commits
 
-        # Call the function
-        gitInfo.title_commits(start_date, end_date)
+        # Call the function and get the result
+        result = gitInfo.title_commits(start_date, end_date)
 
         # Define the expected content
         expected_content = '''#File Title Commits
 
-## Usuário: GZaranza
-### Títulos do commits:
+## User: GZaranza
+### Commit title:
 - Merge pull request #69 from fga-eps-mds/issue_65
 - Merge branch 'main' into issue_65
 
-## Usuário: lucaslobao-18
-### Títulos do commits:
+## User: lucaslobao-18
+### Commit title:
 - Finaliza a funcao das issues com saida em markdown
 - Cria funcao que busca as issues
 
-## Usuário: ViniciussdeOliveira
-### Títulos do commits:
+## User: ViniciussdeOliveira
+### Commit title:
 - Refatorando e adicionando filtro data na função get_commits_users()
 - Adicionando o filtro data na função get_coAuthor()
 - Adicionando filtro data na função check_extension()
 - Adicionando filtro de data na função calculate_commit_average()
 - Merge pull request #68 from fga-eps-mds/grafico_no_markdown
 
-## Usuário: catlenc
-### Títulos do commits:
+## User: catlenc
+### Commit title:
 - Cria as listas com issues assinadas e nao assinadas
 
-## Usuário: FelipeDireito
-### Títulos do commits:
+## User: FelipeDireito
+### Commit title:
 - Adiciona plot do grafico no markdown gerado
 
 '''
-        with open('arquivo_title.md', 'r', encoding='utf-8') as f:
-            result = f.read()
-
         # Compare the result with the expected content
         self.maxDiff = None
         self.assertEqual(result, expected_content)
-
-        # Cleanup: delete the generated file
-        os.remove('arquivo_title.md')
 
     def test_issues_open(self):
         # Mock get_issues result
@@ -475,6 +469,70 @@ src/gitInfo.py |
         # Compare the result with the expected content
         self.maxDiff = None
         self.assertMultiLineEqual(result, expected_content)
+
+    def test_generate_report(self):
+        start_date = '06-28-2023'
+        end_date = '06-29-2023'
+
+        # Mock check_extension function
+        mock_check_extension = MagicMock(return_value='Mocked extension report')
+        gitInfo.check_extension = mock_check_extension
+
+        # Mock get_coAuthor function
+        mock_get_coAuthor = MagicMock(return_value=pd.DataFrame({
+            'Hash': ['hash1', 'hash2'],
+            'Author': ['author1', 'author2'],
+            'Coauthor': ['coauthor1', 'coauthor2']
+        }))
+        gitInfo.get_coAuthor = mock_get_coAuthor
+
+        # Mock calculate_commit_average function
+        mock_calculate_commit_average = MagicMock(return_value=pd.DataFrame({
+            'Index': ['index1', 'index2'],
+            'Author': ['author1', 'author2'],
+            'Commits': [5, 10],
+            'Averege': [7.5, 7.5]
+        }))
+        gitInfo.calculate_commit_average = mock_calculate_commit_average
+
+        # Call the function and generate the report
+        gitInfo.generate_report(start_date, end_date)
+
+        # Read the generated report file
+        with open('gitInfo_report.md', 'r', encoding='utf-8') as f:
+            result = f.read()
+
+        # Define the expected content
+        expected_content = '''## Report from 06-28-2023 - 06-29-2023
+
+Mocked extension report
+
+## List of commits with coauthor
+
+| Hash | Author | Coauthor |
+|------|--------|----------|
+|0|hash1|author1|coauthor1|
+|1|hash2|author2|coauthor2|
+
+
+## Commits per person and general avarage
+
+| Index | Author | Commits | Averege |
+|-------|--------|---------|---------|
+|0|index1|author1|5|7.5|
+|1|index2|author2|10|7.5|
+
+
+![Commit Average Graph](commit_average.png)
+
+'''
+
+        # Compare the result with the expected content
+        self.assertEqual(result, expected_content)
+
+        # Cleanup: delete the generated report file
+        os.remove('gitInfo_report.md')
+
 
 if __name__ == '__main__':
         unittest.main()
