@@ -180,16 +180,16 @@ def commit_data(date: str):
 
     # Criar o arquivo Markdown
     with io.open("commit_data.md", "w", encoding="utf-8") as file:
-        file.write("# Commits do dia {}\n\n".format(date))
+        file.write("# Commits from day {}\n\n".format(date))
 
         if not hashes:
-            file.write("Não houve commits no dia.\n")
+            file.write("There were no commits that day.\n")
         else:
             for i in range(len(hashes)):
                 file.write("## Commit {}\n\n".format(i+1))
                 file.write("- Hash: {}\n".format(hashes[i]))
-                file.write("- Autor: {}\n".format(authors[i]))
-                file.write("- Mensagem: {}\n\n".format(messages[i]))
+                file.write("- Author: {}\n".format(authors[i]))
+                file.write("- Message: {}\n\n".format(messages[i]))
 
 
 def commit_palavra(string: str, start_date: str, end_date: str):
