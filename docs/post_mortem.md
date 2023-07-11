@@ -26,7 +26,14 @@ Durante os primeiros dias de aula me senti muito perdida sem saber o que era pra
 
 Apesar de as dificuldades que tenho por ser uma pessoa bem mais velha que a maioria dos estudantes, e me sentir atrasada com relação ao conhecimento dos demais, eu sempre me senti bem em trabalhar em equipe, e o grupo foi bem organizado e um ajudou o outro muito bem.
 
-Enfim, foi um processo desafiador e recompensador. Aprendi bastantes termos novos, e pude vivenciar na prática um trabalho real. É importante continuar a aproveitar essa experiência como base para futuros projetos e aprendizados.
+Enfim, foi um processo desafiador e recompensador. Aprendi bastantes termos novos, e pude vivenciar na prática um trabalho real. É importante continuar a aproveitar essa experiência como base para futuros projetos e aprendizados.  
+
+### Lucas Lobão
+Minha visão sobre o projeto e sobre a matéria no geral é que de fato ela divide o curso de software em antes e depois de MDS. Aprender sobre desenvolvimento ágil e aplicá-lo, mesmo errando em alguns pontos nos mostrou a importância de cada etapa, do planejamento, da organização, comunicação, e da resolução de grandes problemas dividindo-os em pequenas partes.  
+
+Infelizmente, da minha experiência em específico, acredito que poderia ter sido melhor, eu iniciei o semestre fazendo muitas coisas EXTRA faculdade, trabalho, compromissos na minha comunidade de fé… o que acabou diminuindo aquela curva de aprendizado inicial das tecnologias que iríamos usar (linguagens, ide, github) mas do meio pro final do semestre eu conseguir dar uma enxugada na agenda e me dedicar mais no desenvolvimento do trabalho.  
+
+Se eu puder dar alguma dica para os próximos squads, acredito que seja, desenvolva bem o projeto (pré-código), gaste tempo se organizando, planejando as Histórias de usuário/tasks, deixe bem definido o escopo do projeto. Além disso, não perca tempo de estudo, aproveite as primeiras semanas para se dedicar em conhecer as ferramentas e linguagens que serão utilizadas (isso pesou muito pra mim).  
 
 ### Felipe Direito
 
