@@ -149,7 +149,7 @@ def calculate_commit_average(start_date: str, end_date: str):
     df = pd.DataFrame(data)
     df = df.sort_values(by='Commits', ascending=False)
 
-    df['Average'] = average_total 
+    df['Average'] = average_total
 
     plt.bar(df['Author'], df['Commits'])
     plt.axhline(y=average_total, color='r', linestyle='-', label='Average')
@@ -292,6 +292,26 @@ def title_commits(start_date: str, end_date: str):
 
 
 def generate_report(start_date: str, end_date: str):
+    """
+    Função usada para gerar, em markdown, um relatório completo do repositório por datas.
+
+    Parâmetros
+    _____________
+
+    start_date : str
+        data de início: exemplo "06-07-2023"
+    end_date : str
+        data de fim: exemplo "07-07-2023
+
+
+    Retornos
+    _____________
+
+    arquivo markdown e um grafico em png
+
+    """
+
+
     content = '## Report from ' + start_date + ' - ' + end_date + '\n\n'
 
     content += check_extension(start_date, end_date)
