@@ -8,7 +8,7 @@ import datetime
 import matplotlib.pyplot as plt
 from datetime import datetime
 from github import Github
-import gitInfo
+import DEPLOY
 import difflib
 import numpy as np
 from numpy.testing import assert_array_equal
@@ -65,7 +65,7 @@ class TestGitFunctions(unittest.TestCase):
 
         expected_hashes = ['f8e353', 'fe0389', 'd49ca6', 'bdc947']
 
-        result = gitInfo.get_commits_by_user(usuario, start_date, end_date)
+        result = DEPLOY.get_commits_by_user(usuario, start_date, end_date)
 
         self.assertSequenceEqual(result['Message'].tolist(), expected_messages, "\n\n".join(list(difflib.unified_diff(expected_messages, result['Message'].tolist()))))
         self.assertEqual(result.index.tolist(), expected_hashes)
@@ -92,7 +92,7 @@ class TestGitFunctions(unittest.TestCase):
         repo.get_commits.return_value = [commit1, commit2]
 
         # Chama a função
-        result = gitInfo.get_commits_by_user(user, start_date, end_date)
+        result = DEPLOY.get_commits_by_user(user, start_date, end_date)
 
         # Verifica o resultado
         expected_result = "No commits with this user"
@@ -123,7 +123,7 @@ class TestGitFunctions(unittest.TestCase):
         expected_users = ['GZaranza', 'lucaslobao-18', 'ViniciussdeOliveira', 'catlenc', 'FelipeDireito']
         expected_result = pd.DataFrame({"Users": expected_users})
 
-        result = gitInfo.get_commits_users(start_date, end_date)
+        result = DEPLOY.get_commits_users(start_date, end_date)
 
         assert_frame_equal(result, expected_result, check_like=True)
 
@@ -139,7 +139,7 @@ class TestGitFunctions(unittest.TestCase):
         repo = MagicMock()
         repo.get_commits.return_value = commits
 
-        result = gitInfo.get_coAuthor(start_date, end_date)
+        result = DEPLOY.get_coAuthor(start_date, end_date)
 
         expected_authors = ['author1', 'author2']
         expected_coauthors = ['coauthor1', 'coauthor2']
@@ -172,7 +172,7 @@ class TestGitFunctions(unittest.TestCase):
         expected_counts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
         expected_months = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16']
 
-        gitInfo.issues_month(start_date, end_date)
+        DEPLOY.issues_month(start_date, end_date)
 
         x_ticks = [str(tick) for tick in plt.xticks()[0]]
         assert_array_equal(np.array(x_ticks), np.array(expected_months))
@@ -200,7 +200,7 @@ class TestGitFunctions(unittest.TestCase):
         expected_commits = [5, 3, 2, 1, 1]
         expected_average = 2.4
     
-        result = gitInfo.calculate_commit_average(start_date, end_date)
+        result = DEPLOY.calculate_commit_average(start_date, end_date)
     
         self.assertEqual(result['Author'].tolist(), expected_authors)
         self.assertEqual(result['Commits'].tolist(), expected_commits)
@@ -235,7 +235,7 @@ class TestGitFunctions(unittest.TestCase):
     
         self.repo.get_commits.return_value = [commit1, commit2, commit3, commit4]
     
-        gitInfo.commit_data(date)
+        DEPLOY.commit_data(date)
     
         # Assert content of 'arquivo_data.md' file
     
@@ -280,7 +280,7 @@ class TestGitFunctions(unittest.TestCase):
         expected_authors = ['lucaslobao-18', 'catlenc', 'lucaslobao-18']
         expected_indexes = ['718b52', 'f7bcfd', '6f0926']
     
-        result = gitInfo.commit_palavra(string, start_date, end_date)
+        result = DEPLOY.commit_palavra(string, start_date, end_date)
     
         result['message'] = result['message'].apply(lambda x: re.split('\n\n|\n', x, maxsplit=1)[0])
         result_messages = result['message'].tolist()
@@ -310,7 +310,7 @@ class TestGitFunctions(unittest.TestCase):
         repo.get_commits.return_value = [commit1, commit2]
 
         # Chama a função
-        result = gitInfo.commit_palavra(string, start_date, end_date)
+        result = DEPLOY.commit_palavra(string, start_date, end_date)
 
         # Verifica o resultado
         expected_result = "No commits with this word"
@@ -389,7 +389,7 @@ src/gitInfo.py |
 
 '''
     
-        result = gitInfo.check_extension(start_date, end_date)
+        result = DEPLOY.check_extension(start_date, end_date)
     
         self.maxDiff = None
         self.assertMultiLineEqual(result, expected_content)
@@ -416,7 +416,7 @@ src/gitInfo.py |
         repo.get_commits.return_value = commits
     
         # Call the function and get the result
-        result = gitInfo.title_commits(start_date, end_date)
+        result = DEPLOY.title_commits(start_date, end_date)
     
         # Define the expected content
         expected_content = '''#File Title Commits
@@ -492,7 +492,7 @@ src/gitInfo.py |
         repo.get_issues.return_value = issues
     
         # Call the function
-        result = gitInfo.issues_open()
+        result = DEPLOY.issues_open()
     
         # Construir o conteúdo esperado usando issues
         expected_content = '## Issues opened assigned\n'
@@ -520,7 +520,7 @@ src/gitInfo.py |
     
         # Mock check_extension function
         mock_check_extension = MagicMock(return_value='Mocked extension report')
-        gitInfo.check_extension = mock_check_extension
+        DEPLOY.check_extension = mock_check_extension
     
         # Mock get_coAuthor function
         mock_get_coAuthor = MagicMock(return_value=pd.DataFrame({
@@ -528,7 +528,7 @@ src/gitInfo.py |
             'Author': ['author1', 'author2'],
             'Coauthor': ['coauthor1', 'coauthor2']
         }))
-        gitInfo.get_coAuthor = mock_get_coAuthor
+        DEPLOY.get_coAuthor = mock_get_coAuthor
     
         # Mock calculate_commit_average function
         mock_calculate_commit_average = MagicMock(return_value=pd.DataFrame({
@@ -537,10 +537,10 @@ src/gitInfo.py |
             'Commits': [5, 10],
             'Averege': [7.5, 7.5]
         }))
-        gitInfo.calculate_commit_average = mock_calculate_commit_average
+        DEPLOY.calculate_commit_average = mock_calculate_commit_average
     
         # Call the function and generate the report
-        gitInfo.generate_report(start_date, end_date)
+        DEPLOY.generate_report(start_date, end_date)
     
         # Read the generated report file
         with open('gitInfo_report.md', 'r', encoding='utf-8') as f:
