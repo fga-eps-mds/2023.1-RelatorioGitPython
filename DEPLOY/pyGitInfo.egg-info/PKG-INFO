@@ -1,0 +1,125 @@
+Metadata-Version: 2.1
+Name: pyGitInfo
+Version: 0.0.4
+Summary: Analisador de repositórios do github
+Author: ['Catlen Cleane', 'Felipe Direito', 'Gabriel Rosa', 'Gabriel Zaranza', 'Rafael Kenji', 'Lucas Lobão', 'Vinicius de Oliveira']
+Author-email: catlen.cleane@hotmail.com, fedireito92@gmail.com, gabriel10919@outlook.com, gabrielzaranza@hotmail.com, rafak.taira@gmail.com, lucaslobao14df@gmail.com, viniciusoliveirasp22@gmail.com
+License: MIT License
+Keywords: gitInfo,github,git,relatorio,reports,gitReports
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+### Uso da biblioteca
+
+ApÃ³s baixar e configurar a biblioteca podemos comeÃ§ar a usar.  
+
+Primeiro vamos importar a biblioteca para o projeto.
+
+```python
+from gitInfo import *
+```  
+
+### ObservaÃ§Ãµes/PadronizaÃ§Ã£o  
+
+**Data:** O formato padrÃ£o para passar datas Ã© "mÃªs-dia-ano" Ex: "06-07-2023" equivale ao dia 07 de junho de 2023  
+
+### FunÃ§Ãµes e Retornos  
+
+- **get_commits_by_user()**  
+  Permite que vocÃª busque os commits por usuÃ¡rio, passando como parÃ¢metro 3 strings, o nome do usuÃ¡rio (str), uma data inicial e uma data final.  
+
+  ```python
+  get_commits_by_user('name_user','date_init','date_end')
+  ```  
+  
+  essa funÃ§Ã£o retorna _DataFrame_ da biblioteca _Pandas_ ou uma mensagem de erro  
+
+- **get_commits_users()**  
+  Permite que vocÃª busque os commits de todos os contribuintes, passando como parÃ¢metro 2 strings que definem o range temporal, uma data inicial e uma data final.  
+
+  ```python
+  get_commits_users('date_init','date_end')
+  ```  
+
+  essa funÃ§Ã£o retorna _DataFrame_ da biblioteca _Pandas_  
+
+- **get_coAuthor()**  
+  Busque todos os commits com Coauthor, passando como parÃ¢metro 2 strings que definem o range temporal, uma data inicial e uma data final.  
+
+  ```python
+  get_coAuthor('date_init','date_end')
+  ```  
+
+  Essa funÃ§Ã£o retorna um _DataFrame_ da biblioteca _Pandas_ ou uma mensagem de erro  
+
+- **issues_month()**  
+  Essa funÃ§Ã£o veifica quantas Issues foram fechadas por mÃªs, dentro do perÃ­odo estipulado. A funÃ§Ã£o recebe como parÃ¢metro 2 strings de data, a data inicial e a final.
+
+  ```python
+  issues_month('date_init','date_end')
+  ```  
+
+  A funÃ§Ã£o retorna _DataFrame_ da biblioteca _Pandas_ e tambÃ©m gera um grÃ¡fico png
+
+- **calculate_commit_average()**  
+  Calcula a mÃ©dia de commits entre todos os contribuintes e mostra quem estÃ¡ acima ou abaixo dessa mÃ©dia. Deve passar como parÃ¢metro o perÃ­odo de anÃ¡lise com 2 strings representando as datas
+
+  ```python
+  calculate_commit_average('date_init','date_end')
+  ```  
+
+  A funÃ§Ã£o retorna _DataFrame_ da biblioteca _Pandas_ e tambÃ©m gera um grÃ¡fico png
+
+- **commit_data()**  
+  Busca todos os commits em um dia expecÃ­fico, a funÃ§Ã£o recebe como parÃ¢metro uma string com a data desejada.
+
+  ```python
+  commit_data('date')
+  ```  
+
+  A funÃ§Ã£o gera um arquivo markdown com as informaÃ§Ãµes
+
+- **commit_palavra()**  
+  Busca todos os commits (dentro de um intervalo de tempo) que tÃªm a palavra desejada em sua descriÃ§Ã£o. Essa funÃ§Ã£o recebe como parÃ¢metro 3 strings, a primeira com a 'palavra' que serÃ¡ buscada, e as 2 'datas' referente ao intervalo de tempo
+
+  ```python
+  commit_palavra('palavra','date_init','date_end')
+  ```  
+
+  A funÃ§Ã£o retorna um _DataFrame_ da biblioteca _Pandas_ ou uma mensagem de erro  
+
+- **check_extension()**  
+  Faz uma busca pelos arquivos que estÃ£o sendo commitados por cada contribuinte e classifÃ­ca-os de acordo com a sua extenÃ§Ã£o. Deve-se passar o intervalo de tempo para a anÃ¡lise (2 strings de 'data')
+
+  ```python
+  check_extension('date_init','date_end')
+  ```  
+
+  A funÃ§Ã£o retorna uma variÃ¡vel com o conteÃºdo escrito em formato markdown
+
+- **title_commits()**  
+  Busca todos os titulos de commits, por usuÃ¡rio, facilitando assim a vizualizaÃ§Ã£o do que cada contribuinte tem feito (Necessita de um intervalo temporal) 2 strings 'data'
+
+  ```python
+  title_commits('date_init','date_end')
+  ```  
+
+  A funÃ§Ã£o retorna uma variÃ¡vel com o conteÃºdo escrito em formato markdown  
+
+- **gerenate_report()**  
+  Combina as funÃ§Ãµes de commit com coauthor e mÃ©dia geral para gerar um relatÃ³rio mais completo. A funÃ§Ã£o recebe como parÃ¢metro 2 strings de data com o intervalo de tempo que serÃ¡ analisado ('data_inicial',' data_final')
+
+  ```python
+  gerenate_report('date_init','date_end')
+  ```  
+
+  Gera um markdown "gitInfo_report.md" com as informaÃ§Ãµes de commits com coauthor e da quantidade de commits por usuÃ¡rio
+
+- **issues_open()**  
+  Busca todas as Issues que estÃ£o abertas mas ainda nÃ£o foram assinadas por ninguÃ©m. NÃ£o recebe nada como parÃ¢metro.
+
+  ```python
+  issues_open()
+  ```  
+
+  A funÃ§Ã£o retorna uma variÃ¡vel com o conteÃºdo escrito em formato markdown

@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+pyGitInfo/__init__.py
+pyGitInfo/pyGitInfo.py
+pyGitInfo.egg-info/PKG-INFO
+pyGitInfo.egg-info/SOURCES.txt
+pyGitInfo.egg-info/dependency_links.txt
+pyGitInfo.egg-info/requires.txt
+pyGitInfo.egg-info/top_level.txt
