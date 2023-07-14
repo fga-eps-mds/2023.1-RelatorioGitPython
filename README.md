@@ -50,20 +50,20 @@ Veja o [guia de contribuição](/CONTRIBUTING.md) para saber como começar.
 
 Por favor, siga o [código de conduta](docs/CODE_OF_CONDUCT.md) desse projeto.
 
-## :books: Documentação  
+## :books: Documentation  
 
-### Visão Geral
+### Overview
 
-Imagine um scrum master, tendo que levantar métricas sobre a sua equipe, ele precisa verificar o número de commits por integrantes, qual é a média geral da equipe, quais as issues ainda estão por fazer, tudo isso levaria algum tempo e um esforço do scrum master.  
+Imagine a scrum master, having to gather metrics about his team, he needs to check the number of commits per member, what is the general average of the team, which issues are still to be done, all this would take some time and scrum effort master.
 
-A biblioteca Gitpython tem por objetivo facilitar toda essa análise de repositórios no github, trazendo insights sobre cada contribuinte e sua respectiva participação no repositório. Ela dispõem de funcionalidades para análise de commits, arquivos, issues, Pull Requests e boa parte do que é utilizado em um repositório.  
+The pyGitInfo library aims to facilitate all this analysis of repositories on github, bringing insights about each contributor and their respective participation in the repository. It has features for analyzing commits, files, issues, Pull Requests and much of what is used in a repository. 
 
-### Instalação e Configuração  
+### Installation and Configuration  
 
-**Configurando a biblioteca**  
-Crie um arquivo **.env** dentro da pasta "gitinfo". Nesse arquivo você precisa adicionar o seu GITHUB_TOKEN e o diretório do seu repositório 'REPO'  
+**Configuring the library**  
+Create a file **.env** inside the "gitinfo" folder. In that file you need to add your GITHUB_TOKEN and your repository directory 'REPO'  
 
-O Arquivo fica assim:  
+The file looks like this:  
 
 ```python
 
@@ -72,120 +72,120 @@ REPO = "fga-eps-mds/2023.1-RelatorioGitPython" #Your project directory on Github
 
 ```  
 
-### Uso da biblioteca
+### Library use
 
-Após baixar e configurar a biblioteca podemos começar a usar.  
+After downloading and configuring the library, we can start using it.  
 
-Primeiro vamos importar a biblioteca para o projeto.
+First let's import the library into the project.  
 
 ```python
-from gitInfo import *
+from pyGitInfo import *
 ```  
 
-### Observações/Padronização  
+### Notes/Standardization  
 
-**Data:** O formato padrão para passar datas é "mês-dia-ano" Ex: "06-07-2023" equivale ao dia 07 de junho de 2023  
+**Date:** The default format for passing dates is "month-day-year" Ex: "06-07-2023" is equivalent to June 07, 2023  
 
-### Funções e Retornos  
+### Functions and Returns  
 
 - **get_commits_by_user()**  
-  Permite que você busque os commits por usuário, passando como parâmetro 3 strings, o nome do usuário (str), uma data inicial e uma data final.  
+  Allows you to search for commits by user, passing 3 strings as a parameter, the user's name (str), a start date and an end date.  
 
   ```python
   get_commits_by_user('name_user','date_init','date_end')
   ```  
   
-  essa função retorna _DataFrame_ da biblioteca _Pandas_ ou uma mensagem de erro  
+  This function returns _DataFrame_ from the _Pandas_ library or an error message  
 
 - **get_commits_users()**  
-  Permite que você busque os commits de todos os contribuintes, passando como parâmetro 2 strings que definem o range temporal, uma data inicial e uma data final.  
+  Allows you to search for commits from all contributors, passing as a parameter 2 strings that define the time range, a start date and an end date.  
 
   ```python
   get_commits_users('date_init','date_end')
   ```  
 
-  essa função retorna _DataFrame_ da biblioteca _Pandas_  
+  This function returns _DataFrame_ from the _Pandas_ library  
 
 - **get_coAuthor()**  
-  Busque todos os commits com Coauthor, passando como parâmetro 2 strings que definem o range temporal, uma data inicial e uma data final.  
+  Search all commits with Coauthor, passing as parameters 2 strings that define the time range, a start date and an end date.  
 
   ```python
   get_coAuthor('date_init','date_end')
   ```  
 
-  Essa função retorna um _DataFrame_ da biblioteca _Pandas_ ou uma mensagem de erro  
+  This function returns a _DataFrame_ from the _Pandas_ library or an error message  
 
 - **issues_month()**  
-  Essa função veifica quantas Issues foram fechadas por mês, dentro do período estipulado. A função recebe como parâmetro 2 strings de data, a data inicial e a final.
+  This function verifies how many Issues were closed per month, within the stipulated period. The function receives 2 date strings as a parameter, the start and end date.
 
   ```python
   issues_month('date_init','date_end')
   ```  
 
-  A função retorna _DataFrame_ da biblioteca _Pandas_ e também gera um gráfico png
+  The function returns _DataFrame_ from the _Pandas_ library and also generates a png graphic
 
 - **calculate_commit_average()**  
-  Calcula a média de commits entre todos os contribuintes e mostra quem está acima ou abaixo dessa média. Deve passar como parâmetro o período de análise com 2 strings representando as datas
+  Calculates the average commits across all contributors and shows who is above or below that average. You must pass the analysis period as a parameter with 2 strings representing the dates
 
   ```python
   calculate_commit_average('date_init','date_end')
   ```  
 
-  A função retorna _DataFrame_ da biblioteca _Pandas_ e também gera um gráfico png
+  The function returns _DataFrame_ from the _Pandas_ library and also generates a png graphic
 
 - **commit_data()**  
-  Busca todos os commits em um dia expecífico, a função recebe como parâmetro uma string com a data desejada.
+  Searches for all commits on a specific day, the function receives a string with the desired date as a parameter.
 
   ```python
   commit_data('date')
   ```  
 
-  A função gera um arquivo markdown com as informações
+  The function generates a markdown file with the information
 
 - **commit_palavra()**  
-  Busca todos os commits (dentro de um intervalo de tempo) que têm a palavra desejada em sua descrição. Essa função recebe como parâmetro 3 strings, a primeira com a 'palavra' que será buscada, e as 2 'datas' referente ao intervalo de tempo
+  Searches for all commits (within a time range) that have the desired word in their description. This function receives 3 strings as a parameter, the first with the 'word' to be searched for, and the 2 'dates' referring to the time interval
 
   ```python
   commit_palavra('palavra','date_init','date_end')
   ```  
 
-  A função retorna um _DataFrame_ da biblioteca _Pandas_ ou uma mensagem de erro  
+  The function returns a _DataFrame_ from the _Pandas_ library or an error message  
 
 - **check_extension()**  
-  Faz uma busca pelos arquivos que estão sendo commitados por cada contribuinte e classifíca-os de acordo com a sua extenção. Deve-se passar o intervalo de tempo para a análise (2 strings de 'data')
+  It does a search for the files that are being committed by each contributor and classifies them according to their extension. You must pass the time interval for the analysis (2 strings of 'date')
 
   ```python
   check_extension('date_init','date_end')
   ```  
 
-  A função retorna uma variável com o conteúdo escrito em formato markdown
+  The function returns a variable with the content written in markdown format
 
 - **title_commits()**  
-  Busca todos os titulos de commits, por usuário, facilitando assim a vizualização do que cada contribuinte tem feito (Necessita de um intervalo temporal) 2 strings 'data'
+  Searches all commit titles, by user, thus facilitating the visualization of what each contributor has done (Requires a time interval) 2 strings 'data'
 
   ```python
   title_commits('date_init','date_end')
   ```  
 
-  A função retorna uma variável com o conteúdo escrito em formato markdown  
+  The function returns a variable with the content written in markdown format  
 
 - **gerenate_report()**  
-  Combina as funções de commit com coauthor e média geral para gerar um relatório mais completo. A função recebe como parâmetro 2 strings de data com o intervalo de tempo que será analisado ('data_inicial',' data_final')
+  Combines the functions of commit with coauthor and overall average to generate a more complete report. The function receives as parameter 2 date strings with the time interval to be analyzed ('initial_date','final_date')
 
   ```python
   gerenate_report('date_init','date_end')
   ```  
 
-  Gera um markdown "gitInfo_report.md" com as informações de commits com coauthor e da quantidade de commits por usuário
+  Generates a "gitInfo_report.md" markdown with information about commits with coauthor and the number of commits per user
 
 - **issues_open()**  
-  Busca todas as Issues que estão abertas mas ainda não foram assinadas por ninguém. Não recebe nada como parâmetro.
+  Searches all Issues that are open but have not yet been signed by anyone. It takes nothing as a parameter.
 
   ```python
   issues_open()
   ```  
 
-  A função retorna uma variável com o conteúdo escrito em formato markdown
+  The function returns a variable with the content written in markdown format
 
 ### Atualização e Suporte
 
