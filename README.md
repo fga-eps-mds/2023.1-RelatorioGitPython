@@ -60,6 +60,13 @@ The pyGitInfo library aims to facilitate all this analysis of repositories on gi
 
 ### Installation and Configuration  
 
+**Installing the library**  
+To install the library, use the following command in your terminal
+
+```python
+pip install pyGitInfo
+```
+
 **Configuring the library**  
 Create a file **.env** inside the "gitinfo" folder. In that file you need to add your GITHUB_TOKEN and your repository directory 'REPO'  
 
