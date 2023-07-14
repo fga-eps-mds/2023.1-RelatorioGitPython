@@ -6,7 +6,7 @@ with open("README.md", "r") as arq:
     readme = arq.read()
 
 setup(name='pyGitInfo',
-    version='0.0.4',
+    version='0.0.5',
     license='MIT License',
     author=['Catlen Cleane', 'Felipe Direito', 'Gabriel Rosa', 'Gabriel Zaranza', 'Rafael Kenji', 'Lucas Lobão', 'Vinicius de Oliveira'],
     long_description=readme,
