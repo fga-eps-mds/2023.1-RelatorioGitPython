@@ -194,8 +194,6 @@ from pyGitInfo import *
 
   The function returns a variable with the content written in markdown format
 
-### Atualização e Suporte
-
 ## :mag_right: Licença  
 
   Este projeto está sob [licença](/LICENSE). Acesse para mais informações.
