@@ -53,7 +53,7 @@ Este documento aplica-se ao projeto da biblioteca em python para gerar relatóri
 | RE04 | A biblioteca deverá relacionar o usuário com o título do commit | -- | Alta |
 | RE05 | A biblioteca deverá identificar os commits que tivem co-author | -- | Alta |
 | RE06 | A biblioteca deverá listar a descrição de commit por pessoa | -- | Alta |
-| RE07 | A biblioteca deverá através de uma função fornecer um relatório completo do repositório do GitHub | -- | Alta |
+| RE07 | A biblioteca deverá através de uma função fornecer um relatório do repositório do GitHub | -- | Alta |
 | RE08 | A biblioteca deverá fornecer um gráfico de issues do repositório | -- | Alta |
 | RE09 | A biblioteca deverá listar os commits através de uma data específica | -- | Média |
 | RE10 | A biblioteca deverá buscar um commit através de uma palavra fornecida pelo usuário | -- | Baixa | 

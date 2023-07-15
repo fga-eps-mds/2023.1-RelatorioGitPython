@@ -67,4 +67,4 @@ A biblioteca deverá ser simples de ser utilizadas, com as funções bem definid
 O projeto será desenvolvimento em Python (versão 3.10), em conjunto com a biblioteca PyGitHub pegandos todas informações que são capazes de retirar da API.
 
 ### 4.4 Confiabilidade
-A biblioteca terá uma cobertura de teste de 90%, buscando garantir que suas funcionalidades foram suficientemente testadas.
+A biblioteca terá uma cobertura de teste de 95%, buscando garantir que suas funcionalidades foram suficientemente testadas.
