@@ -6,7 +6,7 @@ with open("README.md", "r") as arq:
     readme = arq.read()
 
 setup(name='pyGitInfo',
-    version='0.0.5',
+    version='0.0.6',
     license='MIT License',
     author=['Catlen Cleane', 'Felipe Direito', 'Gabriel Rosa', 'Gabriel Zaranza', 'Rafael Kenji', 'Lucas Lobão', 'Vinicius de Oliveira'],
     long_description=readme,
@@ -15,4 +15,4 @@ setup(name='pyGitInfo',
     keywords=["gitInfo", "github", "git", "relatorio", "reports", "gitReports"],
     description=u'Analisador de repositórios do github',
     packages=['pyGitInfo'],
-    install_requires=["pandas>=1.4.0", "matplotlib", "pygithub"],)
+    install_requires=["pandas>=1.4.0", "matplotlib", "pygithub", "python-dotenv"],)
