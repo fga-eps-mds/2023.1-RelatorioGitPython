@@ -7,7 +7,23 @@ Este projeto visa criar uma biblioteca Python para gerar relatórios automático
 
 ## :dart: Objetivo
 
-Elaborar uma ferramenta offline, que, por linha de comando, a partir do _git log_ de um repositório, gere relatório (txt) com estatísticas de um ususário específico ou da esquipe inteira.  
+A biblioteca "pyGitInfo" tem o objetivo de fornecer funcionalidades para análise e extração de informações relacionadas a repositórios Git. Ela oferece uma variedade de funções que podem ser utilizadas para extrair dados sobre commits, coautores, problemas (issues), além de realizar análises estatísticas e geração de relatórios.
+
+Alguns dos principais objetivos da biblioteca são:
+
+- Facilitar a busca e análise de informações sobre commits realizados em um repositório Git, permitindo filtrar por usuário, período de tempo e palavras-chave nas descrições dos commits.
+
+- Identificar commits que possuem coautores, ou seja, colaboradores que contribuíram para um commit específico.
+
+- Gerar estatísticas sobre o número de commits por usuário e calcular a média de commits para avaliar o desempenho de cada colaborador em relação à média geral.
+
+- Analisar problemas (issues) relacionados ao repositório, verificando quantos foram fechados em determinado período e gerando gráficos para visualização.
+
+- Classificar os arquivos que estão sendo commitados pelos contribuidores de acordo com suas extensões, permitindo identificar quais tipos de arquivos são mais comumente modificados.
+
+- Gerar relatórios completos que combinam várias análises, como commits com coautores, média geral de commits e informações sobre problemas, fornecendo uma visão abrangente do repositório Git.
+
+Em resumo, a biblioteca tem como objetivo simplificar e automatizar a extração e análise de informações em repositórios Git, facilitando o entendimento e a avaliação do histórico de desenvolvimento de um projeto. 
 
 ## :computer: Tecnologias
 
