@@ -61,7 +61,7 @@ The file looks like this:
 
 ```python
 
-GITGUH_TOKEN = "ghp_ap0JAORWzs**********************" #your personal access token
+GITHUB_TOKEN = "ghp_ap0JAORWzs**********************" #your personal access token
 REPO = "fga-eps-mds/2023.1-RelatorioGitPython" #Your project directory on Github
 
 ```  
