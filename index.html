@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>Repositório</title>
+    <title>pyGitInfo</title>
 </head>
 <body>
     
     <header>
-        <h1>Relatório <br/> GitPython</h1>
+        <h1>Documentation <br/> pyGitInfo</h1>
         <button id="openMenu">&#9776</button>
         <div id="identDir">
             <button id="closeMenu">X</button>
             <p><a class="ancora" href="#Descricao">Descrição</a></p>
             <p><a class="ancora" href="#Objetivo">Objetivo</a></p>
+            <p><a class="ancora" href="#Documentation">Documentação</a></p>
             <p><a class="ancora" href="#CodigoDeConduta">Código de conduta</a></p>
             <p><a class="ancora" href="#Contribuicao">Contribuição</a></p>
             <p><a class="ancora" href="#Licenca">Licença</a></p>
@@ -23,32 +24,140 @@
 
     <main>
         <section>
-            <h2 id="Descricao">Descrição</h2>
+            <h2 id="Descricao">Descrição do projeto</h2>
             <p>Trabalho referente a disciplina de Métodos de Desenvolvimento de Software, Ministrada pela prof. Carla Rocha, na Universidade de Brasília - FGA. Este projeto visa criar uma biblioteca Python para gerar relatórios automáticos sobre as participações dos desenvolvedores em um repositório/projeto. Como por exemplo, listar a quantidade de commits e issues por cara desenvolvedor.</p>
         </section>
 
         <section class="white">
             <h2 id="Objetivo">Objetivo</h2>
-            <p>Elaborar uma ferramenta offline, que, por linha de comando, a partir do git log de um repositório, gere relatório (txt) com estatísticas de um ususário específico ou da esquipe inteira.</p>
+            <p>A biblioteca "pyGitInfo" tem o objetivo de fornecer funcionalidades para análise e extração de   informações relacionadas a repositórios Git. Ela oferece uma variedade de funções que podem ser utilizadas para extrair dados sobre commits, coautores, problemas (issues), além de realizar análises estatísticas e geração de relatórios.
+                <br>
+                Alguns dos principais objetivos da biblioteca são:
+                <ul>
+                    <li>Facilitar a busca e análise de informações sobre commits realizados em um repositório Git, permitindo filtrar por usuário, período de tempo e palavras-chave nas descrições dos commits.</li>
+                    <li>Identificar commits que possuem coautores, ou seja, colaboradores que contribuíram para um commit específico.</li>
+                    <li>Gerar estatísticas sobre o número de commits por usuário e calcular a média de commits para avaliar o desempenho de cada colaborador em relação à média geral.</li>
+                    <li>Analisar problemas (issues) relacionados ao repositório, verificando quantos foram fechados em determinado período e gerando gráficos para visualização.</li>
+                    <li>Classificar os arquivos que estão sendo commitados pelos contribuidores de acordo com suas extensões, permitindo identificar quais tipos de arquivos são mais comumente modificados.</li>
+                    <li>Gerar relatórios completos que combinam várias análises, como commits com coautores, média geral de commits e informações sobre problemas, fornecendo uma visão abrangente do repositório Git.</li>
+                </ul>
+                Gerar relatórios completos que combinam várias análises, como commits com coautores, média geral de commits e informações sobre problemas, fornecendo uma visão abrangente do repositório Git.</p>
         </section>
 
         <section>
-            <h2 id="CodigoDeConduta">Código de conduta</h2>
-            <p>Por favor, siga o <a class="docs" href="https://github.com/fga-eps-mds/2023.1-RelatorioGitPython/blob/main/docs/CODE_OF_CONDUCT.md" target="_blank">código de conduta</a> desse projeto.</p>
+            <h2 id="Documentation">Documentation</h2>
+            <p><h3>Overview</h3>
+                Imagine a scrum master, having to gather metrics about his team, he needs to check the number of commits per member, what is the general average of the team, which issues are still to be done, all this would take some time and scrum effort master.
+                <br/>
+                The pyGitInfo library aims to facilitate all this analysis of repositories on github, bringing insights about each contributor and their respective participation in the repository. It has features for analyzing commits, files, issues, Pull Requests and much of what is used in a repository.
+                <br/><br/>
+                <h3>Installation and Configuration</h3>
+                <b>Installing the library</b><br/>
+                To install the library, use the following command in your terminal:
+                <br/>
+                <i>pip install pyGitInfo</i><br/><br/>
+                <b>Configuring the library</b><br/>
+                Create a file .env inside the "gitinfo" folder. In that file you need to add your GITHUB_TOKEN and your repository directory 'REPO'
+                <br/>
+                The file looks like this:
+                <br/>
+                <i>GITHUB_TOKEN = "ghp_ap0JAORWzs**********************" #your personal access token</i><br/>
+                <i>REPO = "fga-eps-mds/2023.1-RelatorioGitPython" #Your project directory on Github</i><br/>
+                <br/>
+                <h3>Library use</h3>
+                After downloading and configuring the library, we can start using it.
+                <br/>
+                First let's import the library into the project:
+                <br/>
+                <i>from pyGitInfo import *</i><br/><br/>
+                <b>Notes/Standardization</b>
+                Date: The default format for passing dates is "month-day-year" Ex: "06-07-2023" is equivalent to June 07, 2023.
+                <br/><br/>
+                <h3>Functions and Returns</h3>
+                <b>get_commits_by_user()</b><br/>
+                Allows you to search for commits by user, passing 3 strings as a parameter, the user's name (str), a start date and an end date.
+                <br/>
+                <i>get_commits_by_user('name_user','date_init','date_end')</i><br/>
+                This function returns DataFrame from the Pandas library or an error message.
+                <br/><br/>
+                <b>get_commits_users()</b><br/>
+                Allows you to search for commits from all contributors, passing as a parameter 2 strings that define the time range, a start date and an end date.
+                <br/>
+                <i>get_commits_users('date_init','date_end')</i><br/>
+                This function returns DataFrame from the Pandas library.
+                <br/><br/>
+                <b>get_coAuthor()</b><br/>
+                Search all commits with Coauthor, passing as parameters 2 strings that define the time range, a start date and an end date.
+                <br/>
+                <i>get_coAuthor('date_init','date_end')</i><br/>
+                This function returns a DataFrame from the Pandas library or an error message.
+                <br/><br/>
+                <b>issues_month()</b><br/>
+                This function verifies how many Issues were closed per month, within the stipulated period. The function receives 2 date strings as a parameter, the start and end date.
+                <br/>
+                <i>issues_month('date_init','date_end')</i><br/>
+                The function returns DataFrame from the Pandas library and also generates a png graphic.
+                <br/><br/>
+                <b>calculate_commit_average()</b><br/>
+                Calculates the average commits across all contributors and shows who is above or below that average. You must pass the analysis period as a parameter with 2 strings representing the dates.
+                <br/>
+                <i>calculate_commit_average('date_init','date_end')</i><br/>
+                The function returns DataFrame from the Pandas library and also generates a png graphic.
+                <br/><br/>
+                <b>commit_data()</b><br/>
+                Searches for all commits on a specific day, the function receives a string with the desired date as a parameter.
+                <br/>
+                <i>commit_data('date')</i><br/>
+                The function generates a markdown file with the information.
+                <br/><br/>
+                <b>commit_palavra()</b><br/>
+                Searches for all commits (within a time range) that have the desired word in their description. This function receives 3 strings as a parameter, the first with the 'word' to be searched for, and the 2 'dates' referring to the time interval.
+                <br/>
+                <i>commit_palavra('palavra','date_init','date_end')</i><br/>
+                The function returns a DataFrame from the Pandas library or an error message.
+                <br/><br/>
+                <b>check_extension()</b><br/>
+                It does a search for the files that are being committed by each contributor and classifies them according to their extension. You must pass the time interval for the analysis (2 strings of 'date').
+                <br/>
+                <i>check_extension('date_init','date_end')</i><br/>
+                The function returns a variable with the content written in markdown format.
+                <br/><br/>
+                <b>title_commits()</b><br/>
+                Searches all commit titles, by user, thus facilitating the visualization of what each contributor has done (Requires a time interval) 2 strings 'data'.
+                <br/>
+                <i>title_commits('date_init','date_end')</i><br/>
+                The function returns a variable with the content written in markdown format.
+                <br/><br/>
+                <b>gerenate_report()</b><br/>
+                Combines the functions of commit with coauthor and overall average to generate a more complete report. The function receives as parameter 2 date strings with the time interval to be analyzed ('initial_date','final_date').
+                <br/>
+                <i>gerenate_report('date_init','date_end')</i><br/>
+                Generates a "gitInfo_report.md" markdown with information about commits with coauthor and the number of commits per user.
+                <br/><br/>
+                <b>issues_open()</b><br/>
+                Searches all Issues that are open but have not yet been signed by anyone. It takes nothing as a parameter.
+                <br/>
+                <i>issues_open()</i><br/>
+                The function returns a variable with the content written in markdown format</p>
         </section>
 
         <section class="white">
+            <h2 id="CodigoDeConduta">Código de conduta</h2>
+            <p>Por favor, siga o <a class="docs" href="https://github.com/fga-eps-mds/2023.1-RelatorioGitPython/blob/main/CODE_OF_CONDUCT.md" target="_blank">código de conduta</a> desse projeto.</p>
+        </section>
+
+        <section>
             <h2 id="Contribuicao">Contribuição</h2>
             <p>Contribuições são sempre bem-vindas!</p>
         </section>
 
-        <section>
+        <section class="white">
             <h2 id="Licenca">Licença</h2>
             <p>Este projeto está sob <a class="docs" href="https://github.com/fga-eps-mds/2023.1-RelatorioGitPython/blob/main/LICENSE" target="_blank">licença</a>. Acesse para mais informações.</p>
         </section>
 
         <footer>
-            <p>Contato</p>
+            <a class="contato" href="https://github.com/fga-eps-mds/2023.1-RelatorioGitPython" target="_blank">pyGitInfo</a>
         </footer>
     </main>
 

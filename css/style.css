@@ -65,8 +65,12 @@ section > h2 {
 
 }
 
+ul {
+    padding-left: 18px;
+}
+
 .docs{
-    color: #00CCCC;
+    color: #0026ff;
 }
 
 .white {
@@ -79,10 +83,12 @@ footer {
     background-color: #33CC33;
     color: white;
     margin-top: 2px;
+    text-align: center;
 }
 
-footer > p{
-    text-align: center;
+.contato{
+    color: white;
+    text-decoration: none;
 }
 
 /* ============================================================================================================ */
