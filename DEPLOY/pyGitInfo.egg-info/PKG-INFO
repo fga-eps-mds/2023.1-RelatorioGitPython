@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pyGitInfo
-Version: 0.0.5
+Version: 0.0.6
 Summary: Analisador de repositórios do github
 Author: ['Catlen Cleane', 'Felipe Direito', 'Gabriel Rosa', 'Gabriel Zaranza', 'Rafael Kenji', 'Lucas Lobão', 'Vinicius de Oliveira']
 Author-email: catlen.cleane@hotmail.com, fedireito92@gmail.com, gabriel10919@outlook.com, gabrielzaranza@hotmail.com, rafak.taira@gmail.com, lucaslobao14df@gmail.com, viniciusoliveirasp22@gmail.com
