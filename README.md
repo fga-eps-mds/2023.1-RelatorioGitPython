@@ -51,7 +51,7 @@ Contribuições são sempre bem-vindas!
 
 Veja o [guia de contribuição](/CONTRIBUTING.md) para saber como começar.
 
-Por favor, siga o [código de conduta](docs/CODE_OF_CONDUCT.md) desse projeto.
+Por favor, siga o [código de conduta](CODE_OF_CONDUCT.md) desse projeto.
 
 ## :books: Documentation  
 
